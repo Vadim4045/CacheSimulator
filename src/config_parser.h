@@ -2,7 +2,25 @@
 #define CONFIG_PARSER_H
 
 #define _1K (1 << 10)
+#define _2K (2 * (1 << 10))
+#define _4K (4 * (1 << 10))
+#define _8K (8 * (1 << 10))
+#define _16K (16 * (1 << 10))
+#define _32K (32 * (1 << 10))
+#define _64K (64 * (1 << 10))
+#define _128K (128 * (1 << 10))
+#define _256K (256 * (1 << 10))
+#define _512K (512 * (1 << 10))
 #define _1M (1 << 20)
+#define _2M (2 * (1 << 20))
+#define _4M (4 * (1 << 20))
+#define _8M (8 * (1 << 20))
+#define _16M (16 * (1 << 20))
+#define _32M (32 * (1 << 20))
+#define _64M (64 * (1 << 20))
+#define _128M (128 * (1 << 20))
+#define _256M (256 * (1 << 20))
+#define _512M (512 * (1 << 20))
 
 typedef enum
 {
