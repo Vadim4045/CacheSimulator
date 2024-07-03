@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/Users/boss/CacheSimulator/build",
+  "command": "/opt/homebrew/bin/gcc-13 -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.dir/src/cache.c.o -c /Users/boss/CacheSimulator/src/cache.c",
+  "file": "/Users/boss/CacheSimulator/src/cache.c",
+  "output": "CMakeFiles/CacheSimulator.dir/src/cache.c.o"
+},
+{
+  "directory": "/Users/boss/CacheSimulator/build",
+  "command": "/opt/homebrew/bin/gcc-13 -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.dir/src/cache_level.c.o -c /Users/boss/CacheSimulator/src/cache_level.c",
+  "file": "/Users/boss/CacheSimulator/src/cache_level.c",
+  "output": "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o"
+},
+{
+  "directory": "/Users/boss/CacheSimulator/build",
+  "command": "/opt/homebrew/bin/gcc-13 -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.dir/src/main.c.o -c /Users/boss/CacheSimulator/src/main.c",
+  "file": "/Users/boss/CacheSimulator/src/main.c",
+  "output": "CMakeFiles/CacheSimulator.dir/src/main.c.o"
+},
+{
+  "directory": "/Users/boss/CacheSimulator/build",
+  "command": "/opt/homebrew/bin/gcc-13 -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.dir/src/parser.c.o -c /Users/boss/CacheSimulator/src/parser.c",
+  "file": "/Users/boss/CacheSimulator/src/parser.c",
+  "output": "CMakeFiles/CacheSimulator.dir/src/parser.c.o"
+}
+]

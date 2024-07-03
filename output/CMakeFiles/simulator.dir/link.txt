@@ -1,0 +1,1 @@
+/opt/homebrew/bin/gcc-13  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/simulator.dir/src/cache.c.o CMakeFiles/simulator.dir/src/cache_level.c.o CMakeFiles/simulator.dir/src/main.c.o -o /Users/boss/CacheSimulator/simulator 
