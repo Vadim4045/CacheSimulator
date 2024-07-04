@@ -129,30 +129,6 @@ CacheSimulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/build
 .PHONY : CacheSimulator/fast
 
-src/cache.o: src/cache.c.o
-.PHONY : src/cache.o
-
-# target to build an object file
-src/cache.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache.c.o
-.PHONY : src/cache.c.o
-
-src/cache.i: src/cache.c.i
-.PHONY : src/cache.i
-
-# target to preprocess a source file
-src/cache.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache.c.i
-.PHONY : src/cache.c.i
-
-src/cache.s: src/cache.c.s
-.PHONY : src/cache.s
-
-# target to generate assembly for a file
-src/cache.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache.c.s
-.PHONY : src/cache.c.s
-
 src/cache_level.o: src/cache_level.c.o
 .PHONY : src/cache_level.o
 
@@ -176,6 +152,30 @@ src/cache_level.s: src/cache_level.c.s
 src/cache_level.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_level.c.s
 .PHONY : src/cache_level.c.s
+
+src/cache_simulator.o: src/cache_simulator.c.o
+.PHONY : src/cache_simulator.o
+
+# target to build an object file
+src/cache_simulator.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.o
+.PHONY : src/cache_simulator.c.o
+
+src/cache_simulator.i: src/cache_simulator.c.i
+.PHONY : src/cache_simulator.i
+
+# target to preprocess a source file
+src/cache_simulator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.i
+.PHONY : src/cache_simulator.c.i
+
+src/cache_simulator.s: src/cache_simulator.c.s
+.PHONY : src/cache_simulator.s
+
+# target to generate assembly for a file
+src/cache_simulator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.s
+.PHONY : src/cache_simulator.c.s
 
 src/config_parser.o: src/config_parser.c.o
 .PHONY : src/config_parser.o
@@ -201,6 +201,30 @@ src/config_parser.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/config_parser.c.s
 .PHONY : src/config_parser.c.s
 
+src/loger.o: src/loger.c.o
+.PHONY : src/loger.o
+
+# target to build an object file
+src/loger.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.o
+.PHONY : src/loger.c.o
+
+src/loger.i: src/loger.c.i
+.PHONY : src/loger.i
+
+# target to preprocess a source file
+src/loger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.i
+.PHONY : src/loger.c.i
+
+src/loger.s: src/loger.c.s
+.PHONY : src/loger.s
+
+# target to generate assembly for a file
+src/loger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.s
+.PHONY : src/loger.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -225,6 +249,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/test_runner.o: src/test_runner.c.o
+.PHONY : src/test_runner.o
+
+# target to build an object file
+src/test_runner.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.o
+.PHONY : src/test_runner.c.o
+
+src/test_runner.i: src/test_runner.c.i
+.PHONY : src/test_runner.i
+
+# target to preprocess a source file
+src/test_runner.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.i
+.PHONY : src/test_runner.c.i
+
+src/test_runner.s: src/test_runner.c.s
+.PHONY : src/test_runner.s
+
+# target to generate assembly for a file
+src/test_runner.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.s
+.PHONY : src/test_runner.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -234,18 +282,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... CacheSimulator"
-	@echo "... src/cache.o"
-	@echo "... src/cache.i"
-	@echo "... src/cache.s"
 	@echo "... src/cache_level.o"
 	@echo "... src/cache_level.i"
 	@echo "... src/cache_level.s"
+	@echo "... src/cache_simulator.o"
+	@echo "... src/cache_simulator.i"
+	@echo "... src/cache_simulator.s"
 	@echo "... src/config_parser.o"
 	@echo "... src/config_parser.i"
 	@echo "... src/config_parser.s"
+	@echo "... src/loger.o"
+	@echo "... src/loger.i"
+	@echo "... src/loger.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/test_runner.o"
+	@echo "... src/test_runner.i"
+	@echo "... src/test_runner.s"
 .PHONY : help
 
 

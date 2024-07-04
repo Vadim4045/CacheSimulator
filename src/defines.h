@@ -132,4 +132,23 @@ typedef struct
 
 } cache_level;
 
+typedef struct
+{
+	uint _cache_levels_num;
+	cache_level **_cache_levels_inst;
+
+} cache;
+
+const char *range_types[] = {
+	"page_size",
+	"cache_levels",
+	"level1_size",
+	"level2_size",
+	"level3_size",
+	"write_policy",
+	"replaсement",
+	"associativity",
+	"interleaving"
+	};
+	
 #endif // DEFINES_H

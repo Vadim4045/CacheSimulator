@@ -1,5 +1,7 @@
-#include "cache.h"
+#include "cache_simulator.h"
+#include "cashe_level.h"
 #include <stdlib.h>
+
 
 void cache_init
 (cache* cache, uint levels_num, uint bank_size, uint page_size, uint counter_width)
