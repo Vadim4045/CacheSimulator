@@ -5,12 +5,12 @@
 
 typedef struct
 {
-	unsigned int _cache_levels_num;
+	uint _cache_levels_num;
 	cache_level **_cache_levels_inst;
 
 } cache;
 
-void cache_init(cache *cache, unsigned int levels_num, unsigned int bank_size, unsigned int page_size, unsigned int counter_width);
+void cache_init(cache *cache, uint levels_num, uint bank_size, uint page_size, uint counter_width);
 void release_cache_resources(cache *cache);
 
 #endif // CACHE_H

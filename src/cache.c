@@ -2,9 +2,9 @@
 #include <stdlib.h>
 
 void cache_init
-(cache* cache, unsigned int levels_num, unsigned int bank_size, unsigned int page_size, unsigned int counter_width)
+(cache* cache, uint levels_num, uint bank_size, uint page_size, uint counter_width)
 {
-	unsigned int i;
+	uint i;
 	cache->_cache_levels_num = levels_num;
 	cache->_cache_levels_inst = (cache_level **)malloc(levels_num * sizeof(cache_level *));
 	DEBUG("%s will make %d cache levels:\n", __FUNCTION__, levels_num);
@@ -17,7 +17,7 @@ void cache_init
 
 void release_cache_resources(cache *cache)
 {
-	unsigned int i;
+	uint i;
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
 		DEBUG("%s release level %d\n", __FUNCTION__, i);
