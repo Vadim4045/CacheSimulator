@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#include <string.h>
 #include "defines.h"
 #include "cache.h"
 #include "config_parser.h"
@@ -22,7 +22,7 @@ static const char* range_types[] = {
 	"interleaving"
 };
 
-int run_test(cache_config config)
+int run_test(char *trace, cache_config* config)
 {
 	char output_filename[MAX_LINE_LENGTH] = "../logs/";
 }
@@ -41,14 +41,14 @@ int runner(char* trace, int type, uint num_params, uint* params_arr)
 
 	if(type == -1)
 	{
-		return run_test(config);
+		return run_test(trace, &config);
 	}
 		
 	for (int i = 0; i < num_params; ++i)
 	{
-		set_param(config, type, params_arr[i]);
+		set_param(&config, type, params_arr[i]);
 
-		if (run_test(config))
+		if (run_test(trace, &config))
 		{
 			fprintf(stderr, "Error: Test filed\n");
 			return 1;
@@ -58,7 +58,13 @@ int runner(char* trace, int type, uint num_params, uint* params_arr)
 	return 0;
 }
 
-int main(int argc, char** argv){
+void print_usage()
+{
+	
+}	
+	
+int main(int argc, char **argv)
+{
 	uint numbers[MAX_PARAMS];
 	int opt;
 	char *file_name = NULL;
@@ -114,7 +120,17 @@ int main(int argc, char** argv){
 
 		for (int i = 0; i < num_count; i++)
 		{
-			numbers[i] = atoi(argv[optind + i]);
+			opt = atoi(argv[optind + i]);
+			if(opt && is_power_of_2(opt))
+			{
+				numbers[i] = opt;
+			}
+			else
+			{
+				fprintf(stderr, "Error: All values must be power of two\n");
+				exit(EXIT_FAILURE);
+			}
+			
 		}
 	}
 

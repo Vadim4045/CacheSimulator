@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CacheSimulator.dir/src/cache.c.o.d"
   "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o"
   "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o.d"
+  "CMakeFiles/CacheSimulator.dir/src/config_parser.c.o"
+  "CMakeFiles/CacheSimulator.dir/src/config_parser.c.o.d"
   "CMakeFiles/CacheSimulator.dir/src/main.c.o"
   "CMakeFiles/CacheSimulator.dir/src/main.c.o.d"
 )

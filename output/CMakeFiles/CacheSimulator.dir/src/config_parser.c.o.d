@@ -1,5 +1,7 @@
-CMakeFiles/CacheSimulator.dir/src/main.c.o: \
- /Users/boss/CacheSimulator/src/main.c \
+CMakeFiles/CacheSimulator.dir/src/config_parser.c.o: \
+ /Users/boss/CacheSimulator/src/config_parser.c \
+ /Users/boss/CacheSimulator/src/config_parser.h \
+ /Users/boss/CacheSimulator/src/defines.h \
  /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include-fixed/stdio.h \
  /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include/stdarg.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_stdio.h \
@@ -79,32 +81,40 @@ CMakeFiles/CacheSimulator.dir/src/main.c.o: \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_ptrcheck.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_dev_t.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mode_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/unistd.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/unistd.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_posix_vdisable.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_gid_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_useconds_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/select.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_def.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_timespec.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_time_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_suseconds_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_setsize.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_set.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_clr.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_isset.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_zero.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_copy.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_select.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_uuid_t.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/gethostuuid.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/dirent.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/dirent.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ino_t.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/string.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_strings.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_string.h \
- /Users/boss/CacheSimulator/src/defines.h \
- /Users/boss/CacheSimulator/src/cache.h \
- /Users/boss/CacheSimulator/src/cashe_level.h \
- /Users/boss/CacheSimulator/src/config_parser.h
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach-o/dyld.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include/stddef.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include/stdbool.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach-o/loader.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/vm_types.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/vm_types.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/boolean.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/boolean.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/boolean.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/vm_prot.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/thread_status.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/thread_status.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/thread_state.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/thread_state.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/message.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/limits.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/limits.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/_limits.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/port.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mach_port_t.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/kern_return.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/kern_return.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/kern_return.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/vm_types.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/architecture/byte_order.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/libkern/OSByteOrder.h \
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h

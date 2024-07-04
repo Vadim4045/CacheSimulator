@@ -12,6 +12,7 @@
 #define DEBUG(fmt, ...)
 #endif
 
+#define uchar unsigned char
 #define uint unsigned int
 #define ulong unsigned long
 #define ull unsigned long long
@@ -40,20 +41,23 @@
 typedef enum
 {
 	False = 0,
-	True = 1
+	True = 1,
+	Wrong
 } BOOL;
 
 typedef enum
 {
 	HIT,
 	MISS,
-	WRITE_BACK
+	WRITE_BACK,
+	RET_WRONG
 } RET_STATUS;
 
 typedef enum
 {
 	WRITE_ALLOCATE,
-	WRITE_AROUND
+	WRITE_AROUND,
+	WRONG_POLICY
 } WRITE_POLICY;
 
 typedef enum
@@ -61,46 +65,47 @@ typedef enum
 	FIFO,
 	LRU,
 	LFU,
+	WRONG_REPLAСEMENT
 } REPLAСEMENT_POLICY;
 
 typedef enum
 {
 	DIRECT_MAPPED,
 	SET_ASSOCIATIVE,
-	FULLY_ASSOCIATIVE
+	FULLY_ASSOCIATIVE,
+	WRONG_ASSOCIATIVITY
 } ASSOCIATIVITY;
 typedef struct
 {
-	unsigned char level;
-	unsigned char page_size;
-	unsigned char total_size;
-
-	WRITE_POLICY WP;
-	REPLAСEMENT_POLICY RP;
-	ASSOCIATIVITY AC;
-
-	unsigned char sets;
+	uchar level;
+	uchar total_size;
+	uchar sets;
 } cache_level_config;
 
 typedef enum
 {
 	ROW_INTERLEAVING,
-	BLOCK_INTERLEAVING
+	BLOCK_INTERLEAVING,
+	WRONG_INTERLEAVING
 } INTERLEAVING_POLICY;
 
 typedef struct
 {
-	unsigned char bus_width;
-	unsigned char channels;
-	unsigned char dimms;
-	unsigned char banks;
+	uchar bus_width;
+	uchar channels;
+	uchar dimms;
+	uchar banks;
 
 	INTERLEAVING_POLICY IP;
 } ddr_config;
 
 typedef struct _cache_config
 {
-	unsigned char cache_levels;
+	unsigned int page_size;
+	uchar cache_levels;
+	WRITE_POLICY WP;
+	REPLAСEMENT_POLICY RP;
+	ASSOCIATIVITY AC;
 	cache_level_config *cache_configurations;
 	ddr_config ddr_configuration;
 
@@ -122,7 +127,7 @@ typedef struct
 	unsigned int _tag_width;
 	unsigned int _set_width;
 	unsigned int _counter_width;
-	// unsigned char* pages_arr;
+	// uchar* pages_arr;
 	unsigned int *addr_arr;
 
 } cache_level;

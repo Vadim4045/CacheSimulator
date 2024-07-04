@@ -81,12 +81,12 @@ clean: CMakeFiles/CacheSimulator.dir/clean
 CMakeFiles/CacheSimulator.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=1,2,3,4 "Built target CacheSimulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=1,2,3,4,5 "Built target CacheSimulator"
 .PHONY : CMakeFiles/CacheSimulator.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CacheSimulator.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/boss/CacheSimulator/output/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/boss/CacheSimulator/output/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CacheSimulator.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/boss/CacheSimulator/output/CMakeFiles 0
 .PHONY : CMakeFiles/CacheSimulator.dir/rule

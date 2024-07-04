@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/boss/CacheSimulator/src/cache.c" "CMakeFiles/CacheSimulator.dir/src/cache.c.o" "gcc" "CMakeFiles/CacheSimulator.dir/src/cache.c.o.d"
   "/Users/boss/CacheSimulator/src/cache_level.c" "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o" "gcc" "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o.d"
+  "/Users/boss/CacheSimulator/src/config_parser.c" "CMakeFiles/CacheSimulator.dir/src/config_parser.c.o" "gcc" "CMakeFiles/CacheSimulator.dir/src/config_parser.c.o.d"
   "/Users/boss/CacheSimulator/src/main.c" "CMakeFiles/CacheSimulator.dir/src/main.c.o" "gcc" "CMakeFiles/CacheSimulator.dir/src/main.c.o.d"
   )
 
