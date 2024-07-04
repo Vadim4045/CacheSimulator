@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_LINE_LENGTH 1024
 #define MAX_REG_NAME_LENGTH 8
+#define MAX_LINE_LENGTH 1024
 
 typedef struct
 {

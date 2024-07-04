@@ -2,7 +2,7 @@
 #define DEFINES_H
 
 #define SYS_BUS 4
-
+#define MAX_LINE_LENGTH 1024
 #define MASK(bits) ((1 << (bits)) - 1)
 #define PART_NUM(num, pos, bits) (((num) >> (pos)) & MASK(bits))
 

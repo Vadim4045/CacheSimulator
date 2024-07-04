@@ -1,84 +1,127 @@
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#include "defines.h"
 #include "cache.h"
-#include "parser.h"
+#include "config_parser.h"
 
 #define MAX_PARAMS 10
-typedef enum
+#define RANGES 9
+
+static const char* range_types[] = {
+	"page_size",
+	"cache_levels",
+	"level1_size",
+	"level2_size",
+	"level3_size",
+	"write_policy",
+	"replaсement",
+	"associativity",
+	"interleaving"
+};
+
+int run_test(cache_config config)
 {
-	page_size,
-	cache_levels,
-	level1_size,
-	level2_size,
-	level3_size,
-	write_policy,
-	replaсement,
-	associativity,
-	interleaving
-	
-} range_type;
+	char output_filename[MAX_LINE_LENGTH] = "../logs/";
+}
 
-
-
-void runner(char *config_file, range_type type, uint first, ...)
+int runner(char* trace, int type, uint num_params, uint* params_arr)
 {
-	va_list args;
-	va_start(args, type);
-
-	int params[MAX_PARAMS];
-	int num_params = 0;
-
-	va_start(args, first);
-	while (num_params < MAX_PARAMS)
+	int i;
+	cache_config config;
+	char input_filename[MAX_LINE_LENGTH] = "../traces/";
+	strcat(input_filename, trace);
+	if (access(input_filename, F_OK) == -1)
 	{
-		int param = va_arg(args);
-		if (param == -1)
-			break;
-		params[num_params++] = param;
+		fprintf(stderr, "Error: File '%s' does not exist\n", input_filename);
+		return 1;
 	}
-	va_end(args);
 
+	if(type == -1)
+	{
+		return run_test(config);
+	}
+		
 	for (int i = 0; i < num_params; ++i)
 	{
-		switch (type)
+		set_param(config, type, params_arr[i]);
+
+		if (run_test(config))
 		{
-		case page_size:
-			test_function(params[i]);
-			break;
-		case cache_levels:
-			test_function(params[i]);
-			break;
-		case level1_size:
-			test_function(params[i]);
-			break;
-		case level2_size:
-			test_function(params[i]);
-			break;
-		case level3_size:
-			test_function(params[i]);
-			break;
-		case write_policy:
-			test_function(params[i]);
-			break;
-		case replaсement:
-			test_function(params[i]);
-			break;
-		case associativity:
-			test_function(params[i]);
-			break;
-		case interleaving:
-			test_function(params[i]);
-			break;
-		default:
-			printf("Unknown range_type\n");
-			break;
+			fprintf(stderr, "Error: Test filed\n");
+			return 1;
 		}
 	}
+	
+	return 0;
 }
 
 int main(int argc, char** argv){
-	printf("%s start:\n", __FUNCTION__);
-	cache _cache;
-	DEBUG("%s Initial cache:\n", __FUNCTION__);
-	cache_init(&_cache, 3, 1024 * 1024, 1024, 8);
-	release_cache_resources(&_cache);
+	uint numbers[MAX_PARAMS];
+	int opt;
+	char *file_name = NULL;
+	char *range_type = NULL;
+	int show_help = 0, range_num = -1;
+
+	while ((opt = getopt(argc, argv, "hf:")) != -1)
+	{
+		switch (opt)
+		{
+		case 'h':
+			show_help = 1;
+			break;
+		case 'f':
+			file_name = optarg;
+			break;
+		case 't':
+			range_type = optarg;
+			break;
+		default:
+			print_usage();
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (show_help)
+	{
+		print_usage();
+		exit(EXIT_SUCCESS);
+	}
+
+	if (file_name == NULL)
+	{
+		fprintf(stderr, "Error: File name is required\n");
+		print_usage();
+		exit(EXIT_FAILURE);
+	}
+
+	int num_count = argc - optind;
+	if (range_type != NULL){
+		for (range_num = 0; range_num < RANGES; ++range_num)
+		{
+			if (strcmp(range_type, range_types[range_num]))
+				break;
+		}
+
+		if (num_count <= 0 || range_num >= RANGES)
+		{
+			fprintf(stderr, "Error: Range type or values wrong\n");
+			print_usage();
+			exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < num_count; i++)
+		{
+			numbers[i] = atoi(argv[optind + i]);
+		}
+	}
+
+	if (runner(file_name, range_num, num_count, numbers)){
+		fprintf(stderr, "Error: Simulation Failed\n");
+		exit(EXIT_FAILURE);
+	}
+		
+	exit(EXIT_SUCCESS);
 }
