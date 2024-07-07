@@ -7,6 +7,8 @@
 int run_test(char *trace_f, cache_config *config)
 {
 	char output_filename[MAX_LINE_LENGTH] = "../logs/";
+
+	return 0;
 }
 
 int runner(char *trace_f, char *config_f, int type, uint num_params, uint *params_arr)
@@ -31,7 +33,7 @@ int runner(char *trace_f, char *config_f, int type, uint num_params, uint *param
 		return 1;
 	}
 
-	init_simulator(config_f);
+	init_simulator(&config, config_f);
 
 	if (type == -1)
 	{
