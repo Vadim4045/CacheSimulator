@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 	}
 
 	char input_filename[MAX_LINE_LENGTH] = "./raw_traces/";
-	char output_filename[MAX_LINE_LENGTH] = "new_";
+	char output_filename[MAX_LINE_LENGTH] = "./";
 
 	if (strlen(input_filename) + strlen(argv[1]) >= MAX_LINE_LENGTH)
 	{

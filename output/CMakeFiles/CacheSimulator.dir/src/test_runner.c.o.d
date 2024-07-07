@@ -1,5 +1,5 @@
-CMakeFiles/CacheSimulator.dir/src/main.c.o: \
- /Users/boss/CacheSimulator/src/main.c \
+CMakeFiles/CacheSimulator.dir/src/test_runner.c.o: \
+ /Users/boss/CacheSimulator/src/test_runner.c \
  /Users/boss/CacheSimulator/src/test_runner.h \
  /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include-fixed/stdio.h \
  /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include/stdarg.h \
@@ -105,4 +105,8 @@ CMakeFiles/CacheSimulator.dir/src/main.c.o: \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_strings.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_string.h \
- /Users/boss/CacheSimulator/src/defines.h
+ /Users/boss/CacheSimulator/src/defines.h \
+ /Users/boss/CacheSimulator/src/cache_simulator.h \
+ /Users/boss/CacheSimulator/src/ddr_simulator.h \
+ /Users/boss/CacheSimulator/src/config_parser.h \
+ /Users/boss/CacheSimulator/src/loger.h

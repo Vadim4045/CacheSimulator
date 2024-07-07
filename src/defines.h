@@ -150,5 +150,14 @@ const char *range_types[] = {
 	"associativity",
 	"interleaving"
 	};
-	
+
+int is_power_of_2(int num)
+{
+	while (num & 1 == 0)
+	{
+		num >>= 1;
+	}
+	return num == 1;
+}
+
 #endif // DEFINES_H

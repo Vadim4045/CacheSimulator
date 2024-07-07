@@ -201,6 +201,30 @@ src/config_parser.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/config_parser.c.s
 .PHONY : src/config_parser.c.s
 
+src/ddr_simulator.o: src/ddr_simulator.c.o
+.PHONY : src/ddr_simulator.o
+
+# target to build an object file
+src/ddr_simulator.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o
+.PHONY : src/ddr_simulator.c.o
+
+src/ddr_simulator.i: src/ddr_simulator.c.i
+.PHONY : src/ddr_simulator.i
+
+# target to preprocess a source file
+src/ddr_simulator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.i
+.PHONY : src/ddr_simulator.c.i
+
+src/ddr_simulator.s: src/ddr_simulator.c.s
+.PHONY : src/ddr_simulator.s
+
+# target to generate assembly for a file
+src/ddr_simulator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.s
+.PHONY : src/ddr_simulator.c.s
+
 src/loger.o: src/loger.c.o
 .PHONY : src/loger.o
 
@@ -291,6 +315,9 @@ help:
 	@echo "... src/config_parser.o"
 	@echo "... src/config_parser.i"
 	@echo "... src/config_parser.s"
+	@echo "... src/ddr_simulator.o"
+	@echo "... src/ddr_simulator.i"
+	@echo "... src/ddr_simulator.s"
 	@echo "... src/loger.o"
 	@echo "... src/loger.i"
 	@echo "... src/loger.s"

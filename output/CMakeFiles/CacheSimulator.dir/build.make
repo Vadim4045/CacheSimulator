@@ -111,10 +111,24 @@ CMakeFiles/CacheSimulator.dir/src/config_parser.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/CacheSimulator.dir/src/config_parser.c.s"
 	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/boss/CacheSimulator/src/config_parser.c -o CMakeFiles/CacheSimulator.dir/src/config_parser.c.s
 
+CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o: CMakeFiles/CacheSimulator.dir/flags.make
+CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o: /Users/boss/CacheSimulator/src/ddr_simulator.c
+CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o: CMakeFiles/CacheSimulator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o"
+	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o -MF CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o.d -o CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o -c /Users/boss/CacheSimulator/src/ddr_simulator.c
+
+CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.i"
+	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/boss/CacheSimulator/src/ddr_simulator.c > CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.i
+
+CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.s"
+	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/boss/CacheSimulator/src/ddr_simulator.c -o CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.s
+
 CMakeFiles/CacheSimulator.dir/src/loger.c.o: CMakeFiles/CacheSimulator.dir/flags.make
 CMakeFiles/CacheSimulator.dir/src/loger.c.o: /Users/boss/CacheSimulator/src/loger.c
 CMakeFiles/CacheSimulator.dir/src/loger.c.o: CMakeFiles/CacheSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/CacheSimulator.dir/src/loger.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/CacheSimulator.dir/src/loger.c.o"
 	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CacheSimulator.dir/src/loger.c.o -MF CMakeFiles/CacheSimulator.dir/src/loger.c.o.d -o CMakeFiles/CacheSimulator.dir/src/loger.c.o -c /Users/boss/CacheSimulator/src/loger.c
 
 CMakeFiles/CacheSimulator.dir/src/loger.c.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/CacheSimulator.dir/src/loger.c.s: cmake_force
 CMakeFiles/CacheSimulator.dir/src/main.c.o: CMakeFiles/CacheSimulator.dir/flags.make
 CMakeFiles/CacheSimulator.dir/src/main.c.o: /Users/boss/CacheSimulator/src/main.c
 CMakeFiles/CacheSimulator.dir/src/main.c.o: CMakeFiles/CacheSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/CacheSimulator.dir/src/main.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/CacheSimulator.dir/src/main.c.o"
 	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CacheSimulator.dir/src/main.c.o -MF CMakeFiles/CacheSimulator.dir/src/main.c.o.d -o CMakeFiles/CacheSimulator.dir/src/main.c.o -c /Users/boss/CacheSimulator/src/main.c
 
 CMakeFiles/CacheSimulator.dir/src/main.c.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/CacheSimulator.dir/src/main.c.s: cmake_force
 CMakeFiles/CacheSimulator.dir/src/test_runner.c.o: CMakeFiles/CacheSimulator.dir/flags.make
 CMakeFiles/CacheSimulator.dir/src/test_runner.c.o: /Users/boss/CacheSimulator/src/test_runner.c
 CMakeFiles/CacheSimulator.dir/src/test_runner.c.o: CMakeFiles/CacheSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/CacheSimulator.dir/src/test_runner.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/CacheSimulator.dir/src/test_runner.c.o"
 	/opt/homebrew/bin/gcc-13 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CacheSimulator.dir/src/test_runner.c.o -MF CMakeFiles/CacheSimulator.dir/src/test_runner.c.o.d -o CMakeFiles/CacheSimulator.dir/src/test_runner.c.o -c /Users/boss/CacheSimulator/src/test_runner.c
 
 CMakeFiles/CacheSimulator.dir/src/test_runner.c.i: cmake_force
@@ -158,6 +172,7 @@ CacheSimulator_OBJECTS = \
 "CMakeFiles/CacheSimulator.dir/src/cache_level.c.o" \
 "CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.o" \
 "CMakeFiles/CacheSimulator.dir/src/config_parser.c.o" \
+"CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o" \
 "CMakeFiles/CacheSimulator.dir/src/loger.c.o" \
 "CMakeFiles/CacheSimulator.dir/src/main.c.o" \
 "CMakeFiles/CacheSimulator.dir/src/test_runner.c.o"
@@ -168,12 +183,13 @@ CacheSimulator_EXTERNAL_OBJECTS =
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/cache_level.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/config_parser.c.o
+/Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/loger.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/main.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/src/test_runner.c.o
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/build.make
 /Users/boss/CacheSimulator/CacheSimulator: CMakeFiles/CacheSimulator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable /Users/boss/CacheSimulator/CacheSimulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable /Users/boss/CacheSimulator/CacheSimulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CacheSimulator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

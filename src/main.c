@@ -6,14 +6,29 @@
 
 void print_usage()
 {
+	char line[MAX_LINE_LENGTH];
+	FILE *file = fopen("./README.txt", "r");
+
+	if (!file)
+	{
+		printf("Error: opening Readme file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	while (fgets(line, sizeof(line), file))
+	{
+		printf(line);
+	}
 	
+	fclose(file);
 }	
 	
 int main(int argc, char **argv)
 {
 	uint numbers[MAX_PARAMS];
 	int opt;
-	char *file_name = NULL;
+	char *trace_file_name = NULL;
+	char *config_file_name = NULL;
 	char *range_type = NULL;
 	int show_help = 0, range_num = -1;
 
@@ -24,10 +39,13 @@ int main(int argc, char **argv)
 		case 'h':
 			show_help = 1;
 			break;
-		case 'f':
-			file_name = optarg;
-			break;
 		case 't':
+			trace_file_name = optarg;
+			break;
+		case 'c':
+			config_file_name = optarg;
+			break;
+		case 'r':
 			range_type = optarg;
 			break;
 		default:
@@ -40,13 +58,6 @@ int main(int argc, char **argv)
 	{
 		print_usage();
 		exit(EXIT_SUCCESS);
-	}
-
-	if (file_name == NULL)
-	{
-		fprintf(stderr, "Error: File name is required\n");
-		print_usage();
-		exit(EXIT_FAILURE);
 	}
 
 	int num_count = argc - optind;
@@ -80,7 +91,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (runner(file_name, range_num, num_count, numbers)){
+	if (runner(trace_file_name, config_file_name, range_num, num_count, numbers)){
 		fprintf(stderr, "Error: Simulation Failed\n");
 		exit(EXIT_FAILURE);
 	}

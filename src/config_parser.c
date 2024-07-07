@@ -4,60 +4,6 @@
 #include <dirent.h>
 #include <string.h>
 
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#endif
-
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-int is_power_of_2(int num)
-{
-	while (num & 1 == 0)
-	{
-		num >>= 1;
-	}
-	return num == 1;
-}
-
-int get_current_dir(char *buff, int size)
-{
-	char exe_path[size];
-
-#ifdef __linux__
-	ssize_t len = readlink("/proc/self/exe", exe_path, size - 1);
-	if (len != -1)
-	{
-		exe_path[len] = '\0';
-	}
-	else
-	{
-		perror("readlink");
-		return 1;
-	}
-#elif __APPLE__
-	uint32_t bufsize = size;
-	if (_NSGetExecutablePath(exe_path, &bufsize))
-	{
-		fprintf(stderr, "Buffer too small; need size %u\n", bufsize);
-		return 1;
-	}
-#elif _WIN32
-	DWORD len = GetModuleFileName(NULL, exe_path, size);
-	if (len == 0)
-	{
-		fprintf(stderr, "GetModuleFileName failed with error %lu\n", GetLastError());
-		return 1;
-	}
-#else
-	fprintf(stderr, "Unsupported platform\n");
-	return 1;
-#endif
-
-	strncpy(buff, dirname(exe_path), size);
-	return 0;
-}
 
 int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 {
@@ -92,7 +38,78 @@ int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 	return count;
 }
 
-int set_param(cache_config* config, int type, int value)
+int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
+	
+	
+	return 0;
+}
+
+int set_cache_level_param(cache_level_config *cl_cfg, char *param, int val) 
+{
+
+	return 0;
+}
+
+int set_cache_param(cache_config *cache_cfg, char *param, int val)
+{
+
+	return 0;
+}
+
+int init_simulator(cache_config *config, char *config_f)
+{
+	char line[MAX_LINE_LENGTH];
+	if (config_f != NULL)
+	{
+		sprintf(line, "./%s.config", config_f);
+	}else{
+		sprintf(line, "./default_config.config");
+	}
+
+	FILE *file = fopen(line, "r");
+	if (!file)
+	{
+		printf("Error: opening config file\n");
+		return 1;
+	}
+
+	while (fgets(line, sizeof(line), file))
+	{
+		switch(line[0])
+		{
+			case '#':
+				break;
+			case 'L':
+				switch (line[1])
+				{
+					case '1':
+					
+						break;
+					case '2':
+					
+						break;
+					case '3':
+					
+						break;
+					default:
+						
+				}
+				break;
+			case 'D':
+
+				break;
+			case 'C':
+
+				break;
+			default:
+		}
+	}
+
+	fclose(file);
+	return 0;
+}
+	
+int set_param(cache_config *config, int type, int value)
 {
 	switch(type)
 	{
