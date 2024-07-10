@@ -79,7 +79,7 @@ typedef enum
 typedef struct
 {
 	uchar level;
-	uchar total_size;
+	uchar size;
 	uchar sets;
 } cache_level_config;
 
@@ -92,7 +92,6 @@ typedef enum
 
 typedef struct
 {
-	uchar bus_width;
 	uchar channels;
 	uchar dimms;
 	uchar banks;
@@ -102,6 +101,7 @@ typedef struct
 
 typedef struct _cache_config
 {
+	uchar bus_width;
 	unsigned int page_size;
 	uchar cache_levels;
 	WRITE_POLICY WP;

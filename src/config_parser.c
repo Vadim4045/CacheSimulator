@@ -4,6 +4,18 @@
 #include <dirent.h>
 #include <string.h>
 
+static const char *cache_level_params[] = {"size", "sets"};
+static const char *ddr_params[] = {"channels", "dimms", "banks"};
+static const char *top_cache_params[] = {"bus", "page_size", "levels", "write_policy", "replaycement", "associativity"};
+
+int is_power_of_2(int num)
+{
+	while (num & 1 == 0)
+	{
+		num >>= 1;
+	}
+	return num == 1;
+}
 
 int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 {
@@ -38,6 +50,14 @@ int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 	return count;
 }
 
+int get_param_num(const char** arr, uchar arr_size, const char* param_name){
+	int idx;
+	for(idx = 0; idx < arr_size; ++idx){
+		if(!strcmp(param_name, arr[idx])) return idx;
+	}
+	return -1;
+}
+
 int parse_param_line(const char *line, char *param_name, int *param_value, char simbol)
 {
 	const char *equals_sign = strchr(line, simbol);
@@ -58,7 +78,7 @@ int parse_param_line(const char *line, char *param_name, int *param_value, char 
 	const char *value_str = equals_sign + 1;
 	*param_value = atoi(value_str);
 
-	return 0;
+	return !is_power_of_2(*param_value);
 }
 
 int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
@@ -69,13 +89,55 @@ int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
 
 int set_cache_level_param(cache_level_config *cl_cfg, char *param, int val) 
 {
+	int idx;
 
+	if ((idx = get_param_num(cache_level_params, 2, param)) == -1)
+		return -1;
+
+	switch (idx)
+	{
+	case 0:
+		cl_cfg->size = val;
+		break;
+	case 1:
+		cl_cfg->sets = val;
+		break;
+	default:
+		break;
+	}
 	return 0;
 }
 
 int set_cache_param(cache_config *cache_cfg, char *param, int val)
 {
+	int idx;
 
+	if ((idx = get_param_num(top_cache_params, 6, param)) == -1)
+		return -1;
+
+	switch (idx)
+	{
+	case 0:
+		cache_cfg->bus_width = val;
+		break;
+	case 1:
+		cache_cfg->page_size = val;
+		break;
+	case 2:
+		cache_cfg->cache_levels = val;
+		break;
+	case 3:
+		cache_cfg->WP = val;
+		break;
+	case 4:
+		cache_cfg->RP = val;
+		break;
+	case 5:
+		cache_cfg->AC = val;
+		break;
+	default:
+		break;
+	}
 	return 0;
 }
 
@@ -165,7 +227,7 @@ int set_param(cache_config *config, int type, int value)
 	case 2: // level1_size
 		if (config->cache_levels >= 1)
 		{
-			config->cache_configurations[0].total_size = value;
+			config->cache_configurations[0].size = value;
 		}
 		else
 		{
@@ -176,7 +238,7 @@ int set_param(cache_config *config, int type, int value)
 	case 3: // level2_size
 		if (config->cache_levels >= 2)
 		{
-			config->cache_configurations[1].total_size = value;
+			config->cache_configurations[1].size = value;
 		}
 		else
 		{
@@ -187,7 +249,7 @@ int set_param(cache_config *config, int type, int value)
 	case 4: // level3_size
 		if (config->cache_levels >= 3)
 		{
-			config->cache_configurations[2].total_size = value;
+			config->cache_configurations[2].size = value;
 		}
 		else
 		{

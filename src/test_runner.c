@@ -4,15 +4,6 @@
 #include "config_parser.h"
 #include "loger.h"
 
-int is_power_of_2(int num)
-{
-	while (num & 1 == 0)
-	{
-		num >>= 1;
-	}
-	return num == 1;
-}
-
 int run_test(char *trace_f, cache_config *config)
 {
 	char log_filename[MAX_LINE_LENGTH];
@@ -22,9 +13,9 @@ int run_test(char *trace_f, cache_config *config)
 	sprintf(verbose_log_filename, "./logs/%s_page%d_levels%d.%d.%d_lvl_sets%d.%d.%d.log"
 		 , trace_f
 		 , config->page_size
-		 , config->cache_configurations[0].total_size
-		 , config->cache_configurations[1].total_size
-		 , config->cache_configurations[2].total_size
+		 , config->cache_configurations[0].size
+		 , config->cache_configurations[1].size
+		 , config->cache_configurations[2].size
 		 , config->cache_configurations[0].sets
 		 , config->cache_configurations[1].sets
 		 , config->cache_configurations[2].sets);
