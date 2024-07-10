@@ -139,7 +139,7 @@ typedef struct
 typedef struct
 {
 	uint _cache_levels_num;
-	cache_level **_cache_levels_inst;
+	cache_level _cache_levels_inst[3];
 
 } cache;
 
