@@ -2,7 +2,17 @@
 
 #define MAX_PARAMS 10
 #define RANGES 9
-	
+
+const char *range_types[RANGES] = {
+	"page_size",
+	"cache_levels",
+	"level1_size",
+	"level2_size",
+	"level3_size",
+	"write_policy",
+	"replaсement",
+	"associativity",
+	"interleaving"};
 
 void print_usage()
 {

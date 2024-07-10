@@ -139,25 +139,4 @@ typedef struct
 
 } cache;
 
-const char *range_types[] = {
-	"page_size",
-	"cache_levels",
-	"level1_size",
-	"level2_size",
-	"level3_size",
-	"write_policy",
-	"replaсement",
-	"associativity",
-	"interleaving"
-	};
-
-int is_power_of_2(int num)
-{
-	while (num & 1 == 0)
-	{
-		num >>= 1;
-	}
-	return num == 1;
-}
-
 #endif // DEFINES_H
