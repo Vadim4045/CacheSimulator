@@ -38,6 +38,29 @@ int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 	return count;
 }
 
+int parse_param_line(const char *line, char *param_name, int *param_value, char simbol)
+{
+	const char *equals_sign = strchr(line, simbol);
+	if (equals_sign == NULL)
+	{
+		return -1;
+	}
+
+	size_t name_length = equals_sign - line;
+	if (name_length == 0)
+	{
+		return -1;
+	}
+
+	strncpy(param_name, line, name_length);
+	param_name[name_length] = '\0';
+
+	const char *value_str = equals_sign + 1;
+	*param_value = atoi(value_str);
+
+	return 0;
+}
+
 int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
 	
 	
@@ -59,6 +82,9 @@ int set_cache_param(cache_config *cache_cfg, char *param, int val)
 int init_simulator(cache_config *config, char *config_f)
 {
 	char line[MAX_LINE_LENGTH];
+	char param_name[MAX_PARAM_LENGTH];
+	int param_value;
+	
 	if (config_f != NULL)
 	{
 		sprintf(line, "./%s.config", config_f);
@@ -77,31 +103,48 @@ int init_simulator(cache_config *config, char *config_f)
 	{
 		switch(line[0])
 		{
-			case '#':
+			case '#': // c-sharp style comments
 				break;
-			case 'L':
-				switch (line[1])
-				{
+			case 'L': // cache levels config (L1.param=val)
+				if (line[2] == '.' && !parse_param_line(&line[3], param_name, &param_value, '=')){
+					switch (line[1])
+					{
 					case '1':
-					
+						if (set_cache_level_param(&config->cache_configurations[0], param_name, param_value))
+						{
+							printf("Error: can't config parameter $s in L1 cache\n", param_name);
+						}
 						break;
 					case '2':
-					
+						if (config->cache_levels < 2 || set_cache_level_param(&config->cache_configurations[1], param_name, param_value))
+						{
+							printf("Error: can't config parameter $s in L2 cache\n", param_name);
+						}
 						break;
 					case '3':
-					
+						if (config->cache_levels < 3 || set_cache_level_param(&config->cache_configurations[2], param_name, param_value))
+						{
+							printf("Error: can't config parameter $s in L3 cache\n", param_name);
+						}
 						break;
 					default:
-						
+						printf("Error: wrong cache number\n");
+					}
 				}
 				break;
-			case 'D':
-
-				break;
-			case 'C':
-
+			case 'D': // DDR config(DDR1.param=val)
+				if (line[4] == '.' && !parse_param_line(&line[5], param_name, &param_value, '=')){
+					
+				}
+					break;
+			case 'C': // cache top level config (CACHE.param=val)
+				if (line[5] == '.' && !parse_param_line(&line[6], param_name, &param_value, '='))
+				{
+					
+				}
 				break;
 			default:
+				printf("Error: wrong parameter %s\n", line);
 		}
 	}
 
