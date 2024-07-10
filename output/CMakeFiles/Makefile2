@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /Users/boss/CacheSimulator/output
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/CacheSimulator.dir/all
+all: CMakeFiles/CacheSimulator.bin.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/CacheSimulator.dir/clean
+clean: CMakeFiles/CacheSimulator.bin.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/CacheSimulator.dir
+# Target rules for target CMakeFiles/CacheSimulator.bin.dir
 
 # All Build rule for target.
-CMakeFiles/CacheSimulator.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target CacheSimulator"
-.PHONY : CMakeFiles/CacheSimulator.dir/all
+CMakeFiles/CacheSimulator.bin.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/boss/CacheSimulator/output/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target CacheSimulator.bin"
+.PHONY : CMakeFiles/CacheSimulator.bin.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/CacheSimulator.dir/rule: cmake_check_build_system
+CMakeFiles/CacheSimulator.bin.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/boss/CacheSimulator/output/CMakeFiles 8
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CacheSimulator.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CacheSimulator.bin.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/boss/CacheSimulator/output/CMakeFiles 0
-.PHONY : CMakeFiles/CacheSimulator.dir/rule
+.PHONY : CMakeFiles/CacheSimulator.bin.dir/rule
 
 # Convenience name for target.
-CacheSimulator: CMakeFiles/CacheSimulator.dir/rule
-.PHONY : CacheSimulator
+CacheSimulator.bin: CMakeFiles/CacheSimulator.bin.dir/rule
+.PHONY : CacheSimulator.bin
 
 # clean rule for target.
-CMakeFiles/CacheSimulator.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/clean
-.PHONY : CMakeFiles/CacheSimulator.dir/clean
+CMakeFiles/CacheSimulator.bin.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/clean
+.PHONY : CMakeFiles/CacheSimulator.bin.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

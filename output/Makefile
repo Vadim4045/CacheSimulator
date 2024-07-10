@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CacheSimulator
+# Target rules for targets named CacheSimulator.bin
 
 # Build rule for target.
-CacheSimulator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CacheSimulator
-.PHONY : CacheSimulator
+CacheSimulator.bin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CacheSimulator.bin
+.PHONY : CacheSimulator.bin
 
 # fast build rule for target.
-CacheSimulator/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/build
-.PHONY : CacheSimulator/fast
+CacheSimulator.bin/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/build
+.PHONY : CacheSimulator.bin/fast
 
 src/cache_level.o: src/cache_level.c.o
 .PHONY : src/cache_level.o
 
 # target to build an object file
 src/cache_level.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_level.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o
 .PHONY : src/cache_level.c.o
 
 src/cache_level.i: src/cache_level.c.i
@@ -142,7 +142,7 @@ src/cache_level.i: src/cache_level.c.i
 
 # target to preprocess a source file
 src/cache_level.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_level.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.i
 .PHONY : src/cache_level.c.i
 
 src/cache_level.s: src/cache_level.c.s
@@ -150,7 +150,7 @@ src/cache_level.s: src/cache_level.c.s
 
 # target to generate assembly for a file
 src/cache_level.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_level.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.s
 .PHONY : src/cache_level.c.s
 
 src/cache_simulator.o: src/cache_simulator.c.o
@@ -158,7 +158,7 @@ src/cache_simulator.o: src/cache_simulator.c.o
 
 # target to build an object file
 src/cache_simulator.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o
 .PHONY : src/cache_simulator.c.o
 
 src/cache_simulator.i: src/cache_simulator.c.i
@@ -166,7 +166,7 @@ src/cache_simulator.i: src/cache_simulator.c.i
 
 # target to preprocess a source file
 src/cache_simulator.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.i
 .PHONY : src/cache_simulator.c.i
 
 src/cache_simulator.s: src/cache_simulator.c.s
@@ -174,7 +174,7 @@ src/cache_simulator.s: src/cache_simulator.c.s
 
 # target to generate assembly for a file
 src/cache_simulator.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/cache_simulator.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.s
 .PHONY : src/cache_simulator.c.s
 
 src/config_parser.o: src/config_parser.c.o
@@ -182,7 +182,7 @@ src/config_parser.o: src/config_parser.c.o
 
 # target to build an object file
 src/config_parser.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/config_parser.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.o
 .PHONY : src/config_parser.c.o
 
 src/config_parser.i: src/config_parser.c.i
@@ -190,7 +190,7 @@ src/config_parser.i: src/config_parser.c.i
 
 # target to preprocess a source file
 src/config_parser.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/config_parser.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.i
 .PHONY : src/config_parser.c.i
 
 src/config_parser.s: src/config_parser.c.s
@@ -198,7 +198,7 @@ src/config_parser.s: src/config_parser.c.s
 
 # target to generate assembly for a file
 src/config_parser.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/config_parser.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.s
 .PHONY : src/config_parser.c.s
 
 src/ddr_simulator.o: src/ddr_simulator.c.o
@@ -206,7 +206,7 @@ src/ddr_simulator.o: src/ddr_simulator.c.o
 
 # target to build an object file
 src/ddr_simulator.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.o
 .PHONY : src/ddr_simulator.c.o
 
 src/ddr_simulator.i: src/ddr_simulator.c.i
@@ -214,7 +214,7 @@ src/ddr_simulator.i: src/ddr_simulator.c.i
 
 # target to preprocess a source file
 src/ddr_simulator.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.i
 .PHONY : src/ddr_simulator.c.i
 
 src/ddr_simulator.s: src/ddr_simulator.c.s
@@ -222,7 +222,7 @@ src/ddr_simulator.s: src/ddr_simulator.c.s
 
 # target to generate assembly for a file
 src/ddr_simulator.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/ddr_simulator.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.s
 .PHONY : src/ddr_simulator.c.s
 
 src/loger.o: src/loger.c.o
@@ -230,7 +230,7 @@ src/loger.o: src/loger.c.o
 
 # target to build an object file
 src/loger.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.o
 .PHONY : src/loger.c.o
 
 src/loger.i: src/loger.c.i
@@ -238,7 +238,7 @@ src/loger.i: src/loger.c.i
 
 # target to preprocess a source file
 src/loger.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.i
 .PHONY : src/loger.c.i
 
 src/loger.s: src/loger.c.s
@@ -246,7 +246,7 @@ src/loger.s: src/loger.c.s
 
 # target to generate assembly for a file
 src/loger.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/loger.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.s
 .PHONY : src/loger.c.s
 
 src/main.o: src/main.c.o
@@ -254,7 +254,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -262,7 +262,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -270,7 +270,7 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/main.c.s
 .PHONY : src/main.c.s
 
 src/test_runner.o: src/test_runner.c.o
@@ -278,7 +278,7 @@ src/test_runner.o: src/test_runner.c.o
 
 # target to build an object file
 src/test_runner.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.o
 .PHONY : src/test_runner.c.o
 
 src/test_runner.i: src/test_runner.c.i
@@ -286,7 +286,7 @@ src/test_runner.i: src/test_runner.c.i
 
 # target to preprocess a source file
 src/test_runner.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.i
 .PHONY : src/test_runner.c.i
 
 src/test_runner.s: src/test_runner.c.s
@@ -294,7 +294,7 @@ src/test_runner.s: src/test_runner.c.s
 
 # target to generate assembly for a file
 src/test_runner.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.dir/build.make CMakeFiles/CacheSimulator.dir/src/test_runner.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.s
 .PHONY : src/test_runner.c.s
 
 # Help Target
@@ -305,7 +305,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... CacheSimulator"
+	@echo "... CacheSimulator.bin"
 	@echo "... src/cache_level.o"
 	@echo "... src/cache_level.i"
 	@echo "... src/cache_level.s"

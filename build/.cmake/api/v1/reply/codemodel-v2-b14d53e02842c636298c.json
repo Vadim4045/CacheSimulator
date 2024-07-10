@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "CacheSimulator::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CacheSimulator-Debug-7e2aaf2dc71a62dd9d54.json",
-					"name" : "CacheSimulator",
+					"id" : "CacheSimulator.bin::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CacheSimulator.bin-Debug-76df830834eac18682c8.json",
+					"name" : "CacheSimulator.bin",
 					"projectIndex" : 0
 				}
 			]
