@@ -5,7 +5,8 @@
 #include <string.h>
 
 static const char *cache_level_params[] = {"size", "sets"};
-static const char *ddr_params[] = {"channels", "dimms", "banks"};
+static const char *ddr_channel_params[] = {"dimms", "banks"};
+static const char *top_ddr_params[] = {"channels", "interleaving"};
 static const char *top_cache_params[] = {"bus", "page_size", "levels", "write_policy", "replaycement", "associativity"};
 
 int is_power_of_2(int num)
@@ -81,6 +82,12 @@ int parse_param_line(const char *line, char *param_name, int *param_value, char 
 	return !is_power_of_2(*param_value);
 }
 
+int set_ddr_channel_param(ddr_channel_config *channel_cfg, char *param, int val)
+{
+
+	return 0;
+}
+
 int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
 	
 	
@@ -145,7 +152,7 @@ int init_simulator(cache_config *config, char *config_f)
 {
 	char line[MAX_LINE_LENGTH];
 	char param_name[MAX_PARAM_LENGTH];
-	int param_value;
+	int param_value, param_num;
 	
 	if (config_f != NULL)
 	{
@@ -166,47 +173,56 @@ int init_simulator(cache_config *config, char *config_f)
 		switch(line[0])
 		{
 			case '#': // c-sharp style comments
+			case '\n': // empty line
 				break;
 			case 'L': // cache levels config (L1.param=val)
 				if (line[2] == '.' && !parse_param_line(&line[3], param_name, &param_value, '=')){
-					switch (line[1])
+					param_num = line[1] - 48;
+					if (param_num > 0 && param_num <= 3){
+						if (set_cache_level_param(&config->cache_configurations[param_num - 1], param_name, param_value))
+						{
+							printf("Error: can't config parameter $s in L%d cache\n", param_name, param_num);
+						}
+					}else
 					{
-					case '1':
-						if (set_cache_level_param(&config->cache_configurations[0], param_name, param_value))
+						printf("Error: There are not more, then 3 cache levels accepted\n");
+					}	
+				}
+				break;
+			case 'D': // Top DDR config(DDR.param=val)
+				if (line[3] == '.' && !parse_param_line(&line[5], param_name, &param_value, '=')){
+					if (set_ddr_param(&config->ddr_configuration, param_name, param_value))
+					{
+						printf("Error: can't config parameter $s in DDR\n", param_name);
+					}
+				}
+					break;
+			case 'C': // DDR channel config (CHANNEL3.param=value)
+				if (line[8] == '.' && !parse_param_line(&line[9], param_name, &param_value, '='))
+				{
+					param_num = line[7] - 48;
+					if (param_num > 0 && param_num <= 4){
+						if (set_ddr_channel_param(&config->ddr_configuration.channels_config[param_num], param_name, param_value))
 						{
-							printf("Error: can't config parameter $s in L1 cache\n", param_name);
+							printf("Error: can't config parameter $s in DDR%d channel\n", param_name, param_num);
 						}
-						break;
-					case '2':
-						if (config->cache_levels < 2 || set_cache_level_param(&config->cache_configurations[1], param_name, param_value))
-						{
-							printf("Error: can't config parameter $s in L2 cache\n", param_name);
-						}
-						break;
-					case '3':
-						if (config->cache_levels < 3 || set_cache_level_param(&config->cache_configurations[2], param_name, param_value))
-						{
-							printf("Error: can't config parameter $s in L3 cache\n", param_name);
-						}
-						break;
-					default:
-						printf("Error: wrong cache number\n");
+					}
+					else
+					{
+						printf("Error: There are not more, then 4 ddr channels accepted\n");
 					}
 				}
 				break;
-			case 'D': // DDR config(DDR1.param=val)
-				if (line[4] == '.' && !parse_param_line(&line[5], param_name, &param_value, '=')){
-					
-				}
-					break;
-			case 'C': // cache top level config (CACHE.param=val)
-				if (line[5] == '.' && !parse_param_line(&line[6], param_name, &param_value, '='))
+			default: // Top cache parameters (param=value)
+				if (!parse_param_line(&line[9], param_name, &param_value, '=')){
+					if (set_cache_param(config, param_name, param_value))
+					{
+						printf("Error: can't config parameter $s in top cache\n", param_name, param_num);
+					}
+				}else
 				{
-					
+					printf("Error: Wrong line: %s\n", line);
 				}
-				break;
-			default:
-				printf("Error: wrong parameter %s\n", line);
 		}
 	}
 
@@ -214,6 +230,7 @@ int init_simulator(cache_config *config, char *config_f)
 	return 0;
 }
 	
+// Set specific params to range
 int set_param(cache_config *config, int type, int value)
 {
 	switch(type)

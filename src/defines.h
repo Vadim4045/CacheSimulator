@@ -92,14 +92,19 @@ typedef enum
 
 typedef struct
 {
-	uchar channels;
 	uchar dimms;
 	uchar banks;
+} ddr_channel_config;
 
+typedef struct
+{
+	uchar channels;
 	INTERLEAVING_POLICY IP;
+
+	ddr_channel_config channels_config[4];
 } ddr_config;
 
-typedef struct _cache_config
+typedef struct
 {
 	uchar bus_width;
 	unsigned int page_size;
@@ -107,10 +112,8 @@ typedef struct _cache_config
 	WRITE_POLICY WP;
 	REPLAСEMENT_POLICY RP;
 	ASSOCIATIVITY AC;
-	cache_level_config *cache_configurations;
+	cache_level_config cache_configurations[3];
 	ddr_config ddr_configuration;
-
-	struct _cache_config *next;
 } cache_config;
 
 /**
