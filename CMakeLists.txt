@@ -13,11 +13,11 @@ file(GLOB SOURCES ${SOURCE_DIR}/*.c)
 
 add_executable(CacheSimulator.bin ${SOURCES})
 
-if(DEBUG_MODE)
+# if(DEBUG_MODE)
     message("Debug mode enabled")
     target_compile_definitions(CacheSimulator.bin PRIVATE DEBUG_MODE)
-else()
-    message("Debug mode disabled")
-endif()
+# else()
+#     message("Debug mode disabled")
+# endif()
 
 set_target_properties(CacheSimulator.bin PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})

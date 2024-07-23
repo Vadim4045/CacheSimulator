@@ -3,9 +3,9 @@ To compile input commands:
 cd output
 cmake -DDEBUG_MODE=<ON/OFF> ..
 cmake --build .
-../CacheSimulator	-f <trace_file name without extetion>			// default - linpack_vav.trc
-					-c <confif file name without extetion>			// default - default_config.config
-					-r <type of parameter to ranging> <all values>	// default - no range running
+../CacheSimulator.bin	-f <trace_file name without extetion>			// default - linpack_val.trc
+						-c <confif file name without extetion>			// default - default_config.config
+						-r <type of parameter to ranging> <all values>	// default - no range running
 
 Types of ranging:
 	page_size

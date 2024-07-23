@@ -5,16 +5,14 @@
 #include <string.h>
 
 static const char *cache_level_params[] = {"size", "sets"};
+static const char *cache_params[] = {"levels", "write_policy", "replaycement", "associativity"};
 static const char *ddr_channel_params[] = {"dimms", "banks"};
-static const char *top_ddr_params[] = {"channels", "interleaving"};
-static const char *top_cache_params[] = {"bus", "page_size", "levels", "write_policy", "replaycement", "associativity"};
+static const char *ddr_params[] = {"channels", "interleaving"};
+static const char *system_params[] = {"bus", "page_size"};
 
 int is_power_of_2(int num)
 {
-	while (num & 1 == 0)
-	{
-		num >>= 1;
-	}
+	while (num & 1 == 0) num >>= 1;
 	return num == 1;
 }
 
@@ -51,7 +49,8 @@ int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 	return count;
 }
 
-int get_param_num(const char** arr, uchar arr_size, const char* param_name){
+int get_param_num(const char** arr, uchar arr_size, const char* param_name)
+{
 	int idx;
 	for(idx = 0; idx < arr_size; ++idx){
 		if(!strcmp(param_name, arr[idx])) return idx;
@@ -82,74 +81,145 @@ int parse_param_line(const char *line, char *param_name, int *param_value, char 
 	return !is_power_of_2(*param_value);
 }
 
-int set_ddr_channel_param(ddr_channel_config *channel_cfg, char *param, int val)
+int set_ddr_channel_param(ddr_channel_config *cfg, char *line) 
 {
+	DEBUG("ConfigParser::%s\n", __FUNCTION__);
+	char param_name[MAX_PARAM_LENGTH];
+	uint param_value, param_num;
 
-	return 0;
-}
-
-int set_ddr_param(ddr_config* ddr_cfg, char* param, int val){
-	
-	
-	return 0;
-}
-
-int set_cache_level_param(cache_level_config *cl_cfg, char *param, int val) 
-{
-	int idx;
-
-	if ((idx = get_param_num(cache_level_params, 2, param)) == -1)
-		return -1;
-
-	switch (idx)
+	if (!parse_param_line(line, param_name, &param_value, '='))
 	{
-	case 0:
-		cl_cfg->size = val;
-		break;
-	case 1:
-		cl_cfg->sets = val;
-		break;
-	default:
-		break;
+		if ((param_num = get_param_num(ddr_channel_params, 2, param_name)) == -1)
+			return -1;
+
+		switch (param_num)
+		{
+		case 0:
+			cfg->dimms = param_value;
+			break;
+		case 1:
+			cfg->banks = param_value;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	return 0;
+}
+
+int set_cache_level_param(cache_level_config *cfg, char *line)
+{
+	DEBUG("ConfigParser::%s\n", __FUNCTION__);
+	char param_name[MAX_PARAM_LENGTH];
+	uint param_value, param_num;
+
+	if (!parse_param_line(line, param_name, &param_value, '='))
+	{
+		if ((param_num = get_param_num(cache_level_params, 2, param_name)) == -1)
+			return -1;
+
+		switch (param_num)
+		{
+		case 0:
+			cfg->size = param_value;
+			break;
+		case 1:
+			cfg->sets = param_value;
+			break;
+		default:
+			break;
+		}
+	}
+
+	return 0;
+}
+
+int set_ddr(ddr_config *config, char *line)
+{
+	DEBUG("ConfigParser::%s\n", __FUNCTION__);
+	char param_name[MAX_PARAM_LENGTH];
+	uint param_value, channel;
+	if (line[0] == 'C' && line[3] == '.')
+	{
+		channel = line[2] - 48;
+		if (set_ddr_channel_param(&(config->channels_config[channel]), &line[4]))
+		{
+			printf("%s Error: Can't set parameter in DDR channel %d '%s'\n", __FUNCTION__, channel, &line[4]);
+		}
+	}
+	else
+	{
+		if (!parse_param_line(&line[2], param_name, &param_value, '='))
+		{
+
+			if ((channel = get_param_num(cache_params, 2, param_name)) == -1)
+				return -1;
+
+			switch (channel)
+			{
+			case 0:
+				config->channels = param_value;
+				break;
+			case 1:
+				config->IP = param_value;
+				break;
+			default:
+				printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
+				return -1;
+			}
+		}
 	}
 	return 0;
 }
 
-int set_cache_param(cache_config *cache_cfg, char *param, int val)
+int set_cache(cache_config *config, char *line)
 {
-	int idx;
-
-	if ((idx = get_param_num(top_cache_params, 6, param)) == -1)
-		return -1;
-
-	switch (idx)
+	DEBUG("ConfigParser::%s\n", __FUNCTION__);
+	char param_name[MAX_PARAM_LENGTH];
+	uint param_value, level;
+	if (line[0] == 'L' && line[2] == '.')
 	{
-	case 0:
-		cache_cfg->bus_width = val;
-		break;
-	case 1:
-		cache_cfg->page_size = val;
-		break;
-	case 2:
-		cache_cfg->cache_levels = val;
-		break;
-	case 3:
-		cache_cfg->WP = val;
-		break;
-	case 4:
-		cache_cfg->RP = val;
-		break;
-	case 5:
-		cache_cfg->AC = val;
-		break;
-	default:
-		break;
+		level = line[1] - 48;
+		if (set_cache_level_param(&(config->cache_configs[level]), &line[3]))
+		{
+			printf("%s Error: Can't set parameter in Cache level %d '%s'\n", __FUNCTION__, level, &line[3]);
+		}
+	}
+	else
+	{
+		 if(!parse_param_line(line, param_name, &param_value, '='))
+		 {
+
+			 if ((level = get_param_num(cache_params, 4, param_name)) == -1)
+				 return -1;
+
+			 switch (level)
+			 {
+			 case 0:
+				 config->cache_levels = param_value;
+				 break;
+			 case 1:
+				 config->WP = param_value;
+				 break;
+			 case 2:
+				 config->RP = param_value;
+				 break;
+			 case 3:
+				 config->AC = param_value;
+				 break;
+			 default:
+				 printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
+				 return -1;
+			 }
+		 }
 	}
 	return 0;
-}
+} 
 
-int init_simulator(cache_config *config, char *config_f)
+int init_simulator(config *config, char *config_f)
 {
+	DEBUG("%s\n", __FUNCTION__);
 	char line[MAX_LINE_LENGTH];
 	char param_name[MAX_PARAM_LENGTH];
 	int param_value, param_num;
@@ -175,54 +245,43 @@ int init_simulator(cache_config *config, char *config_f)
 			case '#': // c-sharp style comments
 			case '\n': // empty line
 				break;
-			case 'L': // cache levels config (L1.param=val)
-				if (line[2] == '.' && !parse_param_line(&line[3], param_name, &param_value, '=')){
-					param_num = line[1] - 48;
-					if (param_num > 0 && param_num <= 3){
-						if (set_cache_level_param(&config->cache_configurations[param_num - 1], param_name, param_value))
-						{
-							printf("Error: can't config parameter $s in L%d cache\n", param_name, param_num);
-						}
-					}else
+			case 'S': // Top system parameter
+				if (line[1] == '.' && !parse_param_line(&line[2], param_name, &param_value, '='))
+				{
+					param_num = get_param_num(system_params, 2, param_name) ;
+					switch (param_num)
 					{
-						printf("Error: There are not more, then 3 cache levels accepted\n");
-					}	
+					case 0:
+						config->bus_width = param_value;
+						break;
+					case 1:
+						config->page_size = param_value;
+						break;
+					default:
+						printf("%s Error: can't find system parameter '%s'\n", __FUNCTION__, param_name);
+					}
 				}
 				break;
-			case 'D': // Top DDR config(DDR.param=val)
-				if (line[3] == '.' && !parse_param_line(&line[5], param_name, &param_value, '=')){
-					if (set_ddr_param(&config->ddr_configuration, param_name, param_value))
+			case 'D': // DDR perameter
+				if (line[3] == '.')
+				{
+					if (set_ddr(&(config->ddr_cfg), &line[4]))
 					{
-						printf("Error: can't config parameter $s in DDR\n", param_name);
+						printf("%s Error: can't config parameter '%s' in DDR\n", __FUNCTION__, &line[4]);
 					}
 				}
 					break;
-			case 'C': // DDR channel config (CHANNEL3.param=value)
-				if (line[8] == '.' && !parse_param_line(&line[9], param_name, &param_value, '='))
+			case 'C': // Cache parameter
+				if (line[1] == '.')
 				{
-					param_num = line[7] - 48;
-					if (param_num > 0 && param_num <= 4){
-						if (set_ddr_channel_param(&config->ddr_configuration.channels_config[param_num], param_name, param_value))
-						{
-							printf("Error: can't config parameter $s in DDR%d channel\n", param_name, param_num);
-						}
-					}
-					else
+					if (set_cache(&(config->cache_cfg), &line[2]))
 					{
-						printf("Error: There are not more, then 4 ddr channels accepted\n");
+						printf("%s Error: can't config parameter '%s' in CACHE\n", __FUNCTION__, &line[2]);
 					}
 				}
 				break;
-			default: // Top cache parameters (param=value)
-				if (!parse_param_line(&line[9], param_name, &param_value, '=')){
-					if (set_cache_param(config, param_name, param_value))
-					{
-						printf("Error: can't config parameter $s in top cache\n", param_name, param_num);
-					}
-				}else
-				{
-					printf("Error: Wrong line: %s\n", line);
-				}
+			default: // wrong parameter
+				printf("%s Error: Wrong line: %s\n", __FUNCTION__, line);
 		}
 	}
 
@@ -231,20 +290,21 @@ int init_simulator(cache_config *config, char *config_f)
 }
 	
 // Set specific params to range
-int set_param(cache_config *config, int type, int value)
+int set_param(config *config, int type, int value)
 {
+	DEBUG("%s\n", __FUNCTION__);
 	switch(type)
 	{
 	case 0: // page_size
 		config->page_size = value;
 		break;
 	case 1: // cache_levels
-		config->cache_levels = value;
+		config->cache_cfg.cache_levels = value;
 		break;
 	case 2: // level1_size
-		if (config->cache_levels >= 1)
+		if (config->cache_cfg.cache_levels >= 1)
 		{
-			config->cache_configurations[0].size = value;
+			config->cache_cfg.cache_configs[0].size = value;
 		}
 		else
 		{
@@ -253,9 +313,9 @@ int set_param(cache_config *config, int type, int value)
 		}
 		break;
 	case 3: // level2_size
-		if (config->cache_levels >= 2)
+		if (config->cache_cfg.cache_levels >= 2)
 		{
-			config->cache_configurations[1].size = value;
+			config->cache_cfg.cache_configs[1].size = value;
 		}
 		else
 		{
@@ -264,9 +324,9 @@ int set_param(cache_config *config, int type, int value)
 		}
 		break;
 	case 4: // level3_size
-		if (config->cache_levels >= 3)
+		if (config->cache_cfg.cache_levels >= 3)
 		{
-			config->cache_configurations[2].size = value;
+			config->cache_cfg.cache_configs[2].size = value;
 		}
 		else
 		{
@@ -277,7 +337,7 @@ int set_param(cache_config *config, int type, int value)
 	case 5: // write_policy
 		if (value < WRONG_POLICY)
 		{
-			config->WP = value;
+			config->cache_cfg.WP = value;
 		}
 		else
 		{
@@ -288,7 +348,7 @@ int set_param(cache_config *config, int type, int value)
 	case 6: // replaсement
 		if (value < WRONG_REPLAСEMENT)
 		{
-			config->RP = value;
+			config->cache_cfg.RP = value;
 		}
 		else
 		{
@@ -299,7 +359,7 @@ int set_param(cache_config *config, int type, int value)
 	case 7: // associativity
 		if (value < WRONG_ASSOCIATIVITY)
 		{
-			config->AC = value;
+			config->cache_cfg.AC = value;
 		}
 		else
 		{
@@ -310,7 +370,7 @@ int set_param(cache_config *config, int type, int value)
 	case 8: // interleaving
 		if (value < WRONG_INTERLEAVING)
 		{
-			config->ddr_configuration.IP = value;
+			config->ddr_cfg.IP = value;
 		}
 		else
 		{

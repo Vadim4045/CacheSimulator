@@ -76,12 +76,6 @@ typedef enum
 	FULLY_ASSOCIATIVE,
 	WRONG_ASSOCIATIVITY
 } ASSOCIATIVITY;
-typedef struct
-{
-	uchar level;
-	uchar size;
-	uchar sets;
-} cache_level_config;
 
 typedef enum
 {
@@ -89,6 +83,23 @@ typedef enum
 	BLOCK_INTERLEAVING,
 	WRONG_INTERLEAVING
 } INTERLEAVING_POLICY;
+
+typedef struct
+{
+	uchar level;
+	uchar size;
+	uchar sets;
+} cache_level_config;
+
+typedef struct 
+{
+	uchar cache_levels;
+	WRITE_POLICY WP;
+	REPLAСEMENT_POLICY RP;
+	ASSOCIATIVITY AC;
+	cache_level_config cache_configs[3];
+}cache_config;
+
 
 typedef struct
 {
@@ -108,13 +119,10 @@ typedef struct
 {
 	uchar bus_width;
 	unsigned int page_size;
-	uchar cache_levels;
-	WRITE_POLICY WP;
-	REPLAСEMENT_POLICY RP;
-	ASSOCIATIVITY AC;
-	cache_level_config cache_configurations[3];
-	ddr_config ddr_configuration;
-} cache_config;
+	
+	cache_config cache_cfg;
+	ddr_config ddr_cfg;
+} config;
 
 /**
  * _tag_width bits - TAG
