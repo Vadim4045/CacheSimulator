@@ -6,7 +6,7 @@
 
 #include "defines.h"
 
-void cache_level_init(cache_level *cache, uint bank_size, uint page_size, uint sets);
+void cache_level_init(cache_level *cache, cache_level_config *cfg, uint page_size);
 void release_cache_level_resources(cache_level *cache);
 
 

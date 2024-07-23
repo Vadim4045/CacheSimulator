@@ -159,4 +159,9 @@ typedef struct
 
 } cache;
 
+typedef struct
+{
+	cache cache;
+} cache_simulator;
+
 #endif // DEFINES_H

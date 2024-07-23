@@ -1,17 +1,18 @@
 #include "test_runner.h"
-#include "cache_simulator.h"
+#include "cache.h"
 //#include "ddr_simulator.h"
 #include "config_parser.h"
 //#include "loger.h"
 
-int do_instruction(char* instruction_string, uint addr, uint* cost)
+int do_instruction(cache cache, char *instruction_string, uint addr, uint *cost)
 {
-	DEBUG("Readed line: instruction_string = %s, addr 0x%x\n", instruction_string, addr);
+	//DEBUG("Readed line: instruction_string = %s, addr 0x%x\n", instruction_string, addr);
 }
 
 int run_test(char *trace_f, config *config)
 {
 	DEBUG("TestRunner_%s\n", __FUNCTION__);
+	cache cache;
 	uint err_counter = 0;
 	uint cost, addr, trace_counter, instruction_counter;
 	char instruction_string[8];
@@ -32,6 +33,8 @@ int run_test(char *trace_f, config *config)
 			, config->ddr_cfg.channels_config[0].dimms
 			, config->ddr_cfg.channels_config[0].banks);
 
+	cache_init(&cache, config);
+	
 	FILE *file = fopen(trace_f, "r");
 
 	if (!file)
@@ -44,7 +47,7 @@ int run_test(char *trace_f, config *config)
 	{
 		if((sscanf(line, "0x%x 0x%x %s 0x%x", &trace_counter, &instruction_counter, instruction_string, &addr) == 4))
 		{
-			do_instruction(instruction_string, addr, &cost);
+			cost = do_instruction(cache, instruction_string, addr, &cost);
 		}
 		else{
 			printf("Error: reading line %s\n", line);
@@ -88,16 +91,16 @@ int runner(char *trace_f, char *config_f, int type, uint num_params, uint *param
 		return run_test(input_filename, &config);
 	}
 
-	for (int i = 0; i < num_params; ++i)
-	{
-		set_param(&config, type, params_arr[i]);
+	// for (int i = 0; i < num_params; ++i)
+	// {
+	// 	set_param(&config, type, params_arr[i]);
 
-		if (run_test(input_filename, &config))
-		{
-			fprintf(stderr, "Error: Test filed\n");
-			return 1;
-		}
-	}
+	// 	if (run_test(input_filename, &config))
+	// 	{
+	// 		fprintf(stderr, "Error: Test filed\n");
+	// 		return 1;
+	// 	}
+	// }
 
 	return 0;
 }

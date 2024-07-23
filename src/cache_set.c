@@ -1,10 +1,9 @@
 #include "cache_set.h"
 #include <math.h>
 
-
-void cache_set_init(cache_set*set, uint pages, uint page_size, uint sets)
+void cache_set_init(cache_set *set, uint bank_size, uint page_size, uint sets)
 {
-	set->_pages = pages;
+	set->_pages = bank_size / page_size;
 	set->_offcet_width = log(page_size);
 	set->_set_width = log(set->_pages);
 	set->_tag_width = 8 * SYS_BUS - set->_set_width - set->_offcet_width;
@@ -12,7 +11,7 @@ void cache_set_init(cache_set*set, uint pages, uint page_size, uint sets)
 
 	// pages_arr       = (unsigned char*) malloc(bank_size);
 	set->addr_arr = (uint *)calloc(set->_pages, sizeof(uint));
-	DEBUG("%s allocated %d bytes for %d pages\n", __FUNCTION__, (page_size * set->_pages), set->_pages);
+	DEBUG("%s allocated addresses for %d pages\n", __FUNCTION__,  set->_pages);
 }
 
 void release_cache_set_resources(cache_set*set)
