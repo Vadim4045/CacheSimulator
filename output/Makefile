@@ -153,6 +153,30 @@ src/cache_level.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.s
 .PHONY : src/cache_level.c.s
 
+src/cache_set.o: src/cache_set.c.o
+.PHONY : src/cache_set.o
+
+# target to build an object file
+src/cache_set.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.o
+.PHONY : src/cache_set.c.o
+
+src/cache_set.i: src/cache_set.c.i
+.PHONY : src/cache_set.i
+
+# target to preprocess a source file
+src/cache_set.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.i
+.PHONY : src/cache_set.c.i
+
+src/cache_set.s: src/cache_set.c.s
+.PHONY : src/cache_set.s
+
+# target to generate assembly for a file
+src/cache_set.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.s
+.PHONY : src/cache_set.c.s
+
 src/cache_simulator.o: src/cache_simulator.c.o
 .PHONY : src/cache_simulator.o
 
@@ -309,6 +333,9 @@ help:
 	@echo "... src/cache_level.o"
 	@echo "... src/cache_level.i"
 	@echo "... src/cache_level.s"
+	@echo "... src/cache_set.o"
+	@echo "... src/cache_set.i"
+	@echo "... src/cache_set.s"
 	@echo "... src/cache_simulator.o"
 	@echo "... src/cache_simulator.i"
 	@echo "... src/cache_simulator.s"

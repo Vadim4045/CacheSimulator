@@ -124,15 +124,23 @@ typedef struct
  */
 typedef struct
 {
-	unsigned int _bank_size;
-	unsigned int _page_size;
 	unsigned int _pages;
 	unsigned int _offcet_width;
 	unsigned int _tag_width;
 	unsigned int _set_width;
 	unsigned int _counter_width;
-	// uchar* pages_arr;
+
 	unsigned int *addr_arr;
+} cache_set;
+
+typedef struct
+{
+	unsigned int _bank_size;
+	unsigned int _page_size;
+	unsigned int _sets;
+	
+	// uchar* pages_arr;
+	cache_set *sets_arr;
 
 } cache_level;
 

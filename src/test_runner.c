@@ -1,8 +1,8 @@
 #include "test_runner.h"
 #include "cache_simulator.h"
-#include "ddr_simulator.h"
+//#include "ddr_simulator.h"
 #include "config_parser.h"
-#include "loger.h"
+//#include "loger.h"
 
 int run_test(char *trace_f, cache_config *config)
 {
