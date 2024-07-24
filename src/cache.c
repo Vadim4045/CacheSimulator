@@ -8,7 +8,7 @@ void cache_init(cache *cache, config *cfg)
 	cache->_cache_levels_num = cfg->cache_cfg.cache_levels;
 	for (i = 0; i < cfg->cache_cfg.cache_levels; ++i)
 	{
-		cache_level_init(&cache->_cache_levels_inst[i], &(cfg->cache_cfg.cache_configs[i]), cfg->page_size);
+		cache_level_init(&cache->_cache_levels_inst[i], &(cfg->cache_cfg.cache_configs[i]), cfg->bus_width, cfg->page_size);
 	}
 }
 

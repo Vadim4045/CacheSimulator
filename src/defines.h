@@ -1,7 +1,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define SYS_BUS 4
 #define MAX_PARAM_LENGTH 56
 #define MAX_LINE_LENGTH 1024
 #define MASK(bits) ((1 << (bits)) - 1)
@@ -131,6 +130,7 @@ typedef struct
 	
 	// uchar* pages_arr;
 	cache_set *sets_arr;
+	uint* sets_status;
 
 } cache_level;
 
