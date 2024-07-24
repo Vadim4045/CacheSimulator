@@ -4,9 +4,9 @@
 #include <dirent.h>
 #include <string.h>
 
-static const char *cache_level_params[] = {"size", "sets"};
+static const char *cache_level_params[] = {"size", "sets", "cost"};
 static const char *cache_params[] = {"levels", "write_policy", "replaycement", "associativity"};
-static const char *ddr_channel_params[] = {"dimms", "banks"};
+static const char *ddr_channel_params[] = {"dimms", "banks", "RAS", "CAS"};
 static const char *ddr_params[] = {"size", "channels", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
 
@@ -80,7 +80,7 @@ int set_ddr_channel_param(ddr_channel_config *cfg, char *line)
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
-		if ((param_num = get_param_num(ddr_channel_params, 2, param_name)) == -1)
+		if ((param_num = get_param_num(ddr_channel_params, 4, param_name)) == -1)
 			return -1;
 
 		switch (param_num)
@@ -101,6 +101,12 @@ int set_ddr_channel_param(ddr_channel_config *cfg, char *line)
 			}
 			cfg->banks = param_value;
 			break;
+		case 2:
+			cfg->RAS = param_value;
+			break;
+		case 3:
+			cfg->CAS = param_value;
+			break;
 		default:
 			break;
 		}
@@ -116,7 +122,7 @@ int set_cache_level_param(cache_level_config *cfg, char *line)
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
-		if ((param_num = get_param_num(cache_level_params, 2, param_name)) == -1)
+		if ((param_num = get_param_num(cache_level_params, 3, param_name)) == -1)
 			return -1;
 
 		switch (param_num)
@@ -135,6 +141,9 @@ int set_cache_level_param(cache_level_config *cfg, char *line)
 				return -1;
 			}
 			cfg->sets = param_value;
+			break;
+		case 2:
+			cfg->cost = param_value;
 			break;
 		default:
 			break;
@@ -324,13 +333,14 @@ void print_cfg(config *cfg)
 	uint i;
 	printf("\nCache Simulator configuration:\n");
 	printf("Bus width = %d bytes\n", cfg->bus_width);
-	printf("Page size = %d bytes\n", cfg->page_size);
+	printf("Page size = 0x%x bytes\n", cfg->page_size);
 	printf("\nCache levels = %d\n", cfg->cache_cfg.cache_levels);
 	for (i = 0; i < cfg->cache_cfg.cache_levels; ++i)
 	{
-		printf("Level %d:\tSize = 0x%x bytes\tSets = %d\n", i
+		printf("Level %d:\tSize = 0x%x bytes\tSets = %d, HIT cost = %d\n", i
 				, cfg->cache_cfg.cache_configs[i].size
-				, cfg->cache_cfg.cache_configs[i].sets);
+				, cfg->cache_cfg.cache_configs[i].sets
+				, cfg->cache_cfg.cache_configs[i].cost);
 	}
 	printf("WP = %d, RP = %d, AC = %d,\n", cfg->cache_cfg.WP, cfg->cache_cfg.RP, cfg->cache_cfg.AC);
 	
@@ -338,9 +348,11 @@ void print_cfg(config *cfg)
 	printf("DDR have %d channels\n", cfg->ddr_cfg.channels);
 	for (i = 0; i < cfg->ddr_cfg.channels; ++i)
 	{
-		printf("DDR channel %d have %d dimms with %d banks in dimm\n", i
+		printf("DDR channel %d have %d dimms with %d banks in dimm with RAS = %d, CAS = %d\n", i
 				, cfg->ddr_cfg.channels_config[i].dimms
-				, cfg->ddr_cfg.channels_config[i].banks);
+				, cfg->ddr_cfg.channels_config[i].banks
+				, cfg->ddr_cfg.channels_config[i].RAS
+				, cfg->ddr_cfg.channels_config[i].CAS);
 	}
 	printf("DDR IP = %d\n\n", cfg->ddr_cfg.IP);
 }

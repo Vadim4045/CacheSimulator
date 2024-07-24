@@ -19,7 +19,7 @@ void release_cache_set_resources(cache_set*set)
 	free(set->addr_arr);
 }
 
-RET_STATUS read_data(cache_set*set, uint addr)// full DDR addr
+RET_STATUS set_read_data(cache_set *set, uint addr) // full DDR addr
 {
 	if ((PART_NUM(addr, set->_offcet_width + set->_set_width, set->_tag_width) // tag
 			 == set->addr_arr[PART_NUM(addr, set->_offcet_width, set->_set_width)] & MASK(set->_tag_width))													  // stored tag
@@ -31,7 +31,7 @@ RET_STATUS read_data(cache_set*set, uint addr)// full DDR addr
 	return MISS;
 }
 
-RET_STATUS write_data(cache_set*set, uint addr)// full DDR addr
+RET_STATUS set_write_data(cache_set *set, uint addr) // full DDR addr
 {
 	if ((PART_NUM(addr, set->_offcet_width + set->_set_width, set->_tag_width) 
 		== set->addr_arr[PART_NUM(addr, set->_offcet_width, set->_set_width)] & MASK(set->_tag_width)) // stored tag
@@ -44,7 +44,7 @@ RET_STATUS write_data(cache_set*set, uint addr)// full DDR addr
 	return MISS;
 }
 
-RET_STATUS store_page(cache_set*set, uint addr, BOOL write)// page DDR addr
+RET_STATUS set_store_page(cache_set *set, uint addr, BOOL write) // page DDR addr
 {
 	RET_STATUS res = HIT;
 

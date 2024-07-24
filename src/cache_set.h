@@ -10,9 +10,9 @@ void cache_set_init(cache_set *set, uint bank_size, uint bus_width, uint page_si
 void release_cache_set_resources(cache_set*set);
 
 
-RET_STATUS read_data(cache_set*set, uint addr);
-RET_STATUS write_data(cache_set*set, uint addr);
-RET_STATUS store_page(cache_set*set, uint addr, BOOL write);
+RET_STATUS set_read_data(cache_set*set, uint addr);
+RET_STATUS set_write_data(cache_set*set, uint addr);
+RET_STATUS set_store_page(cache_set*set, uint addr, BOOL write);
 
 uint get_page_status(cache_set *set, uint addr);
 

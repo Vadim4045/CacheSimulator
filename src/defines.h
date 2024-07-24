@@ -70,6 +70,7 @@ typedef struct
 {
 	uint size;
 	uint sets;
+	uint cost;
 } cache_level_config;
 
 typedef struct
@@ -85,6 +86,8 @@ typedef struct
 {
 	uint dimms;
 	uint banks;
+	uint RAS;
+	uint CAS;
 } ddr_channel_config;
 
 typedef struct
@@ -124,9 +127,10 @@ typedef struct
 
 typedef struct
 {
-	uint _bank_size;
+	uint _size;
 	uint _page_size;
 	uint _sets;
+	uint _hit_cost;
 	
 	// uchar* pages_arr;
 	cache_set *sets_arr;
