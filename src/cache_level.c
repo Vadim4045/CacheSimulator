@@ -14,7 +14,7 @@ void cache_level_init(cache_level *cache, cache_level_config *cfg, uint page_siz
 	{
 		cache_set_init(&(cache->sets_arr[i]), (cfg->size / cfg->sets), page_size, cfg->sets);
 	}
-	DEBUG("%s %d allocated %d sets for %d pages\n", __FUNCTION__, cfg->level, cache->_sets, cache->_bank_size / cache->_page_size);
+	DEBUG("%s allocated %d sets for %d pages\n", __FUNCTION__, cache->_sets, cache->_bank_size / cache->_sets);
 }
 
 void release_cache_level_resources(cache_level *cache)

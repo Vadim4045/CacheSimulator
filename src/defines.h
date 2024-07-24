@@ -19,25 +19,7 @@
 #define ull unsigned long long
 
 #define _1K (1 << 10)
-#define _2K (2 * (1 << 10))
-#define _4K (4 * (1 << 10))
-#define _8K (8 * (1 << 10))
-#define _16K (16 * (1 << 10))
-#define _32K (32 * (1 << 10))
-#define _64K (64 * (1 << 10))
-#define _128K (128 * (1 << 10))
-#define _256K (256 * (1 << 10))
-#define _512K (512 * (1 << 10))
 #define _1M (1 << 20)
-#define _2M (2 * (1 << 20))
-#define _4M (4 * (1 << 20))
-#define _8M (8 * (1 << 20))
-#define _16M (16 * (1 << 20))
-#define _32M (32 * (1 << 20))
-#define _64M (64 * (1 << 20))
-#define _128M (128 * (1 << 20))
-#define _256M (256 * (1 << 20))
-#define _512M (512 * (1 << 20))
 
 typedef enum
 {
@@ -84,32 +66,32 @@ typedef enum
 	WRONG_INTERLEAVING
 } INTERLEAVING_POLICY;
 
+#pragma pack(push, 4)
 typedef struct
 {
-	uchar level;
-	uchar size;
-	uchar sets;
+	uint size;
+	uint sets;
 } cache_level_config;
 
-typedef struct 
+typedef struct
 {
-	uchar cache_levels;
+	uint cache_levels;
 	WRITE_POLICY WP;
 	REPLAСEMENT_POLICY RP;
 	ASSOCIATIVITY AC;
 	cache_level_config cache_configs[3];
-}cache_config;
-
+} cache_config;
 
 typedef struct
 {
-	uchar dimms;
-	uchar banks;
+	uint dimms;
+	uint banks;
 } ddr_channel_config;
 
 typedef struct
 {
-	uchar channels;
+	uint size;
+	uint channels;
 	INTERLEAVING_POLICY IP;
 
 	ddr_channel_config channels_config[4];
@@ -117,8 +99,8 @@ typedef struct
 
 typedef struct
 {
-	uchar bus_width;
-	unsigned int page_size;
+	uint bus_width;
+	uint page_size;
 	
 	cache_config cache_cfg;
 	ddr_config ddr_cfg;
@@ -132,20 +114,20 @@ typedef struct
  */
 typedef struct
 {
-	unsigned int _pages;
-	unsigned int _offcet_width;
-	unsigned int _tag_width;
-	unsigned int _set_width;
-	unsigned int _counter_width;
+	uint _pages;
+	uint _offcet_width;
+	uint _tag_width;
+	uint _set_width;
+	uint _counter_width;
 
 	unsigned int *addr_arr;
 } cache_set;
 
 typedef struct
 {
-	unsigned int _bank_size;
-	unsigned int _page_size;
-	unsigned int _sets;
+	uint _bank_size;
+	uint _page_size;
+	uint _sets;
 	
 	// uchar* pages_arr;
 	cache_set *sets_arr;
@@ -164,4 +146,5 @@ typedef struct
 	cache cache;
 } cache_simulator;
 
+#pragma pack(pop)
 #endif // DEFINES_H

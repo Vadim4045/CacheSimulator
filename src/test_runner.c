@@ -34,7 +34,7 @@ int run_test(char *trace_f, config *config)
 			, config->ddr_cfg.channels_config[0].banks);
 
 	cache_init(&cache, config);
-	
+
 	FILE *file = fopen(trace_f, "r");
 
 	if (!file)
@@ -61,7 +61,7 @@ int run_test(char *trace_f, config *config)
 	return 0;
 }
 
-int runner(char *trace_f, char *config_f, int type, uint num_params, uint *params_arr)
+int runner(char *trace_f, char *config_f)
 {
 	DEBUG("TestRunner_%s\n", __FUNCTION__);
 	int i;
@@ -84,23 +84,8 @@ int runner(char *trace_f, char *config_f, int type, uint num_params, uint *param
 		return 1;
 	}
 
-	init_simulator(&config, config_f);
+	read_config(&config, config_f);
+	print_cfg(&config);
 
-	if (type == -1)
-	{
-		return run_test(input_filename, &config);
-	}
-
-	// for (int i = 0; i < num_params; ++i)
-	// {
-	// 	set_param(&config, type, params_arr[i]);
-
-	// 	if (run_test(input_filename, &config))
-	// 	{
-	// 		fprintf(stderr, "Error: Test filed\n");
-	// 		return 1;
-	// 	}
-	// }
-
-	return 0;
+	return run_test(input_filename, &config);
 }
