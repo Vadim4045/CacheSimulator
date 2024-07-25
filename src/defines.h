@@ -84,6 +84,7 @@ typedef struct
 
 typedef struct
 {
+	uint size;
 	uint dimms;
 	uint banks;
 	uint RAS;
@@ -92,7 +93,6 @@ typedef struct
 
 typedef struct
 {
-	uint size;
 	uint channels;
 	INTERLEAVING_POLICY IP;
 
