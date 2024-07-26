@@ -201,6 +201,30 @@ src/cache_set.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.s
 .PHONY : src/cache_set.c.s
 
+src/common.o: src/common.c.o
+.PHONY : src/common.o
+
+# target to build an object file
+src/common.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/common.c.o
+.PHONY : src/common.c.o
+
+src/common.i: src/common.c.i
+.PHONY : src/common.i
+
+# target to preprocess a source file
+src/common.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/common.c.i
+.PHONY : src/common.c.i
+
+src/common.s: src/common.c.s
+.PHONY : src/common.s
+
+# target to generate assembly for a file
+src/common.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/common.c.s
+.PHONY : src/common.c.s
+
 src/config_parser.o: src/config_parser.c.o
 .PHONY : src/config_parser.o
 
@@ -339,6 +363,9 @@ help:
 	@echo "... src/cache_set.o"
 	@echo "... src/cache_set.i"
 	@echo "... src/cache_set.s"
+	@echo "... src/common.o"
+	@echo "... src/common.i"
+	@echo "... src/common.s"
 	@echo "... src/config_parser.o"
 	@echo "... src/config_parser.i"
 	@echo "... src/config_parser.s"

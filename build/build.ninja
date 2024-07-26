@@ -49,6 +49,14 @@ cmake_ninja_workdir = /Users/boss/CacheSimulator/build/
 
 build cmake_object_order_depends_target_CacheSimulator.bin: phony || CMakeFiles/CacheSimulator.bin.dir
 
+build CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o: C_COMPILER__CacheSimulator.2ebin_unscanned_Debug /Users/boss/CacheSimulator/src/cache.c || cmake_object_order_depends_target_CacheSimulator.bin
+  DEFINES = -DDEBUG_MODE
+  DEP_FILE = CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  INCLUDES = -I/Users/boss/CacheSimulator/src
+  OBJECT_DIR = CMakeFiles/CacheSimulator.bin.dir
+  OBJECT_FILE_DIR = CMakeFiles/CacheSimulator.bin.dir/src
+
 build CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o: C_COMPILER__CacheSimulator.2ebin_unscanned_Debug /Users/boss/CacheSimulator/src/cache_level.c || cmake_object_order_depends_target_CacheSimulator.bin
   DEFINES = -DDEBUG_MODE
   DEP_FILE = CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o.d
@@ -65,9 +73,9 @@ build CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.o: C_COMPILER__CacheSimu
   OBJECT_DIR = CMakeFiles/CacheSimulator.bin.dir
   OBJECT_FILE_DIR = CMakeFiles/CacheSimulator.bin.dir/src
 
-build CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o: C_COMPILER__CacheSimulator.2ebin_unscanned_Debug /Users/boss/CacheSimulator/src/cache_simulator.c || cmake_object_order_depends_target_CacheSimulator.bin
+build CMakeFiles/CacheSimulator.bin.dir/src/common.c.o: C_COMPILER__CacheSimulator.2ebin_unscanned_Debug /Users/boss/CacheSimulator/src/common.c || cmake_object_order_depends_target_CacheSimulator.bin
   DEFINES = -DDEBUG_MODE
-  DEP_FILE = CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o.d
+  DEP_FILE = CMakeFiles/CacheSimulator.bin.dir/src/common.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   INCLUDES = -I/Users/boss/CacheSimulator/src
   OBJECT_DIR = CMakeFiles/CacheSimulator.bin.dir
@@ -121,7 +129,7 @@ build CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.o: C_COMPILER__CacheSi
 #############################################
 # Link the executable /Users/boss/CacheSimulator/CacheSimulator.bin
 
-build /Users/boss/CacheSimulator/CacheSimulator.bin: C_EXECUTABLE_LINKER__CacheSimulator.2ebin_Debug CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.o CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.o CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.o CMakeFiles/CacheSimulator.bin.dir/src/loger.c.o CMakeFiles/CacheSimulator.bin.dir/src/main.c.o CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.o
+build /Users/boss/CacheSimulator/CacheSimulator.bin: C_EXECUTABLE_LINKER__CacheSimulator.2ebin_Debug CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.o CMakeFiles/CacheSimulator.bin.dir/src/common.c.o CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.o CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.o CMakeFiles/CacheSimulator.bin.dir/src/loger.c.o CMakeFiles/CacheSimulator.bin.dir/src/main.c.o CMakeFiles/CacheSimulator.bin.dir/src/test_runner.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/CacheSimulator.bin.dir
   POST_BUILD = :

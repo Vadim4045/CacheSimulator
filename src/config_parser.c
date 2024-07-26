@@ -1,7 +1,7 @@
 #include "config_parser.h"
+#include "common.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <dirent.h>
 #include <string.h>
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
@@ -10,52 +10,8 @@ static const char *ddr_channel_params[] = {"size", "dimms", "banks", "RAS", "CAS
 static const char *ddr_params[] = {"channels", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
 
-int is_power_of_2(int num)
-{
-	DEBUG("config_parser %s\n", __FUNCTION__);
-	if(num == 0) return 1;
-	
-	while ((num & 1) == 0) num >>= 1;
-	return num == 1;
-}
-
-int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
-{
-	DEBUG("config_parser %s\n", __FUNCTION__);
-	DIR *dir;
-	struct dirent *entry;
-	int count = 0;
-
-	if ((dir = opendir(path)) == NULL)
-	{
-		perror("opendir() error");
-		return -1;
-	}
-	else
-	{
-		while ((entry = readdir(dir)) != NULL && count < arr_size)
-		{
-			if (entry->d_type == DT_REG)
-			{
-				names_arr[count] = malloc(strlen(entry->d_name) + 1);
-				if (names_arr[count] == NULL)
-				{
-					perror("malloc() error");
-					closedir(dir);
-					return -1;
-				}
-				strcpy(names_arr[count], entry->d_name);
-				++count;
-			}
-		}
-		closedir(dir);
-	}
-	return count;
-}
-
 int get_param_num(const char **arr, uint arr_size, const char *param_name)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	int idx;
 	for(idx = 0; idx < arr_size; ++idx){
 		if(!strcmp(param_name, arr[idx]))
@@ -69,7 +25,6 @@ int get_param_num(const char **arr, uint arr_size, const char *param_name)
 
 int parse_param_line(const char *line, char *param_name, int *param_value)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	uint ret = 0;
 	if (sscanf(line, "%s = 0x%x\n", param_name, param_value) != 2)
 	{
@@ -81,7 +36,6 @@ int parse_param_line(const char *line, char *param_name, int *param_value)
 
 int set_ddr_channel_param(ddr_channel_config *cfg, char *line) 
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	char param_name[MAX_PARAM_LENGTH];
 	uint param_value, param_num;
 
@@ -133,7 +87,6 @@ int set_ddr_channel_param(ddr_channel_config *cfg, char *line)
 
 int set_cache_level_param(cache_level_config *cfg, char *line)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	char param_name[MAX_PARAM_LENGTH];
 	uint param_value, param_num;
 
@@ -174,7 +127,6 @@ int set_cache_level_param(cache_level_config *cfg, char *line)
 
 int set_ddr(ddr_config *config, char *line)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	char param_name[MAX_PARAM_LENGTH];
 	uint param_value, channel;
 	if (line[0] == 'C' && line[3] == '.')
@@ -211,7 +163,6 @@ int set_ddr(ddr_config *config, char *line)
 
 int set_cache(cache_config *config, char *line)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	char param_name[MAX_PARAM_LENGTH];
 	uint param_value, level;
 	if (line[0] == 'L' && line[2] == '.')
@@ -254,7 +205,6 @@ int set_cache(cache_config *config, char *line)
 
 int read_config(config *config, char *config_f)
 {
-	DEBUG("config_parser %s\n", __FUNCTION__);
 	char line[MAX_LINE_LENGTH];
 	char param_name[MAX_PARAM_LENGTH];
 	int param_value, param_num, read;

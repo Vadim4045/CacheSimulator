@@ -1,6 +1,12 @@
 [
 {
   "directory": "/Users/boss/CacheSimulator/build",
+  "command": "/opt/homebrew/bin/gcc-13 -DDEBUG_MODE -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o -c /Users/boss/CacheSimulator/src/cache.c",
+  "file": "/Users/boss/CacheSimulator/src/cache.c",
+  "output": "CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o"
+},
+{
+  "directory": "/Users/boss/CacheSimulator/build",
   "command": "/opt/homebrew/bin/gcc-13 -DDEBUG_MODE -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o -c /Users/boss/CacheSimulator/src/cache_level.c",
   "file": "/Users/boss/CacheSimulator/src/cache_level.c",
   "output": "CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o"
@@ -13,9 +19,9 @@
 },
 {
   "directory": "/Users/boss/CacheSimulator/build",
-  "command": "/opt/homebrew/bin/gcc-13 -DDEBUG_MODE -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o -c /Users/boss/CacheSimulator/src/cache_simulator.c",
-  "file": "/Users/boss/CacheSimulator/src/cache_simulator.c",
-  "output": "CMakeFiles/CacheSimulator.bin.dir/src/cache_simulator.c.o"
+  "command": "/opt/homebrew/bin/gcc-13 -DDEBUG_MODE -I/Users/boss/CacheSimulator/src -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/CacheSimulator.bin.dir/src/common.c.o -c /Users/boss/CacheSimulator/src/common.c",
+  "file": "/Users/boss/CacheSimulator/src/common.c",
+  "output": "CMakeFiles/CacheSimulator.bin.dir/src/common.c.o"
 },
 {
   "directory": "/Users/boss/CacheSimulator/build",

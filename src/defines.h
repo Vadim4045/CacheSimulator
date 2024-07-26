@@ -3,8 +3,11 @@
 
 #define MAX_PARAM_LENGTH 56
 #define MAX_LINE_LENGTH 1024
-#define MASK(bits) ((1 << (bits)) - 1)
-#define PART_NUM(num, pos, bits) (((num) >> (pos)) & MASK(bits))
+
+#define GET_MASK(bits) ((1 << (bits)) - 1)
+#define GET_FIELD(x, pos, width) (((x) >> (pos)) & GET_MASK(width))
+#define CLEAR_FIELD(x, pos, width)    ((x) &= ~(GET_MASK(width) << (pos)))
+#define SET_FIELD(x, pos, width, val) ((x) = ((x) & ~(GET_MASK(width) << (pos))) | ((val) << (pos)))
 
 #ifdef DEBUG_MODE
 #define DEBUG(fmt, ...) printf(fmt, __VA_ARGS__)
@@ -109,10 +112,10 @@ typedef struct
 } config;
 
 /**
- * _tag_width bits - TAG
  *  1 bit - is valid
  *  1 bit - is writed
  *  _counter_width - LRU counter
+ *   _tag_width bits - TAG
  */
 typedef struct
 {
@@ -127,6 +130,7 @@ typedef struct
 
 typedef struct
 {
+	uint level;
 	uint _size;
 	uint _page_size;
 	uint _sets;
@@ -140,6 +144,7 @@ typedef struct
 
 typedef struct
 {
+	uint _bus_width;
 	uint _cache_levels_num;
 	cache_level _cache_levels_inst[3];
 

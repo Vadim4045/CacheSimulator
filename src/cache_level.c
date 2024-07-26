@@ -1,9 +1,11 @@
 #include "cashe_level.h"
 #include "cache_set.h"
+#include "common.h"
 
-void cache_level_init(cache_level *cache, cache_level_config *cfg, uint bus_width, uint page_size)
+void cache_level_init(cache_level *cache, uint level, cache_level_config *cfg, uint bus_width, uint page_size)
 {
 	uint i;
+	cache->level = level;
 	cache->_size = cfg->size;
 	cache->_page_size = page_size;
 	cache->_sets = cfg->sets;
@@ -15,7 +17,7 @@ void cache_level_init(cache_level *cache, cache_level_config *cfg, uint bus_widt
 	{
 		cache_set_init(&(cache->sets_arr[i]), (cfg->size / cfg->sets), bus_width, page_size, cfg->sets);
 	}
-	DEBUG("%s allocated %d sets for %d pages\n", __FUNCTION__, cache->_sets, cache->_size / page_size);
+	DEBUG("%s level %d allocated %d sets for %d pages\n", __FUNCTION__, cache->level, cache->_sets, cache->_size / page_size);
 }
 
 void release_cache_level_resources(cache_level *cache)
@@ -40,7 +42,7 @@ RET_STATUS level_read_data(cache_level *cache, uint addr) // full DDR addr
 		if ((ret = set_read_data(&(cache->sets_arr[i]), addr)) == HIT)
 			break;
 	}
-
+	DEBUG("cache_level %d %s addr = 0x%x (%s)\n", cache->level, __FUNCTION__, addr, ret2str(ret));
 	return ret;
 }
 
@@ -54,39 +56,42 @@ RET_STATUS level_write_data(cache_level *cache, uint addr) // full DDR addr
 		if ((ret = set_write_data(&(cache->sets_arr[i]), addr)) == HIT)
 			break;
 	}
-
+	DEBUG("cache_level %d %s addr = 0x%x (%s)\n", cache->level, __FUNCTION__, addr, ret2str(ret));
 	return ret;
 }
 
-RET_STATUS level_store_page(cache_level *cache, uint addr, BOOL write)// page addr
+RET_STATUS level_store_page(cache_level *cache, uint *addr, BOOL * write)// page addr
 {
 	RET_STATUS ret;
-	uint i, tmp_val, idx;
+	uint i, tmp_val, idx, tmp_addr = *addr;
+	
 	for (i = 0; i < cache->_sets; ++i)
 	{
-		cache->sets_status[i] = get_page_status(&(cache->sets_arr[i]), addr);
-		if ((cache->sets_status[i] & 0x1) == 0)// not valid
+		cache->sets_status[i] = get_page_status(&(cache->sets_arr[i]), *addr);
+
+		if (!(cache->sets_status[i] & 1))// not valid
 		{
 			set_store_page(&(cache->sets_arr[i]), addr, write);
-			level_rlu_decrement(cache, addr, i);
+			level_rlu_decrement(cache, tmp_addr, i);
+			DEBUG("cache_level %d(set %d) %s addr = 0x%x (%s)\n", cache->level, i, __FUNCTION__, *addr, ret2str(HIT));
 			return HIT;
 		}
 	}
 
 	idx = 0;
-	tmp_val = MASK(cache->sets_arr[0]._counter_width);
+	tmp_val = GET_MASK(cache->sets_arr[i]._counter_width);
 	for (i = 0; i < cache->_sets; ++i)
 	{
-		if (PART_NUM(cache->sets_status[i], 2, cache->sets_arr[0]._counter_width) < tmp_val)
+		if (GET_FIELD(cache->sets_status[i], 2, cache->sets_arr[i]._counter_width) < tmp_val)
 		{
-			tmp_val = PART_NUM(cache->sets_status[i], 2, cache->sets_arr[0]._counter_width);
+			tmp_val = GET_FIELD(cache->sets_status[i], 2, cache->sets_arr[0]._counter_width);
 			idx = i;
 		}
 	}
 
 	ret = set_store_page(&(cache->sets_arr[idx]), addr, write);
-	level_rlu_decrement(cache, addr, idx);
-
+	level_rlu_decrement(cache, tmp_addr, idx);
+	DEBUG("cache_level %d(set %d) %s addr = 0x%x (%s)\n", cache->level, i, __FUNCTION__, *addr, ret2str(ret));
 	return ret;
 }
 
@@ -97,7 +102,18 @@ void level_rlu_decrement(cache_level *cache, uint addr, uint idx)
 	{
 		if (i != idx)
 		{
-			rlu_decrement(&(cache->sets_arr[idx]), addr);
+			rlu_decrement(&(cache->sets_arr[i]), addr);
 		}
+	}
+}
+
+void print_level(cache_level *cache)
+{
+	uint i;
+	printf("Level %d have %d sets:\n", cache->level, cache->_sets);
+	for (i = 0; i < cache->_sets; ++i)
+	{
+		printf("Set %d", i);
+		print_set(&(cache->sets_arr[i]));
 	}
 }
