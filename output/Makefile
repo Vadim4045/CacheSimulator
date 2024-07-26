@@ -129,77 +129,77 @@ CacheSimulator.bin/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/build
 .PHONY : CacheSimulator.bin/fast
 
-src/cache.o: src/cache.c.o
-.PHONY : src/cache.o
+src/cache/cache.o: src/cache/cache.c.o
+.PHONY : src/cache/cache.o
 
 # target to build an object file
-src/cache.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache.c.o
-.PHONY : src/cache.c.o
+src/cache/cache.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache.c.o
+.PHONY : src/cache/cache.c.o
 
-src/cache.i: src/cache.c.i
-.PHONY : src/cache.i
+src/cache/cache.i: src/cache/cache.c.i
+.PHONY : src/cache/cache.i
 
 # target to preprocess a source file
-src/cache.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache.c.i
-.PHONY : src/cache.c.i
+src/cache/cache.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache.c.i
+.PHONY : src/cache/cache.c.i
 
-src/cache.s: src/cache.c.s
-.PHONY : src/cache.s
+src/cache/cache.s: src/cache/cache.c.s
+.PHONY : src/cache/cache.s
 
 # target to generate assembly for a file
-src/cache.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache.c.s
-.PHONY : src/cache.c.s
+src/cache/cache.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache.c.s
+.PHONY : src/cache/cache.c.s
 
-src/cache_level.o: src/cache_level.c.o
-.PHONY : src/cache_level.o
+src/cache/cache_level.o: src/cache/cache_level.c.o
+.PHONY : src/cache/cache_level.o
 
 # target to build an object file
-src/cache_level.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.o
-.PHONY : src/cache_level.c.o
+src/cache/cache_level.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_level.c.o
+.PHONY : src/cache/cache_level.c.o
 
-src/cache_level.i: src/cache_level.c.i
-.PHONY : src/cache_level.i
+src/cache/cache_level.i: src/cache/cache_level.c.i
+.PHONY : src/cache/cache_level.i
 
 # target to preprocess a source file
-src/cache_level.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.i
-.PHONY : src/cache_level.c.i
+src/cache/cache_level.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_level.c.i
+.PHONY : src/cache/cache_level.c.i
 
-src/cache_level.s: src/cache_level.c.s
-.PHONY : src/cache_level.s
+src/cache/cache_level.s: src/cache/cache_level.c.s
+.PHONY : src/cache/cache_level.s
 
 # target to generate assembly for a file
-src/cache_level.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_level.c.s
-.PHONY : src/cache_level.c.s
+src/cache/cache_level.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_level.c.s
+.PHONY : src/cache/cache_level.c.s
 
-src/cache_set.o: src/cache_set.c.o
-.PHONY : src/cache_set.o
+src/cache/cache_set.o: src/cache/cache_set.c.o
+.PHONY : src/cache/cache_set.o
 
 # target to build an object file
-src/cache_set.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.o
-.PHONY : src/cache_set.c.o
+src/cache/cache_set.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_set.c.o
+.PHONY : src/cache/cache_set.c.o
 
-src/cache_set.i: src/cache_set.c.i
-.PHONY : src/cache_set.i
+src/cache/cache_set.i: src/cache/cache_set.c.i
+.PHONY : src/cache/cache_set.i
 
 # target to preprocess a source file
-src/cache_set.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.i
-.PHONY : src/cache_set.c.i
+src/cache/cache_set.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_set.c.i
+.PHONY : src/cache/cache_set.c.i
 
-src/cache_set.s: src/cache_set.c.s
-.PHONY : src/cache_set.s
+src/cache/cache_set.s: src/cache/cache_set.c.s
+.PHONY : src/cache/cache_set.s
 
 # target to generate assembly for a file
-src/cache_set.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache_set.c.s
-.PHONY : src/cache_set.c.s
+src/cache/cache_set.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/cache/cache_set.c.s
+.PHONY : src/cache/cache_set.c.s
 
 src/common.o: src/common.c.o
 .PHONY : src/common.o
@@ -225,77 +225,77 @@ src/common.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/common.c.s
 .PHONY : src/common.c.s
 
-src/config_parser.o: src/config_parser.c.o
-.PHONY : src/config_parser.o
+src/config_parser/config_parser.o: src/config_parser/config_parser.c.o
+.PHONY : src/config_parser/config_parser.o
 
 # target to build an object file
-src/config_parser.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.o
-.PHONY : src/config_parser.c.o
+src/config_parser/config_parser.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser/config_parser.c.o
+.PHONY : src/config_parser/config_parser.c.o
 
-src/config_parser.i: src/config_parser.c.i
-.PHONY : src/config_parser.i
+src/config_parser/config_parser.i: src/config_parser/config_parser.c.i
+.PHONY : src/config_parser/config_parser.i
 
 # target to preprocess a source file
-src/config_parser.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.i
-.PHONY : src/config_parser.c.i
+src/config_parser/config_parser.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser/config_parser.c.i
+.PHONY : src/config_parser/config_parser.c.i
 
-src/config_parser.s: src/config_parser.c.s
-.PHONY : src/config_parser.s
+src/config_parser/config_parser.s: src/config_parser/config_parser.c.s
+.PHONY : src/config_parser/config_parser.s
 
 # target to generate assembly for a file
-src/config_parser.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.s
-.PHONY : src/config_parser.c.s
+src/config_parser/config_parser.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser/config_parser.c.s
+.PHONY : src/config_parser/config_parser.c.s
 
-src/ddr_simulator.o: src/ddr_simulator.c.o
-.PHONY : src/ddr_simulator.o
+src/ddr/ddr_simulator.o: src/ddr/ddr_simulator.c.o
+.PHONY : src/ddr/ddr_simulator.o
 
 # target to build an object file
-src/ddr_simulator.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.o
-.PHONY : src/ddr_simulator.c.o
+src/ddr/ddr_simulator.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr/ddr_simulator.c.o
+.PHONY : src/ddr/ddr_simulator.c.o
 
-src/ddr_simulator.i: src/ddr_simulator.c.i
-.PHONY : src/ddr_simulator.i
+src/ddr/ddr_simulator.i: src/ddr/ddr_simulator.c.i
+.PHONY : src/ddr/ddr_simulator.i
 
 # target to preprocess a source file
-src/ddr_simulator.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.i
-.PHONY : src/ddr_simulator.c.i
+src/ddr/ddr_simulator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr/ddr_simulator.c.i
+.PHONY : src/ddr/ddr_simulator.c.i
 
-src/ddr_simulator.s: src/ddr_simulator.c.s
-.PHONY : src/ddr_simulator.s
+src/ddr/ddr_simulator.s: src/ddr/ddr_simulator.c.s
+.PHONY : src/ddr/ddr_simulator.s
 
 # target to generate assembly for a file
-src/ddr_simulator.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.s
-.PHONY : src/ddr_simulator.c.s
+src/ddr/ddr_simulator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr/ddr_simulator.c.s
+.PHONY : src/ddr/ddr_simulator.c.s
 
-src/loger.o: src/loger.c.o
-.PHONY : src/loger.o
+src/loger/loger.o: src/loger/loger.c.o
+.PHONY : src/loger/loger.o
 
 # target to build an object file
-src/loger.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.o
-.PHONY : src/loger.c.o
+src/loger/loger.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger/loger.c.o
+.PHONY : src/loger/loger.c.o
 
-src/loger.i: src/loger.c.i
-.PHONY : src/loger.i
+src/loger/loger.i: src/loger/loger.c.i
+.PHONY : src/loger/loger.i
 
 # target to preprocess a source file
-src/loger.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.i
-.PHONY : src/loger.c.i
+src/loger/loger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger/loger.c.i
+.PHONY : src/loger/loger.c.i
 
-src/loger.s: src/loger.c.s
-.PHONY : src/loger.s
+src/loger/loger.s: src/loger/loger.c.s
+.PHONY : src/loger/loger.s
 
 # target to generate assembly for a file
-src/loger.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger.c.s
-.PHONY : src/loger.c.s
+src/loger/loger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/loger/loger.c.s
+.PHONY : src/loger/loger.c.s
 
 src/main.o: src/main.c.o
 .PHONY : src/main.o
@@ -354,27 +354,27 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... CacheSimulator.bin"
-	@echo "... src/cache.o"
-	@echo "... src/cache.i"
-	@echo "... src/cache.s"
-	@echo "... src/cache_level.o"
-	@echo "... src/cache_level.i"
-	@echo "... src/cache_level.s"
-	@echo "... src/cache_set.o"
-	@echo "... src/cache_set.i"
-	@echo "... src/cache_set.s"
+	@echo "... src/cache/cache.o"
+	@echo "... src/cache/cache.i"
+	@echo "... src/cache/cache.s"
+	@echo "... src/cache/cache_level.o"
+	@echo "... src/cache/cache_level.i"
+	@echo "... src/cache/cache_level.s"
+	@echo "... src/cache/cache_set.o"
+	@echo "... src/cache/cache_set.i"
+	@echo "... src/cache/cache_set.s"
 	@echo "... src/common.o"
 	@echo "... src/common.i"
 	@echo "... src/common.s"
-	@echo "... src/config_parser.o"
-	@echo "... src/config_parser.i"
-	@echo "... src/config_parser.s"
-	@echo "... src/ddr_simulator.o"
-	@echo "... src/ddr_simulator.i"
-	@echo "... src/ddr_simulator.s"
-	@echo "... src/loger.o"
-	@echo "... src/loger.i"
-	@echo "... src/loger.s"
+	@echo "... src/config_parser/config_parser.o"
+	@echo "... src/config_parser/config_parser.i"
+	@echo "... src/config_parser/config_parser.s"
+	@echo "... src/ddr/ddr_simulator.o"
+	@echo "... src/ddr/ddr_simulator.i"
+	@echo "... src/ddr/ddr_simulator.s"
+	@echo "... src/loger/loger.o"
+	@echo "... src/loger/loger.i"
+	@echo "... src/loger/loger.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

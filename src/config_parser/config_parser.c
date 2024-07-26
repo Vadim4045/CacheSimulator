@@ -1,5 +1,5 @@
 #include "config_parser.h"
-#include "common.h"
+#include "../common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +10,7 @@ static const char *ddr_channel_params[] = {"size", "dimms", "banks", "RAS", "CAS
 static const char *ddr_params[] = {"channels", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
 
-int get_param_num(const char **arr, uint arr_size, const char *param_name)
+int get_param_num(const char **arr, unsigned int arr_size, const char *param_name)
 {
 	int idx;
 	for(idx = 0; idx < arr_size; ++idx){
@@ -25,7 +25,7 @@ int get_param_num(const char **arr, uint arr_size, const char *param_name)
 
 int parse_param_line(const char *line, char *param_name, int *param_value)
 {
-	uint ret = 0;
+	unsigned int ret = 0;
 	if (sscanf(line, "%s = 0x%x\n", param_name, param_value) != 2)
 	{
 		ret = -1;
@@ -37,7 +37,7 @@ int parse_param_line(const char *line, char *param_name, int *param_value)
 int set_ddr_channel_param(ddr_channel_config *cfg, char *line) 
 {
 	char param_name[MAX_PARAM_LENGTH];
-	uint param_value, param_num;
+	unsigned int param_value, param_num;
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
@@ -88,7 +88,7 @@ int set_ddr_channel_param(ddr_channel_config *cfg, char *line)
 int set_cache_level_param(cache_level_config *cfg, char *line)
 {
 	char param_name[MAX_PARAM_LENGTH];
-	uint param_value, param_num;
+	unsigned int param_value, param_num;
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
@@ -128,7 +128,7 @@ int set_cache_level_param(cache_level_config *cfg, char *line)
 int set_ddr(ddr_config *config, char *line)
 {
 	char param_name[MAX_PARAM_LENGTH];
-	uint param_value, channel;
+	unsigned int param_value, channel;
 	if (line[0] == 'C' && line[3] == '.')
 	{
 		channel = line[2] - 48;
@@ -164,7 +164,7 @@ int set_ddr(ddr_config *config, char *line)
 int set_cache(cache_config *config, char *line)
 {
 	char param_name[MAX_PARAM_LENGTH];
-	uint param_value, level;
+	unsigned int param_value, level;
 	if (line[0] == 'L' && line[2] == '.')
 	{
 		level = line[1] - 49;
@@ -295,7 +295,7 @@ int read_config(config *config, char *config_f)
 
 void print_cfg(config *cfg)
 {
-	uint i;
+	unsigned int i;
 	printf("\nCache Simulator configuration:\n");
 	printf("Bus width = %d bytes\n", cfg->bus_width);
 	printf("Page size = 0x%x bytes\n", cfg->page_size);

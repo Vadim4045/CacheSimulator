@@ -3,7 +3,7 @@
 
 #include "defines.h"
 
-int get_param_num(const char **arr, uint arr_size, const char *param_name);
+int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
 int parse_param_line(const char *line, char *param_name, int *param_value);
 int set_ddr_channel_param(ddr_channel_config *cfg, char *line);
 int set_cache_level_param(cache_level_config *cfg, char *line);

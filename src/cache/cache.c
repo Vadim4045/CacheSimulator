@@ -1,11 +1,11 @@
 #include "cache.h"
 #include "cashe_level.h"
-#include "common.h"
+#include "../common.h"
 #include <stdlib.h>
 
 void cache_init(cache *cache, config *cfg)
 {
-	uint i;
+	unsigned int i;
 	cache->_bus_width = cfg->bus_width;
 	cache->_cache_levels_num = cfg->cache_cfg.cache_levels;
 	for (i = 0; i < cfg->cache_cfg.cache_levels; ++i)
@@ -14,14 +14,14 @@ void cache_init(cache *cache, config *cfg)
 	}
 }
 
-RET_STATUS cache_read(cache *cache, uint *addr, uint *cost)
+RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 {
 	DEBUG("cache %s addr = 0x%x\n", __FUNCTION__, *addr);
 	BOOL write = False;
-	uint i, tmp_addr;
+	unsigned int i, tmp_addr;
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*cost += cache->_cache_levels_inst[i]._hit_cost;
+		*log |= 1 << i;
 		
 		if(level_read_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
@@ -34,7 +34,7 @@ RET_STATUS cache_read(cache *cache, uint *addr, uint *cost)
 		
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*cost += cache->_cache_levels_inst[i]._hit_cost * cache->_cache_levels_inst[i]._page_size  / cache->_bus_width;
+		*log |= 1 << (5 + i);
 		if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
 		{
 			break;
@@ -44,16 +44,16 @@ RET_STATUS cache_read(cache *cache, uint *addr, uint *cost)
 	return WRITE_BACK;
 }
 
-RET_STATUS cache_write(cache *cache, uint *addr, uint* cost)
+RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 {
 	DEBUG("cache %s addr = 0x%x\n", __FUNCTION__, *addr);
 	BOOL write = True;
-	uint i;
+	unsigned int i;
 
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*cost += cache->_cache_levels_inst[i]._hit_cost;
-		
+		*log |= 1 << i;
+
 		if (level_write_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
 			return HIT;
@@ -66,8 +66,8 @@ RET_STATUS cache_write(cache *cache, uint *addr, uint* cost)
 
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*cost += cache->_cache_levels_inst[i]._hit_cost * cache->_cache_levels_inst[i]._page_size / cache->_bus_width;
-		
+		*log |= 1 << (5 + i);
+
 		if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
 		{
 			break;
@@ -79,7 +79,7 @@ RET_STATUS cache_write(cache *cache, uint *addr, uint* cost)
 
 void print_cache(cache *cache)
 {
-	uint i;
+	unsigned int i;
 	printf("Chache levels addresses:\n");
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{

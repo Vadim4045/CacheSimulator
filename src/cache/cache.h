@@ -5,8 +5,8 @@
 
 void cache_init(cache *cache, config *cfg);
 
-RET_STATUS cache_read(cache *cache, uint *addr, uint *cost);
-RET_STATUS cache_write(cache *cache, uint *addr, uint *cost);
+RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log);
+RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int *log);
 
 void print_cache(cache *cache);
 

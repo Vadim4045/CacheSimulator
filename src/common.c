@@ -11,6 +11,19 @@ char * ret2str(RET_STATUS ret)
 	return ret_values[ret];
 }
 
+int log2int(unsigned int n)
+{ // but truncated
+	if (n == 0) return 0; // not math
+	
+	int logValue = -1;
+	while (n)
+	{ //
+		logValue++;
+		n >>= 1;
+	}
+	return logValue;
+}
+
 int is_power_of_2(int num)
 {
 	if (num == 0)

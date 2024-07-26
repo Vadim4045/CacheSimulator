@@ -15,11 +15,6 @@
 #define DEBUG(fmt, ...)
 #endif
 
-#define uchar unsigned char
-#define uint unsigned int
-#define ulong unsigned long
-#define ull unsigned long long
-
 #define _1K (1 << 10)
 #define _1M (1 << 20)
 
@@ -71,14 +66,14 @@ typedef enum
 #pragma pack(push, 4)
 typedef struct
 {
-	uint size;
-	uint sets;
-	uint cost;
+	unsigned int size;
+	unsigned int sets;
+	unsigned int cost;
 } cache_level_config;
 
 typedef struct
 {
-	uint cache_levels;
+	unsigned int cache_levels;
 	WRITE_POLICY WP;
 	REPLAСEMENT_POLICY RP;
 	ASSOCIATIVITY AC;
@@ -87,16 +82,16 @@ typedef struct
 
 typedef struct
 {
-	uint size;
-	uint dimms;
-	uint banks;
-	uint RAS;
-	uint CAS;
+	unsigned int size;
+	unsigned int dimms;
+	unsigned int banks;
+	unsigned int RAS;
+	unsigned int CAS;
 } ddr_channel_config;
 
 typedef struct
 {
-	uint channels;
+	unsigned int channels;
 	INTERLEAVING_POLICY IP;
 
 	ddr_channel_config channels_config[4];
@@ -104,8 +99,8 @@ typedef struct
 
 typedef struct
 {
-	uint bus_width;
-	uint page_size;
+	unsigned int bus_width;
+	unsigned int page_size;
 	
 	cache_config cache_cfg;
 	ddr_config ddr_cfg;
@@ -119,33 +114,33 @@ typedef struct
  */
 typedef struct
 {
-	uint _pages;
-	uint _offcet_width;
-	uint _tag_width;
-	uint _set_width;
-	uint _counter_width;
+	unsigned int _pages;
+	unsigned int _offcet_width;
+	unsigned int _tag_width;
+	unsigned int _set_width;
+	unsigned int _counter_width;
 
 	unsigned int *addr_arr;
 } cache_set;
 
 typedef struct
 {
-	uint level;
-	uint _size;
-	uint _page_size;
-	uint _sets;
-	uint _hit_cost;
+	unsigned int level;
+	unsigned int _size;
+	unsigned int _page_size;
+	unsigned int _sets;
+	unsigned int _hit_cost;
 	
 	// uchar* pages_arr;
 	cache_set *sets_arr;
-	uint* sets_status;
+	unsigned int* sets_status;
 
 } cache_level;
 
 typedef struct
 {
-	uint _bus_width;
-	uint _cache_levels_num;
+	unsigned int _bus_width;
+	unsigned int _cache_levels_num;
 	cache_level _cache_levels_inst[3];
 
 } cache;
