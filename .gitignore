@@ -6,3 +6,4 @@
 *.bin
 output/*
 build/*
+logs/*

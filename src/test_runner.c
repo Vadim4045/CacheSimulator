@@ -32,11 +32,11 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 	unsigned int wb_cost = config->page_size / config->bus_width;
 	FILE * file;
 	
-	// if(init_log_file(config))
-	// {
-	// 	printf("Error: can't make log file\n");
-	// 	exit(EXIT_FAILURE);
-	// }
+	if(init_log_file(config))
+	{
+		printf("Error: can't make log file\n");
+		exit(EXIT_FAILURE);
+	}
 
 	file = fopen(trace_f, "r");
 	if (!file)
@@ -61,7 +61,9 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 						  + wb_cost * ((log >> 10) & 1) * config->cache_cfg.cache_configs[1].cost // L1<->L2 swap
 						  + wb_cost * ((log >> 11) & 1) * config->cache_cfg.cache_configs[2].cost // L2<->L3 swap
 						  + 100 * ((log >> 12) & 1);											  // L3 write-back after swap
-			++total_oper;
+
+			add_line(total_oper, trace_counter, addr, log);
+			++ total_oper;
 		}
 	}
 
@@ -79,6 +81,7 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 	
+	end_logging();
 	fclose(file);
 	printf("--------Total lowd/store instructions: %d,total cost: %d, avg: %f\n", total_oper, total_cost, (float)total_cost / total_oper);
 	return 0;

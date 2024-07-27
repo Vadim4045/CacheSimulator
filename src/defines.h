@@ -29,29 +29,6 @@ typedef enum
 
 typedef enum
 {
-	WRITE_ALLOCATE,
-	WRITE_AROUND,
-	WRONG_POLICY
-} WRITE_POLICY;
-
-typedef enum
-{
-	FIFO,
-	LRU,
-	LFU,
-	WRONG_REPLAСEMENT
-} REPLAСEMENT_POLICY;
-
-typedef enum
-{
-	DIRECT_MAPPED,
-	SET_ASSOCIATIVE,
-	FULLY_ASSOCIATIVE,
-	WRONG_ASSOCIATIVITY
-} ASSOCIATIVITY;
-
-typedef enum
-{
 	ROW_INTERLEAVING,
 	BLOCK_INTERLEAVING,
 	WRONG_INTERLEAVING
@@ -68,9 +45,6 @@ typedef struct
 typedef struct
 {
 	unsigned int cache_levels;
-	WRITE_POLICY WP;
-	REPLAСEMENT_POLICY RP;
-	ASSOCIATIVITY AC;
 	cache_level_config cache_configs[3];
 } cache_config;
 
@@ -101,10 +75,10 @@ typedef struct
 } config;
 
 /**
- *  1 bit - is valid
- *  1 bit - is writed
- *  _counter_width - LRU counter
- *   _tag_width bits - TAG
+ *  1 bits			- is valid
+ *  1 bits			- is writed
+ *  _counter_width	- LRU counter
+ *  _tag_width bits	- TAG
  */
 typedef struct
 {

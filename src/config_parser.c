@@ -2,7 +2,7 @@
 #include "common.h"
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
-static const char *cache_params[] = {"levels", "write_policy", "replaycement", "associativity"};
+static const char *cache_params[] = {"levels"};
 static const char *ddr_channel_params[] = {"size", "dimms", "banks", "RAS", "CAS"};
 static const char *ddr_params[] = {"channels", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
@@ -181,22 +181,13 @@ int set_cache(cache_config *config, char *line)
 	{
 		if (!parse_param_line(line, param_name, &param_value))
 		{
-			if ((level = get_param_num(cache_params, 4, param_name)) == -1)
+			if ((level = get_param_num(cache_params, 1, param_name)) == -1)
 				return -1;
 
 			switch (level)
 			{
 			case 0:
 				config->cache_levels = param_value;
-				break;
-			case 1:
-				config->WP = param_value;
-				break;
-			case 2:
-				config->RP = param_value;
-				break;
-			case 3:
-				config->AC = param_value;
 				break;
 			default:
 				printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
@@ -311,7 +302,6 @@ void print_cfg(config *cfg)
 				, cfg->cache_cfg.cache_configs[i].sets
 				, cfg->cache_cfg.cache_configs[i].cost);
 	}
-	printf("WP = %d, RP = %d, AC = %d,\n", cfg->cache_cfg.WP, cfg->cache_cfg.RP, cfg->cache_cfg.AC);
 	
 	printf("\nDDR have %d channels\n", cfg->ddr_cfg.channels);
 	for (i = 0; i < cfg->ddr_cfg.channels; ++i)
