@@ -1,6 +1,6 @@
 #include "cache.h"
 #include "cashe_level.h"
-#include "../common.h"
+#include "common.h"
 #include <stdlib.h>
 
 void cache_init(cache *cache, config *cfg)
@@ -16,7 +16,6 @@ void cache_init(cache *cache, config *cfg)
 
 RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 {
-	DEBUG("cache %s addr = 0x%x\n", __FUNCTION__, *addr);
 	BOOL write = False;
 	unsigned int i, tmp_addr;
 	for (i = 0; i < cache->_cache_levels_num; ++i)
@@ -25,13 +24,30 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 		
 		if(level_read_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
+			if(i > 0)
+			{
+				for (i = 0; i < cache->_cache_levels_num; ++i)
+				{
+					*log |= 1 << (9 + i);
+					*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
+					if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
+					{
+						break;
+					}
+				}
+			}
 			return HIT;
 		}
 	}
 
-	*addr = GET_FIELD(*addr, cache->_cache_levels_inst[0].sets_arr[0]._offcet_width
-		, (cache->_cache_levels_inst[0].sets_arr[0]._tag_width + cache->_cache_levels_inst[0].sets_arr[0]._set_width)); // now we work with page addr
-		
+	if (i == cache->_cache_levels_num)
+	{
+		*log |= 1 << (4 + i);
+	}
+	
+	// now we work with page addr
+	*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
+
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
 		*log |= 1 << (5 + i);
@@ -46,7 +62,6 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 
 RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 {
-	DEBUG("cache %s addr = 0x%x\n", __FUNCTION__, *addr);
 	BOOL write = True;
 	unsigned int i;
 
@@ -56,13 +71,29 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 
 		if (level_write_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
+			if(i > 0)
+			{
+				for (i = 0; i < cache->_cache_levels_num; ++i)
+				{
+					*log |= 1 << (10 + i);
+					*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
+					if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
+					{
+						break;
+					}
+				}
+			}
 			return HIT;
 		}
 	}
 
-	*addr = GET_FIELD(*addr, cache->_cache_levels_inst[0].sets_arr[0]._offcet_width
-		, (cache->_cache_levels_inst[0].sets_arr[0]._tag_width + cache->_cache_levels_inst[0].sets_arr[0]._set_width)); // now we work with page addr
+	if (i == cache->_cache_levels_num)
+	{
+		*log |= 1 << (4 + i);
+	}
 		
+	// now we work with page addr
+	*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
 
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
@@ -75,6 +106,19 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 	}
 
 	return WRITE_BACK;
+}
+
+unsigned int cache_invalidate_step(cache *cache)
+{
+	unsigned int i, addr = 0;
+	for(i = 0; i < cache->_cache_levels_num; ++i)
+	{
+		if(level_invalidate_step(&(cache->_cache_levels_inst[i]), &addr) == HIT)
+		{
+			break;
+		}
+	}
+	return addr;
 }
 
 void print_cache(cache *cache)

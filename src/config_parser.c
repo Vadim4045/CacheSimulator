@@ -1,5 +1,5 @@
 #include "config_parser.h"
-#include "../common.h"
+#include "common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +9,13 @@ static const char *cache_params[] = {"levels", "write_policy", "replaycement", "
 static const char *ddr_channel_params[] = {"size", "dimms", "banks", "RAS", "CAS"};
 static const char *ddr_params[] = {"channels", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
+
+int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
+int parse_param_line(const char *line, char *param_name, int *param_value);
+int set_ddr_channel_param(ddr_channel_config *cfg, char *line);
+int set_cache_level_param(cache_level_config *cfg, char *line);
+int set_ddr(ddr_config *config, char *line);
+int set_cache(cache_config *config, char *line);
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name)
 {
@@ -203,20 +210,81 @@ int set_cache(cache_config *config, char *line)
 	return 0;
 }
 
-int read_config(config *config, char *config_f)
+int parce_line(config *config, char *line)
 {
-	char line[MAX_LINE_LENGTH];
 	char param_name[MAX_PARAM_LENGTH];
 	int param_value, param_num, read;
 	
+	switch (line[0])
+	{
+	case '#':  // c-sharp style comments
+	case '\n': // empty line
+		break;
+	case 'S': // Top system parameter
+		if (line[1] == '.' && !parse_param_line(&line[2], param_name, &param_value))
+		{
+			param_num = get_param_num(system_params, 2, param_name);
+			switch (param_num)
+			{
+			case 0:
+				if (!is_power_of_2(param_value))
+				{
+					printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
+					return -1;
+				}
+				config->bus_width = param_value;
+				break;
+			case 1:
+				if (!is_power_of_2(param_value))
+				{
+					printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
+					return -1;
+				}
+				config->page_size = param_value;
+				break;
+			default:
+				printf("%s Error: can't find system parameter '%s'\n", __FUNCTION__, param_name);
+			}
+		}
+		break;
+	case 'D': // DDR perameter
+		if (line[3] == '.')
+		{
+			if (set_ddr(&(config->ddr_cfg), &line[4]))
+			{
+				printf("%s Error: can't config parameter '%s' in DDR\n", __FUNCTION__, &line[4]);
+			}
+		}
+		break;
+	case 'C': // Cache parameter
+		if (line[1] == '.')
+		{
+			if (set_cache(&(config->cache_cfg), &line[2]))
+			{
+				printf("%s Error: can't config parameter '%s' in CACHE\n", __FUNCTION__, &line[2]);
+			}
+		}
+		break;
+	default: // wrong parameter
+		printf("%s Error: Wrong line: %s\n", __FUNCTION__, line);
+	}
+	return 0;
+}
+
+int read_config(config *config, char *config_f)
+{
+	char line[MAX_LINE_LENGTH];
+
 	if (config_f != NULL)
 	{
-		sprintf(line, "./%s.config", config_f);
-	}else{
-		sprintf(line, "./default_config.config");
+		sprintf(line, "./%s.trc", config_f);
 	}
-
-	FILE *file = fopen(line, "r");
+	else
+	{
+		memcpy(line, "./default.config", MAX_LINE_LENGTH);
+	}
+	
+		FILE *file = fopen(line, "r");
 	if (!file)
 	{
 		printf("Error: opening config file\n");
@@ -225,70 +293,9 @@ int read_config(config *config, char *config_f)
 
 	while (fgets(line, MAX_LINE_LENGTH, file))
 	{
-		switch (line[0])
-		{
-		case '#': // c-sharp style comments
-		case '\n': // empty line
-			break;
-		case 'S': // Top system parameter
-			if (line[1] == '.' && !parse_param_line(&line[2], param_name, &param_value))
-			{
-				param_num = get_param_num(system_params, 2, param_name) ;
-				switch (param_num)
-				{
-				case 0:
-					if (!is_power_of_2(param_value))
-					{
-						printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
-						return -1;
-					}
-					config->bus_width = param_value;
-					break;
-				case 1:
-					if (!is_power_of_2(param_value))
-					{
-						printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
-						return -1;
-					}
-					config->page_size = param_value;
-					break;
-				default:
-					printf("%s Error: can't find system parameter '%s'\n", __FUNCTION__, param_name);
-				}
-			}
-			break;
-		case 'D': // DDR perameter
-			if (line[3] == '.')
-			{
-				if (set_ddr(&(config->ddr_cfg), &line[4]))
-				{
-					printf("%s Error: can't config parameter '%s' in DDR\n", __FUNCTION__, &line[4]);
-				}
-			}
-				break;
-		case 'C': // Cache parameter
-			if (line[1] == '.')
-			{
-				if (set_cache(&(config->cache_cfg), &line[2]))
-				{
-					printf("%s Error: can't config parameter '%s' in CACHE\n", __FUNCTION__, &line[2]);
-				}
-			}
-			break;
-		default: // wrong parameter
-			printf("%s Error: Wrong line: %s\n", __FUNCTION__, line);
-		}
+		parce_line(config, line);
 	}
 
-	if (feof(file))
-	{
-		DEBUG("%s End of file reached.\n", __FUNCTION__);
-	}
-	else if (ferror(file))
-	{
-		DEBUG("%s An error occurred.\n", __FUNCTION__);
-	}
-	
 	fclose(file);
 	return 0;
 }

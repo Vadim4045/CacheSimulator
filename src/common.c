@@ -24,10 +24,9 @@ int log2int(unsigned int n)
 	return logValue;
 }
 
-int is_power_of_2(int num)
+BOOL is_power_of_2(unsigned int num)
 {
-	if (num == 0)
-		return 1;
+	if (num < 2) return 1;
 
 	while ((num & 1) == 0)
 		num >>= 1;

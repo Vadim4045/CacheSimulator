@@ -7,13 +7,7 @@
 #define GET_MASK(bits) ((1 << (bits)) - 1)
 #define GET_FIELD(x, pos, width) (((x) >> (pos)) & GET_MASK(width))
 #define CLEAR_FIELD(x, pos, width)    ((x) &= ~(GET_MASK(width) << (pos)))
-#define SET_FIELD(x, pos, width, val) ((x) = ((x) & ~(GET_MASK(width) << (pos))) | ((val) << (pos)))
-
-#ifdef DEBUG_MODE
-#define DEBUG(fmt, ...) printf(fmt, __VA_ARGS__)
-#else
-#define DEBUG(fmt, ...)
-#endif
+#define SET_FIELD(x, pos, width, val) ((x) = ((x) & ~(GET_MASK(width) << (pos))) | (((val) & GET_MASK(width)) << (pos)))
 
 #define _1K (1 << 10)
 #define _1M (1 << 20)
