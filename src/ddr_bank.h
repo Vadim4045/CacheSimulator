@@ -3,8 +3,8 @@
 
 #include "defines.h"
 
-void init_ddr_bank
-	(ddr_bank *bank, ddr_bank_config *cfg, unsigned int banks, unsigned int size, unsigned int page_size, unsigned int bus_width);
-unsigned int access_to_bank(ddr_bank *bank, unsigned int *addr);
+void init_ddr_bank(ddr_bank *bank, config *cfg);
+ERROR_RET access_to_ddr_bank(ddr_bank *bank, unsigned int addr, unsigned int size, unsigned int *cost);
+void release_ddr_bank(ddr_bank *bank);
 
 #endif // DDR_BANK_H

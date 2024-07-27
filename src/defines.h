@@ -56,6 +56,7 @@ typedef struct
 
 typedef struct
 {
+	unsigned int size;
 	unsigned int rows;
 	unsigned int columns;
 	unsigned int RAS;
@@ -63,16 +64,19 @@ typedef struct
 } ddr_bank_config;
 typedef struct
 {
+	unsigned int size;
 	unsigned int num_of_banks;
 	ddr_bank_config banks;
 } ddr_rank_config;
 typedef struct
 {
+	unsigned int size;
 	unsigned int num_of_ranks;
 	ddr_rank_config rank;
 } ddr_dimm_config;
 typedef struct
 {
+	unsigned int size;
 	unsigned int num_of_dimms;
 	ddr_dimm_config dimms;
 } ddr_channel_config;
@@ -80,10 +84,10 @@ typedef struct
 typedef struct
 {
 	unsigned int size;
-	unsigned int channels;
+	unsigned int num_of_channels;
 	INTERLEAVING_POLICY IP;
 
-	ddr_channel_config channels_config;
+	ddr_channel_config channels;
 } ddr_config;
 
 typedef struct
@@ -149,30 +153,43 @@ typedef struct
 	unsigned int rows_width;
 	unsigned int columns_width;
 
-	unsigned int offset_width;
-	unsigned int rows_width;
-	unsigned int columns_width;
 	unsigned int current_row
 } ddr_bank;
 typedef struct
 {
+	unsigned int bus;
+	unsigned int page_size;
+	unsigned int size;
 	unsigned int num_of_banks;
 	ddr_bank* banks;
 } ddr_rank;
 	typedef struct
 {
+	unsigned int bus;
+	unsigned int page_size;
+	unsigned int size;
 	unsigned int num_of_ranks;
-	ddr_rank ranks[2];
+	ddr_rank* ranks;
 } ddr_dimm;
 	typedef struct
 {
+	unsigned int bus;
+	unsigned int page_size;
+	unsigned int size;
 	unsigned int num_of_dimms;
-	ddr_dimm dimms[2];
+	ddr_dimm* dimms;
 } ddr_channel;
 	typedef struct
 {
+	unsigned int bus;
+	unsigned int page_size;
+	unsigned int size;
+	
 	unsigned int num_of_channels;
-	ddr_channel channels[2];
+	unsigned int num_of_dimms;
+	unsigned int num_of_ranks;
+	unsigned int num_of_banks;
+	ddr_channel* channels;
 } ddr;
 
 typedef struct
