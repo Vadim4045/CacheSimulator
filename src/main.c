@@ -82,15 +82,7 @@ int main(int argc, char **argv)
 		for (int i = 0; i < num_count; i++)
 		{
 			int val = atoi(argv[optind + i]);
-			if (val > 0 && is_power_of_2(val))
-			{
-				numbers[i] = val;
-			}
-			else
-			{
-				fprintf(stderr, "Error: All values must be positive integers and powers of two\n");
-				exit(EXIT_FAILURE);
-			}
+			numbers[i] = val;
 		}
 	}
 

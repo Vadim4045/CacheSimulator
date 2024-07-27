@@ -31,12 +31,6 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 	char instruction_string[8];
 	unsigned int wb_cost = config->page_size / config->bus_width;
 	FILE * file;
-	
-	if(init_log_file(config))
-	{
-		printf("Error: can't make log file\n");
-		exit(EXIT_FAILURE);
-	}
 
 	file = fopen(trace_f, "r");
 	if (!file)
@@ -44,6 +38,16 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 		printf("Error: opening trace file %s\n", trace_f);
 		exit(EXIT_FAILURE);
 	}
+
+	if (settings & 1)
+	{
+		if (init_log_file(config, trace_f))
+		{
+			printf("\nError: can't make log file\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	
 
 	while (fgets(line, sizeof(line), file))
 	{
@@ -62,7 +66,11 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 						  + wb_cost * ((log >> 11) & 1) * config->cache_cfg.cache_configs[2].cost // L2<->L3 swap
 						  + 100 * ((log >> 12) & 1);											  // L3 write-back after swap
 
-			add_line(total_oper, trace_counter, addr, log);
+			
+			if (settings & 1)
+			{
+				add_line(total_oper, trace_counter, addr, log);
+			}
 			++ total_oper;
 		}
 	}
@@ -80,8 +88,13 @@ int run_test(char *trace_f, cache *cache, config *config, int settings)
 			total_cost += wb_cost * 100; // cost of one page invalidate
 		}
 	}
+
+	add_to_avg_log(config, total_cost / instruction_counter, total_cost / total_oper);
+	if (settings & 1)
+	{
+		end_logging();
+	}
 	
-	end_logging();
 	fclose(file);
 	printf("--------Total lowd/store instructions: %d,total cost: %d, avg: %f\n", total_oper, total_cost, (float)total_cost / total_oper);
 	return 0;

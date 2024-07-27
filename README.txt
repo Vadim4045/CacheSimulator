@@ -11,7 +11,7 @@ To run in root directory:
 All parameters are optional. 
 
 -h -		show README
--v -		add verbosity (not implemented because match prints)
+-v -		store verbosity trace log for inspect(will override if exists)
 -i -		invalidate cach after trace(invalidation cost will add to total cost)
 -m -		print cache map on end of trace(before invalidation)
 -c -		path should be from root directory. If not used it, will be loaded default.congif

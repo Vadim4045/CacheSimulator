@@ -62,3 +62,15 @@ int get_all_files_in_dir(char *path, char **names_arr, int arr_size)
 	}
 	return count;
 }
+
+void replace_simbol(char *str, char from, char to)
+{
+	while (*str != '\0')
+	{
+		if (*str == from)
+		{
+			*str = to;
+		}
+		str++;
+	}
+}
