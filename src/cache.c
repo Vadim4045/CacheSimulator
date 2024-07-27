@@ -19,10 +19,10 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 	unsigned int i, tmp_addr;
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*log |= 1 << i;
 		
 		if(level_read_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
+			*log |= 1 << i;
 			if(i > 0)
 			{
 				for (i = 0; i < cache->_cache_levels_num; ++i)
@@ -49,9 +49,9 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
-		*log |= 1 << (5 + i);
 		if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
 		{
+			*log |= 1 << (5 + i);
 			break;
 		}
 	}

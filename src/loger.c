@@ -10,7 +10,7 @@ BOOL init_log_file(config *config)
 {
 	unsigned int i;
 
-	sprintf(buff_1, "./logs/_%u_%u_%u_%u_%u_"
+	sprintf(buff_1, "./logs/output_%u_%u_%u_%u_%u_"
 			, config->bus_width
 			, config->page_size
 			, config->cache_cfg.cache_levels
@@ -26,7 +26,7 @@ BOOL init_log_file(config *config)
 	
 	for (i = 0; i < config->ddr_cfg.channels; ++i)
 	{
-		sprintf(buff_1, "%s_%x_%u_%x_%u_%u", buff_1
+		sprintf(buff_1, "%s_%x_%u_%u", buff_1
 				, config->ddr_cfg.channels_config[i].size
 				, config->ddr_cfg.channels_config[i].dimms
 				, config->ddr_cfg.channels_config[i].banks);
