@@ -2,6 +2,10 @@
 #define COMMON_H
 
 #include "defines.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
 char *ret2str(RET_STATUS ret);
 int log2int(unsigned int n);

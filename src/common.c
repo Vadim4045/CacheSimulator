@@ -1,8 +1,5 @@
 #include "common.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <dirent.h>
-#include <string.h>
 
 char * ret_values[] = {"HIT", "MISS", "WRITE_BACK", "RET_WRONG"};
 

@@ -1,8 +1,5 @@
 #include "config_parser.h"
 #include "common.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
 static const char *cache_params[] = {"levels", "write_policy", "replaycement", "associativity"};

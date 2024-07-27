@@ -1,7 +1,6 @@
 #include "cache.h"
 #include "cashe_level.h"
 #include "common.h"
-#include <stdlib.h>
 
 void cache_init(cache *cache, config *cfg)
 {
@@ -28,7 +27,7 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 			{
 				for (i = 0; i < cache->_cache_levels_num; ++i)
 				{
-					*log |= 1 << (9 + i);
+					*log |= 1 << (10 + i);
 					*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
 					if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
 					{
@@ -42,7 +41,7 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 
 	if (i == cache->_cache_levels_num)
 	{
-		*log |= 1 << (4 + i);
+		*log |= 1 << 4;
 	}
 	
 	// now we work with page addr
@@ -89,7 +88,7 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 
 	if (i == cache->_cache_levels_num)
 	{
-		*log |= 1 << (4 + i);
+		*log |= 1 << 4;
 	}
 		
 	// now we work with page addr

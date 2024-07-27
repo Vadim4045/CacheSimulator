@@ -1,9 +1,6 @@
 #ifndef CACHE_SET_H
 #define CACHE_SET_H
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "defines.h"
 
 void cache_set_init(cache_set *set, unsigned int bank_size, unsigned int bus_width, unsigned int page_size, unsigned int sets);

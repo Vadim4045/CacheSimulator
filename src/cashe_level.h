@@ -1,9 +1,6 @@
 #ifndef CACHE_LEVEL_H
 #define CACHE_LEVEL_H
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "defines.h"
 
 void cache_level_init(cache_level *cache, unsigned int level, cache_level_config *cfg, unsigned int bus_width, unsigned int page_size);
