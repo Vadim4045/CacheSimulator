@@ -31,10 +31,11 @@ BOOL init_log_file(config *config, char* trace)
 	
 	for (i = 0; i < config->ddr_cfg.channels; ++i)
 	{
-		sprintf(buff_1, "%s_%x_%u_%u", buff_1
-				, config->ddr_cfg.channels_config[i].size
-				, config->ddr_cfg.channels_config[i].dimms
-				, config->ddr_cfg.channels_config[i].banks
+		sprintf(buff_1, "%s_%x_%u_%u_%u_%u", buff_1
+				, config->ddr_cfg.channels
+				, config->ddr_cfg.channels_config.num_of_dimms
+				, config->ddr_cfg.channels_config.dimms.num_of_ranks
+				, config->ddr_cfg.channels_config.dimms.rank.num_of_banks
 				);
 	}
 
@@ -82,7 +83,7 @@ BOOL add_to_avg_log(config *config, unsigned int trc_avg, unsigned int prg_avg)
 			return True;
 		}
 
-		fprintf(file, "Bus;Page_size;Levels;DDR_channels;IP;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_CH1_size;DDR_CH1_dims;DDR_CH1_banks;DDR_CH2_size;DDR_CH2_dims;DDR_CH2_banks;DDR_CH3_size;DDR_CH3_dims;DDR_CH3_banks;DDR_CH4_size;DDR_CH4_dims;DDR_CH4_banks;Trace_AVG;Prog_AVG\n");
+		fprintf(file, "Bus;Page_size;Levels;DDR_channels;IP;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_CH1_size;DDR_CH1_dims;DDR_CH1_banks;Trace_AVG;Prog_AVG\n");
 	}
 
 	fprintf(file, "%u;%u;%u;%u;%u;"
@@ -101,14 +102,7 @@ BOOL add_to_avg_log(config *config, unsigned int trc_avg, unsigned int prg_avg)
 			);
 	}
 
-	for (i = 0; i < 4; ++i)
-	{
-		fprintf(file, "%u;%u;%u;"
-				, config->ddr_cfg.channels_config[i].size
-				, config->ddr_cfg.channels_config[i].dimms
-				, config->ddr_cfg.channels_config[i].banks
-				);
-	}
+	fprintf(file, "%u;%u;%u;%u;", config->ddr_cfg.size, config->ddr_cfg.channels, config->ddr_cfg.channels_config.num_of_dimms, config->ddr_cfg.channels_config.dimms.num_of_ranks, config->ddr_cfg.channels_config.dimms.rank.num_of_banks);
 
 	fprintf(file,"%u;%u\n", trc_avg, prg_avg);
 	fclose(file);

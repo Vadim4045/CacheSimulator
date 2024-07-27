@@ -19,6 +19,11 @@ typedef enum
 	Wrong
 } BOOL;
 
+typedef enum{
+	NO_ERR,
+	ERROR,
+	ERR_WRONG
+} ERROR_RET;
 typedef enum
 {
 	HIT,
@@ -34,7 +39,7 @@ typedef enum
 	WRONG_INTERLEAVING
 } INTERLEAVING_POLICY;
 
-#pragma pack(push, 4)
+//#pragma pack(push, 4)
 typedef struct
 {
 	unsigned int size;
@@ -48,21 +53,37 @@ typedef struct
 	cache_level_config cache_configs[3];
 } cache_config;
 
+
 typedef struct
 {
-	unsigned int size;
-	unsigned int dimms;
-	unsigned int banks;
+	unsigned int rows;
+	unsigned int columns;
 	unsigned int RAS;
 	unsigned int CAS;
+} ddr_bank_config;
+typedef struct
+{
+	unsigned int num_of_banks;
+	ddr_bank_config banks;
+} ddr_rank_config;
+typedef struct
+{
+	unsigned int num_of_ranks;
+	ddr_rank_config rank;
+} ddr_dimm_config;
+typedef struct
+{
+	unsigned int num_of_dimms;
+	ddr_dimm_config dimms;
 } ddr_channel_config;
 
 typedef struct
 {
+	unsigned int size;
 	unsigned int channels;
 	INTERLEAVING_POLICY IP;
 
-	ddr_channel_config channels_config[4];
+	ddr_channel_config channels_config;
 } ddr_config;
 
 typedef struct
@@ -113,10 +134,52 @@ typedef struct
 
 } cache;
 
+
+typedef struct
+{
+	unsigned int bus;
+	unsigned int page_size;
+	unsigned int size;
+	unsigned int num_of_rows;
+	unsigned int num_of_columns;
+	unsigned int RAS;
+	unsigned int CAS;
+
+	unsigned int offset_width;
+	unsigned int rows_width;
+	unsigned int columns_width;
+
+	unsigned int offset_width;
+	unsigned int rows_width;
+	unsigned int columns_width;
+	unsigned int current_row
+} ddr_bank;
+typedef struct
+{
+	unsigned int num_of_banks;
+	ddr_bank* banks;
+} ddr_rank;
+	typedef struct
+{
+	unsigned int num_of_ranks;
+	ddr_rank ranks[2];
+} ddr_dimm;
+	typedef struct
+{
+	unsigned int num_of_dimms;
+	ddr_dimm dimms[2];
+} ddr_channel;
+	typedef struct
+{
+	unsigned int num_of_channels;
+	ddr_channel channels[2];
+} ddr;
+
 typedef struct
 {
 	cache cache;
+	ddr ddr;
 } cache_simulator;
 
-#pragma pack(pop)
+//#pragma pack(pop)
 #endif // DEFINES_H

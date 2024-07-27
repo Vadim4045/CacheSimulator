@@ -304,14 +304,14 @@ void print_cfg(config *cfg)
 	}
 	
 	printf("\nDDR have %d channels\n", cfg->ddr_cfg.channels);
-	for (i = 0; i < cfg->ddr_cfg.channels; ++i)
-	{
-		printf("DDR channel %d have size 0x%x, %d dimms with %d banks in dimm with RAS = %d, CAS = %d\n", i
-				, cfg->ddr_cfg.channels_config[i].size
-				, cfg->ddr_cfg.channels_config[i].dimms
-				, cfg->ddr_cfg.channels_config[i].banks
-				, cfg->ddr_cfg.channels_config[i].RAS
-				, cfg->ddr_cfg.channels_config[i].CAS);
-	}
-	printf("DDR IP = %d\n\n", cfg->ddr_cfg.IP);
+	// for (i = 0; i < cfg->ddr_cfg.channels; ++i)
+	// {
+	// 	printf("DDR channel %d have size 0x%x, %d dimms with %d banks in dimm with RAS = %d, CAS = %d\n", i
+	// 			, cfg->ddr_cfg.channels_config[i].size
+	// 			, cfg->ddr_cfg.channels_config[i].dimms
+	// 			, cfg->ddr_cfg.channels_config[i].banks
+	// 			, cfg->ddr_cfg.channels_config[i].RAS
+	// 			, cfg->ddr_cfg.channels_config[i].CAS);
+	// }
+	// printf("DDR IP = %d\n\n", cfg->ddr_cfg.IP);
 }
