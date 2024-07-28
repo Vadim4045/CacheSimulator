@@ -4,7 +4,7 @@
 #include "defines.h"
 
 void init_ddr(ddr *ddr, config *cfg);
-ERROR_RET access_to_ddr(ddr *ddr, unsigned int addr, unsigned int size, unsigned int *cost);
+DDR_RET access_to_ddr(ddr *ddr, unsigned int addr);
 void release_ddr(ddr *ddr);
 
 #endif // DDR_H

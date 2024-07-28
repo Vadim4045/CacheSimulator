@@ -4,8 +4,6 @@
 #include "defines.h"
 
 void cache_set_init(cache_set *set, unsigned int bank_size, unsigned int bus_width, unsigned int page_size, unsigned int sets);
-void release_cache_set_resources(cache_set*set);
-
 
 RET_STATUS set_read_data(cache_set*set, unsigned int addr);
 RET_STATUS set_write_data(cache_set*set, unsigned int addr);
@@ -27,5 +25,6 @@ void rlu_setmax(cache_set *set, unsigned int page_num);
 unsigned int rlu_get_counter(cache_set *set, unsigned int page_num);
 void print_set(cache_set *page_num);
 
+void release_cache_set(cache_set *set);
 #endif // CACHE_SET_H
 

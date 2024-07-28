@@ -12,4 +12,6 @@ unsigned int cache_invalidate_step(cache *cache);
 unsigned int cache_invalidate_step(cache *cache);
 void print_cache(cache *cache);
 
+void release_cache(cache *cache);
+
 #endif // CACHE_SIMULATOR_H

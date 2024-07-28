@@ -249,29 +249,29 @@ src/config_parser.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/config_parser.c.s
 .PHONY : src/config_parser.c.s
 
-src/ddr_simulator.o: src/ddr_simulator.c.o
-.PHONY : src/ddr_simulator.o
+src/ddr.o: src/ddr.c.o
+.PHONY : src/ddr.o
 
 # target to build an object file
-src/ddr_simulator.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.o
-.PHONY : src/ddr_simulator.c.o
+src/ddr.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr.c.o
+.PHONY : src/ddr.c.o
 
-src/ddr_simulator.i: src/ddr_simulator.c.i
-.PHONY : src/ddr_simulator.i
+src/ddr.i: src/ddr.c.i
+.PHONY : src/ddr.i
 
 # target to preprocess a source file
-src/ddr_simulator.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.i
-.PHONY : src/ddr_simulator.c.i
+src/ddr.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr.c.i
+.PHONY : src/ddr.c.i
 
-src/ddr_simulator.s: src/ddr_simulator.c.s
-.PHONY : src/ddr_simulator.s
+src/ddr.s: src/ddr.c.s
+.PHONY : src/ddr.s
 
 # target to generate assembly for a file
-src/ddr_simulator.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr_simulator.c.s
-.PHONY : src/ddr_simulator.c.s
+src/ddr.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CacheSimulator.bin.dir/build.make CMakeFiles/CacheSimulator.bin.dir/src/ddr.c.s
+.PHONY : src/ddr.c.s
 
 src/loger.o: src/loger.c.o
 .PHONY : src/loger.o
@@ -369,9 +369,9 @@ help:
 	@echo "... src/config_parser.o"
 	@echo "... src/config_parser.i"
 	@echo "... src/config_parser.s"
-	@echo "... src/ddr_simulator.o"
-	@echo "... src/ddr_simulator.i"
-	@echo "... src/ddr_simulator.s"
+	@echo "... src/ddr.o"
+	@echo "... src/ddr.i"
+	@echo "... src/ddr.s"
 	@echo "... src/loger.o"
 	@echo "... src/loger.i"
 	@echo "... src/loger.s"

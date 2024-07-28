@@ -3,16 +3,14 @@
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
 static const char *cache_params[] = {"levels"};
-static const char *ddr_channel_params[] = {"size", "dimms", "banks", "RAS", "CAS"};
-static const char *ddr_params[] = {"channels", "interleaving"};
+static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleaving"};
 static const char *system_params[] = {"bus", "page_size"};
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
 int parse_param_line(const char *line, char *param_name, int *param_value);
-int set_ddr_channel_param(ddr_channel_config *cfg, char *line);
 int set_cache_level_param(cache_level_config *cfg, char *line);
-int set_ddr(ddr_config *config, char *line);
 int set_cache(cache_config *config, char *line);
+int set_ddr(ddr_config *config, char *line);
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name)
 {
@@ -36,57 +34,6 @@ int parse_param_line(const char *line, char *param_name, int *param_value)
 	}
 
 	return ret;
-}
-
-int set_ddr_channel_param(ddr_channel_config *cfg, char *line) 
-{
-	char param_name[MAX_PARAM_LENGTH];
-	unsigned int param_value, param_num;
-
-	if (!parse_param_line(line, param_name, &param_value))
-	{
-		if ((param_num = get_param_num(ddr_channel_params, 5, param_name)) == -1)
-			return -1;
-
-		switch (param_num)
-		{
-		case 0:
-			if (!is_power_of_2(param_value))
-			{
-				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
-				return -1;
-			}
-			cfg->size = param_value * _1M;
-			break;
-		case 1:
-			if (!is_power_of_2(param_value))
-			{
-				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
-				return -1;
-			}
-			cfg->dimms = param_value;
-			break;
-		case 2:
-			if (!is_power_of_2(param_value))
-			{
-				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
-				return -1;
-			}
-			cfg->banks = param_value;
-			break;
-		case 3:
-			cfg->RAS = param_value;
-			break;
-		case 4:
-			cfg->CAS = param_value;
-			break;
-		default:
-			printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
-			break;
-		}
-	}
-	
-	return 0;
 }
 
 int set_cache_level_param(cache_level_config *cfg, char *line)
@@ -129,39 +76,54 @@ int set_cache_level_param(cache_level_config *cfg, char *line)
 	return 0;
 }
 
-int set_ddr(ddr_config *config, char *line)
+int set_ddr(ddr_config *cfg, char *line)
 {
 	char param_name[MAX_PARAM_LENGTH];
 	unsigned int param_value, channel;
-	if (line[0] == 'C' && line[3] == '.')
-	{
-		channel = line[2] - 48;
-		if (set_ddr_channel_param(&(config->channels_config[channel]), &line[4]))
-		{
-			printf("%s Error: Can't set parameter in DDR channel %d '%s'\n", __FUNCTION__, channel, &line[4]);
-		}
-	}
-	else
-	{
-		if (!parse_param_line(line, param_name, &param_value))
-		{
-			if ((channel = get_param_num(ddr_params, 2, param_name)) == -1)
-				return -1;
 
-			switch (channel)
+	if (!parse_param_line(line, param_name, &param_value))
+	{
+		if ((channel = get_param_num(ddr_params, 5, param_name)) == -1)
+			return -1;
+
+		switch (channel)
+		{
+		case 0:
+			if (!is_power_of_2(param_value))
 			{
-			case 0:
-				config->channels = param_value;
-				break;
-			case 1:
-				config->IP = param_value;
-				break;
-			default:
-				printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
+				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
 				return -1;
 			}
+			cfg->num_of_banks = param_value;
+			break;
+		case 1:
+			if (!is_power_of_2(param_value))
+			{
+				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->row_size = param_value;
+			break;
+		case 2:
+			cfg->RAS = param_value;
+			break;
+		case 3:
+			cfg->CAS = param_value;
+			break;
+		case 4:
+			if (param_value > 1)
+			{
+				printf("%s ERROR: %s = 0x%x (mast be 0 or 1)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->IP = param_value;
+			break;
+		default:
+			printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
+			return -1;
 		}
 	}
+
 	return 0;
 }
 
@@ -292,26 +254,23 @@ void print_cfg(config *cfg)
 {
 	unsigned int i;
 	printf("\nCache Simulator configuration:\n");
-	printf("Bus width = %d bytes\n", cfg->bus_width);
+	printf("Bus width = %u bytes\n", cfg->bus_width);
 	printf("Page size = 0x%x bytes\n", cfg->page_size);
-	printf("\nCache levels = %d\n", cfg->cache_cfg.cache_levels);
+	printf("\nCache levels = %u\n", cfg->cache_cfg.cache_levels);
 	for (i = 0; i < cfg->cache_cfg.cache_levels; ++i)
 	{
-		printf("Level %d:\tSize = 0x%x bytes\tSets = %d, HIT cost = %d\n", i
+		printf("Level %u:\tSize = 0x%x bytes\tSets = %u, HIT cost = %u\n", i
 				, cfg->cache_cfg.cache_configs[i].size
 				, cfg->cache_cfg.cache_configs[i].sets
-				, cfg->cache_cfg.cache_configs[i].cost);
+				, cfg->cache_cfg.cache_configs[i].cost
+				);
 	}
-	
-	printf("\nDDR have %d channels\n", cfg->ddr_cfg.channels);
-	// for (i = 0; i < cfg->ddr_cfg.channels; ++i)
-	// {
-	// 	printf("DDR channel %d have size 0x%x, %d dimms with %d banks in dimm with RAS = %d, CAS = %d\n", i
-	// 			, cfg->ddr_cfg.channels_config[i].size
-	// 			, cfg->ddr_cfg.channels_config[i].dimms
-	// 			, cfg->ddr_cfg.channels_config[i].banks
-	// 			, cfg->ddr_cfg.channels_config[i].RAS
-	// 			, cfg->ddr_cfg.channels_config[i].CAS);
-	// }
-	// printf("DDR IP = %d\n\n", cfg->ddr_cfg.IP);
+
+	printf("DDR have size 2 GBytes, 1 channel, 1 dimm, 1 rank and %u banks with row-size %x KBytes.\nCAS = %u, RAS = %u. Interleavingpolicy = %u\n\n"
+			, cfg->ddr_cfg.num_of_banks
+			, cfg->ddr_cfg.row_size / _1K
+			, cfg->ddr_cfg.CAS
+			, cfg->ddr_cfg.RAS
+			, cfg->ddr_cfg.IP
+			);
 }

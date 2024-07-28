@@ -62,7 +62,7 @@ RET_STATUS cache_read(cache *cache, unsigned int *addr, unsigned int *log)
 RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 {
 	BOOL write = True;
-	unsigned int i;
+	unsigned int i, j;
 
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
@@ -72,11 +72,11 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 		{
 			if(i > 0)
 			{
-				for (i = 0; i < cache->_cache_levels_num; ++i)
+				for (j = 0; j < cache->_cache_levels_num; ++j)
 				{
-					*log |= 1 << (10 + i);
+					*log |= 1 << (10 + j);
 					*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
-					if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
+					if (level_store_page(&(cache->_cache_levels_inst[j]), addr, &write) == HIT)
 					{
 						break;
 					}
@@ -93,11 +93,9 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 		
 	// now we work with page addr
 	*addr = *addr >> cache->_cache_levels_inst[0].sets_arr[0]._offcet_width;
-
 	for (i = 0; i < cache->_cache_levels_num; ++i)
 	{
 		*log |= 1 << (5 + i);
-
 		if (level_store_page(&(cache->_cache_levels_inst[i]), addr, &write) == HIT)
 		{
 			break;
@@ -129,4 +127,13 @@ void print_cache(cache *cache)
 		print_level(&(cache->_cache_levels_inst[i]));
 	}
 	
+}
+
+void release_cache(cache *cache)
+{
+	unsigned int i;
+	for (i = 0; i < cache->_cache_levels_num; ++i)
+	{
+		release_cache_level(&(cache->_cache_levels_inst[i]));
+	}
 }

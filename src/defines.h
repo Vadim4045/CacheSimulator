@@ -20,10 +20,10 @@ typedef enum
 } BOOL;
 
 typedef enum{
-	NO_ERR,
-	ERROR,
-	ERR_WRONG
-} ERROR_RET;
+	CAS,
+	RAS,
+	WRONG_RET
+} DDR_RET;
 typedef enum
 {
 	HIT,
@@ -53,41 +53,13 @@ typedef struct
 	cache_level_config cache_configs[3];
 } cache_config;
 
-
 typedef struct
 {
-	unsigned int size;
-	unsigned int rows;
-	unsigned int columns;
-	unsigned int RAS;
-	unsigned int CAS;
-} ddr_bank_config;
-typedef struct
-{
-	unsigned int size;
 	unsigned int num_of_banks;
-	ddr_bank_config banks;
-} ddr_rank_config;
-typedef struct
-{
-	unsigned int size;
-	unsigned int num_of_ranks;
-	ddr_rank_config rank;
-} ddr_dimm_config;
-typedef struct
-{
-	unsigned int size;
-	unsigned int num_of_dimms;
-	ddr_dimm_config dimms;
-} ddr_channel_config;
-
-typedef struct
-{
-	unsigned int size;
-	unsigned int num_of_channels;
+	unsigned int row_size;
+	unsigned int CAS;
+	unsigned int RAS;
 	INTERLEAVING_POLICY IP;
-
-	ddr_channel_config channels;
 } ddr_config;
 
 typedef struct
@@ -132,71 +104,26 @@ typedef struct
 
 typedef struct
 {
+	 unsigned int num_of_banks;
+
+	unsigned int page_size_width;
+	unsigned int bank_num_width;
+	unsigned int offset_width;
+	unsigned int column_num_width;
+	unsigned int row_num_width;
+
+	unsigned int *banks;
+	config* cfg;
+} ddr;
+typedef struct
+{
 	unsigned int _bus_width;
 	unsigned int _cache_levels_num;
 	cache_level _cache_levels_inst[3];
-
+	ddr ddr;
+	
 } cache;
 
-
-typedef struct
-{
-	unsigned int bus;
-	unsigned int page_size;
-	unsigned int size;
-	unsigned int num_of_rows;
-	unsigned int num_of_columns;
-	unsigned int RAS;
-	unsigned int CAS;
-
-	unsigned int offset_width;
-	unsigned int rows_width;
-	unsigned int columns_width;
-
-	unsigned int current_row
-} ddr_bank;
-typedef struct
-{
-	unsigned int bus;
-	unsigned int page_size;
-	unsigned int size;
-	unsigned int num_of_banks;
-	ddr_bank* banks;
-} ddr_rank;
-	typedef struct
-{
-	unsigned int bus;
-	unsigned int page_size;
-	unsigned int size;
-	unsigned int num_of_ranks;
-	ddr_rank* ranks;
-} ddr_dimm;
-	typedef struct
-{
-	unsigned int bus;
-	unsigned int page_size;
-	unsigned int size;
-	unsigned int num_of_dimms;
-	ddr_dimm* dimms;
-} ddr_channel;
-	typedef struct
-{
-	unsigned int bus;
-	unsigned int page_size;
-	unsigned int size;
-	
-	unsigned int num_of_channels;
-	unsigned int num_of_dimms;
-	unsigned int num_of_ranks;
-	unsigned int num_of_banks;
-	ddr_channel* channels;
-} ddr;
-
-typedef struct
-{
-	cache cache;
-	ddr ddr;
-} cache_simulator;
 
 //#pragma pack(pop)
 #endif // DEFINES_H

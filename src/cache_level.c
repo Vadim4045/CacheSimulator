@@ -18,12 +18,12 @@ void cache_level_init(cache_level *cache, unsigned int level, cache_level_config
 	}
 }
 
-void release_cache_level_resources(cache_level *cache)
+void release_cache_level(cache_level *cache)
 {
 	int i;
 	for (i = 0; i < cache->_sets; ++i)
 	{
-		release_cache_set_resources(&(cache->sets_arr[i]));
+		release_cache_set(&(cache->sets_arr[i]));
 	}
 
 	free(cache->sets_arr);
@@ -44,9 +44,7 @@ RET_STATUS level_read_data(cache_level *cache, unsigned int addr) // full DDR ad
 				set_valid(&(cache->sets_arr[i]), ((addr >> cache->sets_arr[i]._offcet_width) & GET_MASK(cache->sets_arr[i]._set_width)), False);
 			}
 			break;
-		}
-		break;
-			
+		}		
 	}
 
 	return ret;
@@ -59,7 +57,7 @@ RET_STATUS level_write_data(cache_level *cache, unsigned int addr) // full DDR a
 
 	for (i = 0; i < cache->_sets; ++i)
 	{
-		if ((ret = set_read_data(&(cache->sets_arr[i]), addr)) == HIT)
+		if ((ret = set_write_data(&(cache->sets_arr[i]), addr)) == HIT)
 		{
 			if(cache->level)
 			{
@@ -85,7 +83,6 @@ RET_STATUS level_store_page(cache_level *cache, unsigned int *addr, BOOL * write
 		{
 			level_rlu_decrement(cache, tmp_addr);
 			set_store_page(&(cache->sets_arr[i]), addr, write);
-
 			return HIT;
 		}
 	}

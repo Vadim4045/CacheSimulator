@@ -14,7 +14,7 @@ void cache_set_init(cache_set *set, unsigned int bank_size, unsigned int bus_wid
 	set->addr_arr = (unsigned int *)calloc(set->_pages, sizeof(unsigned int));
 }
 
-void release_cache_set_resources(cache_set*set)
+void release_cache_set(cache_set*set)
 {
 	free(set->addr_arr);
 }
@@ -74,6 +74,7 @@ RET_STATUS set_store_page(cache_set *set, unsigned int *addr, BOOL *write) // pa
 	rlu_setmax(set, page_num);
 	
 	*write = writeback_write;
+	
 	return res;
 }
 
