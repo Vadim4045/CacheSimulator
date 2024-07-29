@@ -1,16 +1,19 @@
 
-To compile input commands:
-	cd output
-	cmake -DDEBUG_MODE=<ON/OFF> ..
+Compile from directory "./output":
+	cmake ..
 	cmake --build .
 
 
-To run in root directory:
-	./CacheSimulator.bin < -h >	 < -c path_to_config>	  < -t name_of_trace>   < -r type_of_range 2 16 ... values>
+Run from project directory:
+	./CacheSimulator.bin 	< flags >	 
+							< -c path_to_config>	  
+							< -t name_of_trace>   
+							< -r type_of_range 2 16 ... values>
 
-All parameters are optional. 
+All flags and parameters are optional. 
 
 -h -		show README
+-l -		add result to statistic
 -v -		store verbosity trace log for inspect(will override if exists)
 -i -		invalidate cach after trace(invalidation cost will add to total cost)
 -m -		print cache map on end of trace(before invalidation)

@@ -110,7 +110,11 @@ int run_test(char *trace_f, cache *cache, ddr *ddr, config *config, int settings
 		}
 	}
 
-	add_to_avg_log(config, total_cost / instruction_counter, total_cost / total_oper);
+	if (settings & 8)
+	{
+		add_to_avg_log(config, total_cost / instruction_counter, total_cost / total_oper);
+	}
+		
 	if (settings & 1)
 	{
 		end_logging();

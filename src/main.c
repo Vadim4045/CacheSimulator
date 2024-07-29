@@ -31,12 +31,15 @@ int main(int argc, char **argv)
 	char *range_type = NULL;
 	int show_help = 0, range_num = -1, settings = 0;
 
-	while ((opt = getopt(argc, argv, "hvmit:c:r:")) != -1)
+	while ((opt = getopt(argc, argv, "hlvmit:c:r:")) != -1)
 	{
 		switch (opt)
 		{
 		case 'h':
 			show_help = 1;
+			break;
+		case 'l':
+			settings |= 8;
 			break;
 		case 'v':
 			settings |= 1;
