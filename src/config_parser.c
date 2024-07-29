@@ -3,7 +3,7 @@
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
 static const char *cache_params[] = {"levels"};
-static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleaving"};
+static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleaving", "channels", "dimms", "ranks"};
 static const char *system_params[] = {"bus", "page_size"};
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
@@ -83,7 +83,7 @@ int set_ddr(ddr_config *cfg, char *line)
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
-		if ((channel = get_param_num(ddr_params, 5, param_name)) == -1)
+		if ((channel = get_param_num(ddr_params, 8, param_name)) == -1)
 			return -1;
 
 		switch (channel)
@@ -117,6 +117,30 @@ int set_ddr(ddr_config *cfg, char *line)
 				return -1;
 			}
 			cfg->IP = param_value;
+			break;
+		case 5:
+			if (!is_power_of_2(param_value))
+			{
+				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->num_of_channels = param_value;
+			break;
+		case 6:
+			if (!is_power_of_2(param_value))
+			{
+				printf("%s ERROR: %s = 0x%x (mast be power of 2)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->num_of_dimms = param_value;
+			break;
+		case 7:
+			if (!param_value || param_value > 2)
+			{
+				printf("%s ERROR: %s = 0x%x (mast be 1 or 2)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->num_of_ranks = param_value;
 			break;
 		default:
 			printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
@@ -266,7 +290,10 @@ void print_cfg(config *cfg)
 				);
 	}
 
-	printf("DDR have size 2 GBytes, 1 channel, 1 dimm, 1 rank and %u banks with row-size %x KBytes.\nCAS = %u, RAS = %u. Interleavingpolicy = %u\n\n"
+	printf("DDR have size 2 GBytes, %u channels, %u dimms, %u ranks and %u banks with row-size %x KBytes.\nCAS = %u, RAS = %u. Interleavingpolicy = %u\n\n"
+			, cfg->ddr_cfg.num_of_channels
+			, cfg->ddr_cfg.num_of_dimms
+			, cfg->ddr_cfg.num_of_ranks
 			, cfg->ddr_cfg.num_of_banks
 			, cfg->ddr_cfg.row_size / _1K
 			, cfg->ddr_cfg.CAS

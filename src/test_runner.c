@@ -8,9 +8,9 @@
 #define MAX_REG_NAME_LENGTH 8
 #define MAX_LINE_LENGTH 1024
 
-static unsigned long trace_counter = 0;
-static unsigned long total_oper = 0;
-static unsigned long total_cost = 0;
+static unsigned long trace_counter;
+static unsigned long total_oper;
+static unsigned long total_cost;
 
 typedef struct
 {
@@ -214,6 +214,10 @@ void run_loop(char *trace_f, config *config, int settings)
 
 	if (trace_f != NULL)
 	{
+		trace_counter = 0;
+		total_oper = 0;
+		total_cost = 0;
+		
 		sprintf(input_filename, "%s", trace_f);
 		printf("Trace\t%s:\n", input_filename);
 		go_trace(input_filename, &cache, config, settings);
@@ -225,6 +229,10 @@ void run_loop(char *trace_f, config *config, int settings)
 		{
 			if ((sscanf(trace_names[i], "%55[^.].%55s", line, input_filename) == 2) && !strcmp(input_filename, "trc"))
 			{
+				trace_counter = 0;
+				total_oper = 0;
+				total_cost = 0;
+				
 				sprintf(input_filename, "./traces/%s", trace_names[i]);
 				printf("Trace\t%s:\n", trace_names[i]);
 				go_trace(input_filename, &cache, config, settings);

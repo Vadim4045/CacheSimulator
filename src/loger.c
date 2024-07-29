@@ -49,7 +49,9 @@ BOOL init_log_file(config *config, char* trace)
 
 BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned int log){
 	fprintf(file, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u\n", tr_num, addr
-			, ((log >> 0) & 1), ((log >> 1) & 1), ((log >> 2) & 1) // levels HIT
+			, (((log >> 0) & 1) & !(((log >> 1) & 1) | ((log >> 2) & 1) | ((log >> 4) & 1))) // L1 HIT
+			,(((log >> 1) & 1) & !(((log >> 2) & 1) | ((log >> 4) & 1))) // L2 HIT
+			,(((log >> 2) & 1) & !((log >> 4) & 1)) // L3 HIT
 			,((log >> 4) & 1) // MISS
 			,((log >> 5) & 1), ((log >> 6) & 1), ((log >> 7) & 1) // levels write-back
 			,((log >> 11) & 1), ((log >> 12) & 1) // swap costs
@@ -82,7 +84,7 @@ BOOL add_to_avg_log(config *config, float trc_avg, float prg_avg)
 			return True;
 		}
 
-		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;AVG cost/instruction;AVG cost/program_counter\n");
+		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;AVG cache access;AVG cost/program_counter\n");
 	}
 
 	fprintf(file, "%u;%u;"
