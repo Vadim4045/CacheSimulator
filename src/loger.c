@@ -43,17 +43,18 @@ BOOL init_log_file(config *config, char* trace)
 		return True;
 	}
 
-	fprintf(file, "Trace_No;Addr;L1_HIT;L2_HIT;L3_HIT;L1_WB;L2_WB;L3_WB;L2_SWAP;L3_SWAP;DDR_CAS;DDR_RAS\n");
+	fprintf(file, "Trace_No;Addr;L1_HIT;L2_HIT;L3_HIT;MISS;L1_WB;L2_WB;L3_WB;L2_SWAP;L3_SWAP;DDR_CAS;DDR_RAS\n");
 	return False;
 }
 
 BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned int log){
-	fprintf(file, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u\n", tr_num, addr
+	fprintf(file, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u\n", tr_num, addr
 			, ((log >> 0) & 1), ((log >> 1) & 1), ((log >> 2) & 1) // levels HIT
-			, ((log >> 5) & 1), ((log >> 6) & 1), ((log >> 7) & 1) // levels write-back
-			, ((log >> 11) & 1), ((log >> 12) & 1) // swap costs
-			, (((log >> 15) & 1) + ((log >> 17) & 1)) // DDR CAS
-			, (((log >> 16) & 1) + ((log >> 18) & 1)) // DDR RAS
+			,((log >> 4) & 1) // MISS
+			,((log >> 5) & 1), ((log >> 6) & 1), ((log >> 7) & 1) // levels write-back
+			,((log >> 11) & 1), ((log >> 12) & 1) // swap costs
+			,(((log >> 15) & 1) + ((log >> 17) & 1)) // DDR CAS
+			,(((log >> 16) & 1) + ((log >> 18) & 1)) // DDR RAS
 	);
 
 	return True;
