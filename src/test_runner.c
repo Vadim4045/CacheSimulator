@@ -47,16 +47,21 @@ int run_test(char *trace_f, cache *cache, ddr *ddr, config *config, int settings
 			exit(EXIT_FAILURE);
 		}
 	}
-	
+
+	if (settings >> 4)
+	{
+		log |= 1 << 31; // disable date raising to L1 on L2/L3 HIT()
+	}
+
 	while (fgets(line, sizeof(line), file))
 	{
 		
 		if((sscanf(line, "0x%x 0x%x %s 0x%x", &trace_counter, &instruction_counter, instruction_string, &addr) == 4))
 		{
 			addr_wb = addr;
-			log = 0;
+			log = (settings >> 4) << 31; // disable date raising to L1 on L2/L3 HIT()
 			ret = do_instruction(cache, instruction_string, &addr, &log);
-	
+
 			if ((log >> 4) & 1)
 			{
 				log |= (1 << 15); // CAS

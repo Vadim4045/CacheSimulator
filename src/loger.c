@@ -13,21 +13,21 @@ BOOL init_log_file(config *config, char* trace)
 	replace_simbol(trace, '_', ' ');
 	sscanf(trace, "./traces/%s", buff_2);
 	
-	sprintf(buff_1, "./logs/%s_%u_%u", buff_2
+	sprintf(buff_1, "./logs/%s_Page_%u_Levels_%u", buff_2
 			, config->page_size
 			, config->cache_cfg.cache_levels
 			);
 			
 	for(i = 0; i < config->cache_cfg.cache_levels; ++i)
 	{
-		sprintf(buff_1, "%s_%x_%u", buff_1
+		sprintf(buff_1, "%s_p_size_%x_sets_%u", buff_1
 				, config->cache_cfg.cache_configs[i].size / _1K
 				, config->cache_cfg.cache_configs[i].sets
 				);
 	}
 	
 
-	sprintf(buff_1, "%s_%u_%x_%u", buff_1
+	sprintf(buff_1, "%s_ddr_banks_%u_row_size%x_ip_%u", buff_1
 			, config->ddr_cfg.num_of_banks
 			, config->ddr_cfg.row_size / _1K
 			, config->ddr_cfg.IP
@@ -43,17 +43,17 @@ BOOL init_log_file(config *config, char* trace)
 		return True;
 	}
 
-	fprintf(file, "Trace_No;Addr;L1_HIT;L2_HIT;L3_HIT;L1_WB;L2_WB;L3_WB;L1_SWAP;L2_SWAP;L3_SWAP;DDR_CAS;DDR_RAS\n");
+	fprintf(file, "Trace_No;Addr;L1_HIT;L2_HIT;L3_HIT;L1_WB;L2_WB;L3_WB;L2_SWAP;L3_SWAP;DDR_CAS;DDR_RAS\n");
 	return False;
 }
 
 BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned int log){
-	fprintf(file, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u\n", tr_num, addr
+	fprintf(file, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u\n", tr_num, addr
 			, ((log >> 0) & 1), ((log >> 1) & 1), ((log >> 2) & 1) // levels HIT
-			,((log >> 5) & 1), ((log >> 6) & 1), ((log >> 7) & 1) // levels write-back
-			,((log >> 10) & 1), ((log >> 11) & 1), ((log >> 12) & 1) // swap costs
-			,(((log >> 15) & 1) + ((log >> 17) & 1)) // DDR CAS
-			,(((log >> 16) & 1) + ((log >> 18) & 1)) // DDR RAS
+			, ((log >> 5) & 1), ((log >> 6) & 1), ((log >> 7) & 1) // levels write-back
+			, ((log >> 11) & 1), ((log >> 12) & 1) // swap costs
+			, (((log >> 15) & 1) + ((log >> 17) & 1)) // DDR CAS
+			, (((log >> 16) & 1) + ((log >> 18) & 1)) // DDR RAS
 	);
 
 	return True;

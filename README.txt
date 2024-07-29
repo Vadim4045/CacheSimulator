@@ -13,12 +13,13 @@ Run from project directory:
 All flags and parameters are optional. 
 
 -h -		show README
+-d -		disable date raising to L1 on L2/L3 HIT
 -l -		add result to statistic
 -v -		store verbosity trace log for inspect(will override if exists)
 -i -		invalidate cach after trace(invalidation cost will add to total cost)
 -m -		print cache map on end of trace(before invalidation)
 -c -		path should be from root directory. If not used it, will be loaded default.congif
--t -		path to trace file from roo directory. If not used it, will run all taces in directory "traces".
+-t -		path to trace file from project directory. If not used, will run all taces in directory "./traces".
 
 This parameter mast be last!!!
 -r -		name of parameter to range (should be as in config file). 

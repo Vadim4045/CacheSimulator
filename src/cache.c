@@ -70,7 +70,7 @@ RET_STATUS cache_write(cache *cache, unsigned int *addr, unsigned int* log)
 
 		if (level_write_data(&(cache->_cache_levels_inst[i]), *addr) == HIT)
 		{
-			if(i > 0)
+			if (i > 0 && !(*log >> 31))
 			{
 				for (j = 0; j < cache->_cache_levels_num; ++j)
 				{

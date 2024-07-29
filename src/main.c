@@ -31,24 +31,27 @@ int main(int argc, char **argv)
 	char *range_type = NULL;
 	int show_help = 0, range_num = -1, settings = 0;
 
-	while ((opt = getopt(argc, argv, "hlvmit:c:r:")) != -1)
+	while ((opt = getopt(argc, argv, "hdlvmit:c:r:")) != -1)
 	{
 		switch (opt)
 		{
 		case 'h':
 			show_help = 1;
 			break;
-		case 'l':
-			settings |= 8;
-			break;
 		case 'v':
-			settings |= 1;
+			settings |= (1 << 0);
 			break;
 		case 'm':
-			settings |= 2;
+			settings |= (1 << 1);
 			break;
 		case 'i':
-			settings |= 4;
+			settings |= (1 << 2);
+			break;
+		case 'l':
+			settings |= (1 << 3);
+			break;
+		case 'd':
+			settings |= (1 << 4);
 			break;
 		case 't':
 			trace_file_name = optarg;
