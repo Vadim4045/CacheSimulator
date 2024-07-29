@@ -1,5 +1,6 @@
 #include "cache.h"
 #include "cashe_level.h"
+#include "ddr.h"
 #include "common.h"
 
 void write_back_after_miss(cache *cache, unsigned int *addr, unsigned int *log);
@@ -135,4 +136,5 @@ void release_cache(cache *cache)
 	{
 		release_cache_level(&(cache->_cache_levels_inst[i]));
 	}
+	release_ddr(&(cache->ddr));
 }

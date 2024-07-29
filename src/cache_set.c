@@ -7,7 +7,7 @@ void cache_set_init(cache_set *set, unsigned int bank_size, unsigned int bus_wid
 	set->_pages = bank_size / page_size;
 	set->_offcet_width = log2int(page_size);
 	set->_set_width = log2int(set->_pages);
-	set->_tag_width = 8 * bus_width - set->_set_width - set->_offcet_width;// 2GB max in DDR
+	set->_tag_width = BITS_IN_BYTE * bus_width - set->_set_width - set->_offcet_width; // 2GB max in DDR
 	set->_counter_width = log2int(sets);
 
 	// pages_arr       = (unsigned char*) malloc(bank_size);

@@ -12,6 +12,7 @@
 #define _1K (1 << 10)
 #define _1M (1 << 20)
 
+#define BITS_IN_BYTE 8
 typedef enum
 {
 	False = 0,

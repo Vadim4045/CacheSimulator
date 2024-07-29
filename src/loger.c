@@ -60,7 +60,7 @@ BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned 
 	return True;
 }
 
-BOOL add_to_avg_log(config *config, unsigned int trc_avg, unsigned int prg_avg)
+BOOL add_to_avg_log(config *config, float trc_avg, float prg_avg)
 {
 	unsigned int i;
 
@@ -82,7 +82,7 @@ BOOL add_to_avg_log(config *config, unsigned int trc_avg, unsigned int prg_avg)
 			return True;
 		}
 
-		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;Trace_AVG;Prog_AVG\n");
+		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;AVG cost/instruction;AVG cost/program_counter\n");
 	}
 
 	fprintf(file, "%u;%u;"
@@ -98,7 +98,7 @@ BOOL add_to_avg_log(config *config, unsigned int trc_avg, unsigned int prg_avg)
 			);
 	}
 
-	fprintf(file, "%u;%u;%u;%u;%u\n"
+	fprintf(file, "%u;%u;%u;%f;%f\n"
 		, config->ddr_cfg.num_of_banks
 		, config->ddr_cfg.row_size / _1K
 		, config->ddr_cfg.IP
