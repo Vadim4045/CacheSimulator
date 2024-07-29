@@ -20,7 +20,7 @@ BOOL init_log_file(config *config, char* trace)
 			
 	for(i = 0; i < config->cache_cfg.cache_levels; ++i)
 	{
-		sprintf(buff_1, "%s_p_size_%x_sets_%u", buff_1
+		sprintf(buff_1, "%s_L%u_size_%x_sets_%u", buff_1, i + 1
 				, config->cache_cfg.cache_configs[i].size / _1K
 				, config->cache_cfg.cache_configs[i].sets
 				);

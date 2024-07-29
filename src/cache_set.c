@@ -36,6 +36,7 @@ RET_STATUS set_read_data(cache_set *set, unsigned int addr) // full DDR addr
 RET_STATUS set_write_data(cache_set *set, unsigned int addr) // full DDR addr
 {
 	unsigned int page_num = GET_FIELD(addr, set->_offcet_width, set->_set_width);
+	
 	if (((addr >> (set->_offcet_width + set->_set_width)) 				// tag
 		 == (set->addr_arr[page_num] >> (set->_counter_width + 2)))		// stored tag
 		&& (is_valid(set, page_num)))									// is valid																															  // is valid
@@ -56,7 +57,7 @@ RET_STATUS set_store_page(cache_set *set, unsigned int *addr, BOOL *write) // pa
 	page_num = *addr & GET_MASK(set->_set_width);
 	tag = *addr >> set->_set_width;
 
-	if (is_valid(set, page_num))
+	if (is_valid(set, page_num))// busy
 	{
 		*addr = get_page_addr(set, page_num);
 		writeback_write = ((set->addr_arr[page_num] >> 1) & 1);
@@ -76,6 +77,38 @@ RET_STATUS set_store_page(cache_set *set, unsigned int *addr, BOOL *write) // pa
 	*write = writeback_write;
 	
 	return res;
+}
+
+RET_STATUS set_invalidate_step(cache_set *set, unsigned int *addr)
+{
+	unsigned int i;
+	for (i = 0; i < set->_pages; ++i)
+	{
+		if ((set->addr_arr[i] & 1) && (set->addr_arr[i] & 2))// valid and writed
+		{
+			*addr = get_page_addr(set, i);
+			set->addr_arr[i] = 0;
+			return HIT;
+		}
+		else
+		{
+			set->addr_arr[i] = 0;
+		}
+	}
+	return MISS;
+}
+
+void print_set(cache_set *set)
+{
+	unsigned int i;
+	printf(" <tag|valid|writed|counter>:");
+	for (i = 0; i < set->_pages; ++i)
+	{
+		if (i % 8 == 0)
+			printf("\n\t");
+		printf("%8x|%d|%d|%d\t", (set->addr_arr[i] >> (set->_counter_width + 2)), (set->addr_arr[i] & 1), ((set->addr_arr[i] >> 1) & 1), GET_FIELD(set->addr_arr[i], 2, set->_counter_width));
+	}
+	printf("\n");
 }
 
 unsigned int get_page_status(cache_set *set, unsigned int addr)// page addr
@@ -142,35 +175,4 @@ void rlu_setmax(cache_set *set, unsigned int page_num) // page number
 unsigned int rlu_get_counter(cache_set *set, unsigned int page_num)
 {
 	return GET_FIELD(set->addr_arr[page_num], 2, set->_counter_width);
-}
-
-RET_STATUS set_invalidate_step(cache_set *set, unsigned int *addr)
-{
-	unsigned int i;
-	for (i = 0; i < set->_pages; ++i)
-	{
-		if(set->addr_arr[i] & 1)
-		{
-			*addr = get_page_addr(set, i);
-			set->addr_arr[i] = 0;
-			return HIT;
-		}
-		else
-		{
-			set->addr_arr[i] = 0;
-		}	
-	}
-	return MISS;
-}
-
-void print_set(cache_set *set)
-{
-	unsigned int i;
-	printf(" <tag|valid|writed|counter>:");
-	for (i = 0; i < set->_pages; ++i)
-	{
-		if(i%8 == 0) printf("\n\t");
-		printf("%8x|%d|%d|%d\t", (set->addr_arr[i] >> (set->_counter_width + 2)), (set->addr_arr[i] & 1), ((set->addr_arr[i] >> 1) & 1), GET_FIELD(set->addr_arr[i], 2, set->_counter_width));
-	}
-	printf("\n");
 }

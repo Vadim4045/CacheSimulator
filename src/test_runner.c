@@ -111,7 +111,12 @@ int run_test(char *trace_f, cache *cache, ddr *ddr, config *config, int settings
 		while ((addr = cache_invalidate_step(cache)) > 0)
 		{
 			++total_oper;
-			total_cost += wb_cost * 100; // cost of one page invalidate
+			total_cost += wb_cost * config->ddr_cfg.CAS;
+			if (access_to_ddr(ddr, addr))
+			{
+				total_cost += wb_cost * config->ddr_cfg.RAS;
+			}
+			
 		}
 	}
 
