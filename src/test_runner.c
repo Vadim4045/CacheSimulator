@@ -52,7 +52,8 @@ RET_STATUS do_instruction(cache* cache, char instruction, unsigned int *addr, un
 
 RET_STATUS process_line(cache *cache, config *config, int settings, unsigned int *addr, char instruction)
 {
-	unsigned int addr_wb, trace_counter, instruction_counter, ret, log;
+	RET_STATUS ret;
+	unsigned int addr_wb, trace_counter, instruction_counter, log;
 	unsigned int wb_cost = config->page_size / config->bus_width;
 	
 	addr_wb = *addr;
@@ -112,6 +113,8 @@ RET_STATUS process_line(cache *cache, config *config, int settings, unsigned int
 		add_line(total_oper, trace_counter, *addr, log);
 	}
 	++total_oper;
+	
+	return ret;
 }
 
 int go_trace(char *trace_f, cache *cache, config *config, int settings)
@@ -217,7 +220,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 	printf("l1_hit_rate = %f, l2_hit_rate = %f, l3_hit_rate = %f, miss_rate = %f\n", (double)l1_hit_counter / total_oper, (double)l2_hit_counter / total_oper, (double)l3_hit_counter / total_oper, (double)miss_counter / total_oper);
 	printf("l1_wb_rate = %f, l2_wb_rate = %f, l3_wb_rate = %f\n", (double)l1_wb_counter / total_oper, (double)l2_wb_counter / total_oper, (double)l3_wb_counter / total_oper);
 	printf("l2_sw_rate = %f, l3_sw_rate = %f\ncas_rate = %f, ras_rate = %f\n", (double)l2_sw_counter / total_oper, (double)l3_sw_counter / total_oper, (double)cas_counter / total_oper, (double)cas_counter / total_oper);
-	printf("Total access: %d (access_rate: %f), total cost: %d, avg: %f\n", total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
+	printf("Total access: %lu (access_rate: %f), total cost: %lu, avg: %f\n", total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
 
 	return 0;
 }

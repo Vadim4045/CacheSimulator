@@ -16,7 +16,7 @@ void print_usage()
 
 	while (fgets(line, sizeof(line), file))
 	{
-		printf(line);
+		printf("%s",line);
 	}
 	
 	fclose(file);
