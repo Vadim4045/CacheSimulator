@@ -7,7 +7,7 @@ static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleav
 static const char *system_params[] = {"bus", "page_size"};
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
-int parse_param_line(const char *line, char *param_name, int *param_value);
+int parse_param_line(const char *line, char *param_name, unsigned int *param_value);
 int set_cache_level_param(cache_level_config *cfg, char *line);
 int set_cache(cache_config *config, char *line);
 int set_ddr(ddr_config *config, char *line);
