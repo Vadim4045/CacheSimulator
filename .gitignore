@@ -2,7 +2,6 @@
 *.dSYM
 .vscode
 *.o
-.DS_Store
 *.bin
 output/*
 build/*

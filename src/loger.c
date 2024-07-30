@@ -1,6 +1,19 @@
 #include "loger.h"
-
 #include "common.h"
+
+#include <stdio.h>
+#include <errno.h>
+
+#if defined(_WIN32)
+#include <direct.h>
+#define MKDIR(path) _mkdir(path)
+#elif defined(__linux__) || defined(__APPLE__)
+#include <sys/stat.h>
+#include <sys/types.h>
+#define MKDIR(path) mkdir(path, 0700)
+#else
+#error "System not support"
+#endif
 
 static char buff_1[MAX_LINE_LENGTH];
 static char buff_2[MAX_LINE_LENGTH];
@@ -12,12 +25,13 @@ BOOL init_log_file(config *config, char* trace)
 
 	replace_simbol(trace, '_', ' ');
 	sscanf(trace, "./traces/%s", buff_2);
-	
-	sprintf(buff_1, "./logs/%s_page_%u_levels_%u", buff_2
+
+	sprintf(buff_1, "./logs/%s_page_%u_levels_%u"
+			, buff_2
 			, config->page_size
 			, config->cache_cfg.cache_levels
 			);
-			
+
 	for(i = 0; i < config->cache_cfg.cache_levels; ++i)
 	{
 		sprintf(buff_1, "%s_L%u_size_%x_sets_%u", buff_1, i + 1
@@ -36,13 +50,19 @@ BOOL init_log_file(config *config, char* trace)
 
 	sprintf(buff_1, "%s.csv", buff_1);
 
+	if (MKDIR("./logs") && errno != EEXIST)
+	{
+		perror("Can't make folder './logs'\n");
+		return True;
+	}
+	
 	file = fopen(buff_1, "w");
 	if (!file)
 	{
-		printf(buff_1);
+		printf("Can't make file '%s'\n", buff_1);
 		return True;
 	}
-
+	
 	fprintf(file, "Trace_No;Addr;L1_HIT;L2_HIT;L3_HIT;MISS;L1_WB;L2_WB;L3_WB;L2_SWAP;L3_SWAP;DDR_CAS;DDR_RAS\n");
 	return False;
 }
@@ -74,9 +94,16 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 
 	if (access(buff_1, F_OK) == 0)
 	{
+		if (MKDIR("./logs") && errno != EEXIST)
+		{
+			perror("Can't make folder './logs'\n");
+			return True;
+		}
+		
 		file = fopen(buff_1, "a");
 		if (!file)
 		{
+			printf("Can't make file '%s'\n", buff_1);
 			return True;
 		}
 	}
