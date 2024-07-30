@@ -187,7 +187,8 @@ int set_cache(cache_config *config, char *line)
 int parce_line(config *config, char *line)
 {
 	char param_name[MAX_PARAM_LENGTH];
-	int param_value, param_num, read;
+	unsigned int param_value;
+	int param_num, read;
 	
 	switch (line[0])
 	{

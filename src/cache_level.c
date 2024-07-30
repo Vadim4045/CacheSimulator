@@ -111,6 +111,8 @@ RET_STATUS level_invalidate_step(cache_level *level, unsigned int *addr)
 	{
 		return set_invalidate_step(&(level->sets_arr[i]), addr);
 	}
+	
+	return HIT;
 }
 
 void level_rlu_decrement(cache_level *level, unsigned int addr)
