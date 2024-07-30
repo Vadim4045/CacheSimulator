@@ -25,7 +25,7 @@ int get_param_num(const char **arr, unsigned int arr_size, const char *param_nam
 	return -1;
 }
 
-int parse_param_line(const char *line, char *param_name, int *param_value)
+int parse_param_line(const char *line, char *param_name, unsigned int *param_value)
 {
 	unsigned int ret = 0;
 	if (sscanf(line, "%s = 0x%x\n", param_name, param_value) != 2)
