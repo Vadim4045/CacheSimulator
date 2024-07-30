@@ -14,13 +14,18 @@ All flags and parameters are optional.
 
 -h -		show README
 -d -		disable date raising to L1 on L2/L3 HIT
--l -		add result to statistic
+-l -		add result to statistic table
 -v -		store verbosity trace log for inspect(will override if exists)
--i -		invalidate cach after trace(invalidation cost will add to total cost)
+-i -		clear cach after trace(invalidation cost will add to total cost)
 -m -		print cache map on end of trace(before invalidation)
--c -		path should be from root directory. If not used it, will be loaded default.congif
--t -		path to trace file from project directory. If not used, will run all taces in directory "./traces".
+-c -		path should be from root directory. Will be loaded default.congif, if not used.
+-t -		path to trace file from project directory. Will run all taces in directory "./traces"., if not used.
 
 This parameter mast be last!!!
 -r -		name of parameter to range (should be as in config file). 
-		Maximum number of values - 10 (each value mast be decimal and power of 2)
+		Maximum number of values - 10 (each value mast be decimal)
+
+
+
+
+
