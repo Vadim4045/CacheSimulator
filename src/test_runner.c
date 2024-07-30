@@ -11,6 +11,10 @@
 static unsigned long trace_counter;
 static unsigned long total_oper;
 static unsigned long total_cost;
+static unsigned long l1_hit_counter, l2_hit_counter, l3_hit_counter;
+static unsigned long l1_wb_counter, l2_wb_counter, l3_wb_counter;
+static unsigned int  miss_counter, l2_sw_counter, l3_sw_counter;
+static unsigned long cas_counter, ras_counter;
 
 typedef struct
 {
@@ -46,49 +50,66 @@ RET_STATUS do_instruction(cache* cache, char instruction, unsigned int *addr, un
 	return ret;
 }
 
-RET_STATUS process_line(cache *cache, config *config, int settings, unsigned int *log, unsigned int *addr, char instruction)
+RET_STATUS process_line(cache *cache, config *config, int settings, unsigned int *addr, char instruction)
 {
-	unsigned int addr_wb, trace_counter, instruction_counter, ret;
+	unsigned int addr_wb, trace_counter, instruction_counter, ret, log;
 	unsigned int wb_cost = config->page_size / config->bus_width;
 	
 	addr_wb = *addr;
-	*log = (settings >> 4) << 31; // disable date raising to L1 on L2/L3 HIT()
-	ret = do_instruction(cache, instruction, addr, log);
-
-	if ((*log >> 4) & 1)
+	if (settings >> 4)
 	{
-		*log |= (1 << 15); // CAS
+		log |= 1 << 31; // disable date raising to L1 on L2/L3 HIT()
+	}
+	
+	log = (settings >> 4) << 31; // disable date raising to L1 on L2/L3 HIT()
+	ret = do_instruction(cache, instruction, addr, &log);
+
+	if ((log >> 4) & 1)
+	{
+		log |= (1 << 15); // CAS
 		if (access_to_ddr(&(cache->ddr), addr_wb))
 		{
-			*log |= (1 << 16); // RAS
+			log |= (1 << 16); // RAS
 		}
 	}
 
-	if ((*log >> 12) & 1)
+	if ((log >> 12) & 1)
 	{
-		*log |= (1 << 17); // CAS
+		log |= (1 << 17); // CAS
 		if (access_to_ddr(&(cache->ddr), *addr))
 		{
-			*log |= (1 << 18); // RAS
+			log |= (1 << 18); // RAS
 		}
 	}
 
-	total_cost += ((*log >> 0) & 1) * config->cache_cfg.cache_configs[0].cost			  // L1 HIT
-				  + ((*log >> 1) & 1) * config->cache_cfg.cache_configs[1].cost			  // L2 HIT
-				  + ((*log >> 2) & 1) * config->cache_cfg.cache_configs[2].cost			  // L3 HIT
-				  + wb_cost * ((*log >> 15) & 1) * config->ddr_cfg.CAS					  // L3 MISS(DDR CAS)
-				  + ((*log >> 16) & 1) * config->ddr_cfg.RAS								  // L3 MISS(DDR RAS)
-				  + wb_cost * ((*log >> 5) & 1) * config->cache_cfg.cache_configs[1].cost  // L1 write-back
-				  + wb_cost * ((*log >> 6) & 1) * config->cache_cfg.cache_configs[2].cost  // L2 write-back
-				  + wb_cost * ((*log >> 7) & 1) * 100									  // L3 write-back;
-				  + wb_cost * ((*log >> 10) & 1) * config->cache_cfg.cache_configs[1].cost // L1<->L2 swap
-				  + wb_cost * ((*log >> 11) & 1) * config->cache_cfg.cache_configs[2].cost // L2<->L3 swap
-				  + wb_cost * ((*log >> 17) & 1) * config->ddr_cfg.CAS					  // L3 write-back after swap(DDR CAS)
-				  + ((*log >> 18) & 1) * config->ddr_cfg.RAS;							  // L3 write-back after swap(DDR RAS)
+	total_cost += ((log >> 0) & 1) * config->cache_cfg.cache_configs[0].cost			  // L1 HIT
+				  + ((log >> 1) & 1) * config->cache_cfg.cache_configs[1].cost			  // L2 HIT
+				  + ((log >> 2) & 1) * config->cache_cfg.cache_configs[2].cost			  // L3 HIT
+				  + wb_cost * ((log >> 15) & 1) * config->ddr_cfg.CAS					  // L3 MISS(DDR CAS)
+				  + ((log >> 16) & 1) * config->ddr_cfg.RAS								  // L3 MISS(DDR RAS)
+				  + wb_cost * ((log >> 5) & 1) * config->cache_cfg.cache_configs[1].cost  // L1 write-back
+				  + wb_cost * ((log >> 6) & 1) * config->cache_cfg.cache_configs[2].cost  // L2 write-back
+				  + wb_cost * ((log >> 7) & 1) * 100									  // L3 write-back;
+				  + wb_cost * ((log >> 10) & 1) * config->cache_cfg.cache_configs[1].cost // L1<->L2 swap
+				  + wb_cost * ((log >> 11) & 1) * config->cache_cfg.cache_configs[2].cost // L2<->L3 swap
+				  + wb_cost * ((log >> 17) & 1) * config->ddr_cfg.CAS					  // L3 write-back after swap(DDR CAS)
+				  + ((log >> 18) & 1) * config->ddr_cfg.RAS;							  // L3 write-back after swap(DDR RAS)
+
+	l1_hit_counter += (((log >> 0) & 1) & !(((log >> 1) & 1) | ((log >> 2) & 1) | ((log >> 4) & 1)));
+	l2_hit_counter += (((log >> 1) & 1) & !(((log >> 2) & 1) | ((log >> 4) & 1)));
+	l3_hit_counter += (((log >> 2) & 1) & !((log >> 4) & 1));
+	l1_wb_counter += ((log >> 5) & 1);
+	l2_wb_counter += ((log >> 6) & 1);
+	l3_wb_counter += ((log >> 7) & 1);
+	miss_counter += ((log >> 4) & 1);
+	l2_sw_counter += ((log >> 11) & 1);
+	l3_sw_counter += ((log >> 12) & 1);
+	cas_counter += (((log >> 15) & 1) + ((log >> 17) & 1));
+	ras_counter += (((log >> 16) & 1) + ((log >> 18) & 1));
 
 	if (settings & 1)
 	{
-		add_line(total_oper, trace_counter, *addr, *log);
+		add_line(total_oper, trace_counter, *addr, log);
 	}
 	++total_oper;
 }
@@ -103,7 +124,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 	unsigned long instraction_counter;
 	int value1, value2;
 	int num_regs = 0;
-	unsigned int log, addr;
+	unsigned int addr;
 	unsigned int wb_cost = config->page_size / config->bus_width;
 	
 
@@ -123,12 +144,6 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 
-	if (settings >> 4)
-	{
-		log |= 1 << 31; // disable date raising to L1 on L2/L3 HIT()
-	}
-
-
 	while (fgets(line, sizeof(line), file))
 	{
 		++trace_counter;
@@ -140,7 +155,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 				if (reg_idx != -1)
 				{
 					addr = registers[reg_idx].value + value1;
-					ret = process_line(cache, config, settings, &log, &addr, instruction[0]);
+					ret = process_line(cache, config, settings, &addr, instruction[0]);
 					++trace_counter;
 				}
 			}
@@ -187,7 +202,9 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 
 	if (settings & 8)
 	{
-		add_to_avg_log(config, (float)total_cost /total_oper, (float)total_cost / trace_counter);
+		add_to_avg_log(config, l1_hit_counter, l2_hit_counter, l3_hit_counter, l1_wb_counter
+						, l2_wb_counter, l3_wb_counter, miss_counter, l2_sw_counter, l3_sw_counter
+						, cas_counter, ras_counter, total_cost, total_oper, trace_counter);
 	}
 		
 	if (settings & 1)
@@ -196,7 +213,12 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 	}
 
 	fclose(file);
-	printf("--------Total lowd/store instructions: %d,total cost: %d, avg: %f\n", total_oper, total_cost, (float)total_cost / total_oper);
+	
+	printf("l1_hit_rate = %f, l2_hit_rate = %f, l3_hit_rate = %f, miss_rate = %f\n", (double)l1_hit_counter / total_oper, (double)l2_hit_counter / total_oper, (double)l3_hit_counter / total_oper, (double)miss_counter / total_oper);
+	printf("l1_wb_rate = %f, l2_wb_rate = %f, l3_wb_rate = %f\n", (double)l1_wb_counter / total_oper, (double)l2_wb_counter / total_oper, (double)l3_wb_counter / total_oper);
+	printf("l2_sw_rate = %f, l3_sw_rate = %f\ncas_rate = %f, ras_rate = %f\n", (double)l2_sw_counter / total_oper, (double)l3_sw_counter / total_oper, (double)cas_counter / total_oper, (double)cas_counter / total_oper);
+	printf("Total access: %d (access_rate: %f), total cost: %d, avg: %f\n", total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
+
 	return 0;
 }
 
@@ -217,9 +239,20 @@ void run_loop(char *trace_f, config *config, int settings)
 		trace_counter = 0;
 		total_oper = 0;
 		total_cost = 0;
-		
+		l1_hit_counter = 0;
+		l2_hit_counter = 0;
+		l3_hit_counter = 0;
+		l1_wb_counter = 0;
+		l2_wb_counter = 0;
+		l3_wb_counter = 0;
+		miss_counter = 0;
+		l2_sw_counter = 0;
+		l3_sw_counter = 0;
+		cas_counter = 0;
+		ras_counter = 0;
+
 		sprintf(input_filename, "%s", trace_f);
-		printf("Trace\t%s:\n", input_filename);
+		printf("\nTrace\t%s:\n", input_filename);
 		go_trace(input_filename, &cache, config, settings);
 	}
 	else
@@ -232,9 +265,20 @@ void run_loop(char *trace_f, config *config, int settings)
 				trace_counter = 0;
 				total_oper = 0;
 				total_cost = 0;
+				l1_hit_counter = 0;
+				l2_hit_counter = 0;
+				l3_hit_counter = 0;
+				l1_wb_counter = 0;
+				l2_wb_counter = 0;
+				l3_wb_counter = 0;
+				miss_counter = 0;
+				l2_sw_counter = 0;
+				l3_sw_counter = 0;
+				cas_counter = 0;
+				ras_counter = 0;
 				
 				sprintf(input_filename, "./traces/%s", trace_names[i]);
-				printf("Trace\t%s:\n", trace_names[i]);
+				printf("\nTrace\t%s:\n", trace_names[i]);
 				go_trace(input_filename, &cache, config, settings);
 			}
 		}
@@ -256,9 +300,10 @@ int runner(char *trace_f, char *config_f, char *type, unsigned int num_params, u
 		for (i = 0; i < num_params; ++i)
 		{
 			sprintf(range_param, "%s = 0x%x", type, params_arr[i]);
-			parce_line(&config, range_param);
-
-			run_loop(trace_f, &config, settings);
+			if(!parce_line(&config, range_param))
+			{
+				run_loop(trace_f, &config, settings);
+			}
 		}
 	}
 	else

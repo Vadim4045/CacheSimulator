@@ -13,7 +13,7 @@ BOOL init_log_file(config *config, char* trace)
 	replace_simbol(trace, '_', ' ');
 	sscanf(trace, "./traces/%s", buff_2);
 	
-	sprintf(buff_1, "./logs/%s_Page_%u_Levels_%u", buff_2
+	sprintf(buff_1, "./logs/%s_page_%u_levels_%u", buff_2
 			, config->page_size
 			, config->cache_cfg.cache_levels
 			);
@@ -62,7 +62,11 @@ BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned 
 	return True;
 }
 
-BOOL add_to_avg_log(config *config, float trc_avg, float prg_avg)
+BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2_hit_counter
+					, unsigned int l3_hit_counter, unsigned int l1_wb_counter, unsigned int l2_wb_counter
+					, unsigned int l3_wb_counter, unsigned int miss_counter, unsigned int l2_sw_counter
+					, unsigned int l3_sw_counter, unsigned int cas_counter, unsigned int ras_counter
+					, unsigned int total_cost, unsigned int total_oper, unsigned int trace_counter)
 {
 	unsigned int i;
 
@@ -84,13 +88,14 @@ BOOL add_to_avg_log(config *config, float trc_avg, float prg_avg)
 			return True;
 		}
 
-		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;AVG cache access;AVG cost/program_counter\n");
+		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;");
+		fprintf(file, "L1_HIT_rate;L2_HIT_rate;L3_HIT_rate;MISS_rate;");
+		fprintf(file, "L1_WB_rate;L2_WB_rate;L3_WB_rate;");
+		fprintf(file, "L2_swap_rate;L3_swap_rate;DDR_CAS_rate;DDR_RAS_rate;");
+		fprintf(file, "AVG cache access cost\n");
 	}
 
-	fprintf(file, "%u;%u;"
-			, config->page_size
-			, config->cache_cfg.cache_levels
-			);
+	fprintf(file, "%u;%u;", config->page_size, config->cache_cfg.cache_levels);
 
 	for (i = 0; i < 3; ++i)
 	{
@@ -100,11 +105,22 @@ BOOL add_to_avg_log(config *config, float trc_avg, float prg_avg)
 			);
 	}
 
-	fprintf(file, "%u;%u;%u;%f;%f\n"
-		, config->ddr_cfg.num_of_banks
-		, config->ddr_cfg.row_size / _1K
-		, config->ddr_cfg.IP
-		, trc_avg, prg_avg);
+	fprintf(file, "%u;%u;%u;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n"
+			, config->ddr_cfg.num_of_banks
+			, config->ddr_cfg.row_size / _1K
+			, config->ddr_cfg.IP
+			, (double)l1_hit_counter / total_oper
+			, (double)l2_hit_counter / total_oper
+			, (double)l3_hit_counter / total_oper
+			, (double)miss_counter / total_oper
+			, (double)l1_wb_counter / total_oper
+			, (double)l2_wb_counter / total_oper
+			, (double)l3_wb_counter / total_oper
+			, (double)l2_sw_counter / total_oper
+			, (double)l3_sw_counter / total_oper
+			, (double)cas_counter / total_oper
+			, (double)ras_counter / total_oper
+			, (double)total_cost / total_oper);
 
 	fclose(file);
 	return False;
