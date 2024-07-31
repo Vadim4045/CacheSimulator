@@ -30,7 +30,7 @@ All additional runs with the '-l' flag will add the data to the file for joint i
 To clear the statistics data, you need to physically delete the file './logs/Cache_simulator_statistic.csv'.
 
  After using flag '-v' you can inspect real time cache statistic during trace 
-by running 'TraceInspector.ipynb' file (jupyter notebook) and choising file './logs/<trace_name>_<system parameters>csv'.
+by running 'TraceInspector.ipynb' file (jupyter notebook) and choosing file './logs/<trace_name>_<system parameters>.csv'.
 
 
 
