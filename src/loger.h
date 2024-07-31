@@ -9,6 +9,6 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 					, unsigned int l3_hit_counter, unsigned int l1_wb_counter, unsigned int l2_wb_counter
 					, unsigned int l3_wb_counter, unsigned int miss_counter, unsigned int l2_sw_counter
 					, unsigned int l3_sw_counter, unsigned int cas_counter, unsigned int ras_counter
-					, unsigned int total_cost, unsigned int total_oper, unsigned int trace_counter);
+					, unsigned int total_cost, unsigned int total_oper, unsigned int trace_counter, unsigned int RAS);
 BOOL end_logging();
 #endif // LOGER_H

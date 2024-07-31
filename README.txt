@@ -24,6 +24,13 @@ All flags and parameters are optional.
 This parameter mast be last!!!
 -r -		name of parameter to range (should be as in config file). 
 		Maximum number of values - 10 (each value mast be decimal)
+		
+ After using flag '-l' you can inspect test statistic by running 'StatisticInspector.ipynb' file (jupyter notebook).
+All additional runs with the '-l' flag will add the data to the file for joint inspection and comparison. 
+To clear the statistics data, you need to physically delete the file './logs/Cache_simulator_statistic.csv'.
+
+ After using flag '-v' you can inspect real time cache statistic during trace 
+by running 'TraceInspector.ipynb' file (jupyter notebook) and choising file './logs/<trace_name>_<system parameters>csv'.
 
 
 

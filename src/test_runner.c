@@ -205,9 +205,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 
 	if (settings & 8)
 	{
-		add_to_avg_log(config, l1_hit_counter, l2_hit_counter, l3_hit_counter, l1_wb_counter
-						, l2_wb_counter, l3_wb_counter, miss_counter, l2_sw_counter, l3_sw_counter
-						, cas_counter, ras_counter, total_cost, total_oper, trace_counter);
+		add_to_avg_log(config, l1_hit_counter, l2_hit_counter, l3_hit_counter, l1_wb_counter, l2_wb_counter, l3_wb_counter, miss_counter, l2_sw_counter, l3_sw_counter, cas_counter, ras_counter, total_cost, total_oper, trace_counter, config->ddr_cfg.RAS);
 	}
 		
 	if (settings & 1)

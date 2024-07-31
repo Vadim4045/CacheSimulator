@@ -82,11 +82,10 @@ BOOL add_line(unsigned int tr_num, unsigned int ip, unsigned int addr, unsigned 
 	return True;
 }
 
-BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2_hit_counter
-					, unsigned int l3_hit_counter, unsigned int l1_wb_counter, unsigned int l2_wb_counter
-					, unsigned int l3_wb_counter, unsigned int miss_counter, unsigned int l2_sw_counter
-					, unsigned int l3_sw_counter, unsigned int cas_counter, unsigned int ras_counter
-					, unsigned int total_cost, unsigned int total_oper, unsigned int trace_counter)
+BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2_hit_counter, unsigned int l3_hit_counter
+					, unsigned int l1_wb_counter, unsigned int l2_wb_counter, unsigned int l3_wb_counter, unsigned int miss_counter
+					, unsigned int l2_sw_counter, unsigned int l3_sw_counter, unsigned int cas_counter, unsigned int ras_counter
+					, unsigned int total_cost, unsigned int total_oper, unsigned int trace_counter, unsigned int RAS)
 {
 	unsigned int i;
 
@@ -115,7 +114,7 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 			return True;
 		}
 
-		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;");
+		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;DDR RAS;");
 		fprintf(file, "L1_HIT_rate;L2_HIT_rate;L3_HIT_rate;MISS_rate;");
 		fprintf(file, "L1_WB_rate;L2_WB_rate;L3_WB_rate;");
 		fprintf(file, "L2_swap_rate;L3_swap_rate;DDR_CAS_rate;DDR_RAS_rate;");
@@ -132,10 +131,10 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 			);
 	}
 
-	fprintf(file, "%u;%u;%u;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n"
+	fprintf(file, "%u;%u;%u;%u;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n"
 			, config->ddr_cfg.num_of_banks
 			, config->ddr_cfg.row_size / _1K
-			, config->ddr_cfg.IP
+			, config->ddr_cfg.IP, RAS
 			, (double)l1_hit_counter / total_oper
 			, (double)l2_hit_counter / total_oper
 			, (double)l3_hit_counter / total_oper
