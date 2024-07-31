@@ -39,14 +39,13 @@ BOOL init_log_file(config *config, char* trace)
 				, config->cache_cfg.cache_configs[i].sets
 				);
 	}
-	
 
-	sprintf(buff_1, "%s_ddr_banks_%u_row_size%x_ip_%u", buff_1
+	sprintf(buff_1, "%s_ddr_banks_%u_row_size%x_ch_pos_%u_ip_%u", buff_1
 			, config->ddr_cfg.num_of_banks
 			, config->ddr_cfg.row_size / _1K
+			, config->ddr_cfg.channel_pos
 			, config->ddr_cfg.IP
 			);
-
 
 	sprintf(buff_1, "%s.csv", buff_1);
 
@@ -114,7 +113,7 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 			return True;
 		}
 
-		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_banks;DDR_row_size;IP;DDR RAS;");
+		fprintf(file, "Page_size;Levels;L1_size;L1_sets;L2_size;L2_sets;L3_size;L3_sets;DDR_ch;DDR_banks;DDR_row_size;Ch_pos;IP;DDR RAS;");
 		fprintf(file, "L1_HIT_rate;L2_HIT_rate;L3_HIT_rate;MISS_rate;");
 		fprintf(file, "L1_WB_rate;L2_WB_rate;L3_WB_rate;");
 		fprintf(file, "L2_swap_rate;L3_swap_rate;DDR_CAS_rate;DDR_RAS_rate;");
@@ -131,10 +130,13 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 			);
 	}
 
-	fprintf(file, "%u;%u;%u;%u;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n"
+	fprintf(file, "%u;%u;%u;%u;%u;%u;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n"
+			, config->ddr_cfg.num_of_channels
 			, config->ddr_cfg.num_of_banks
 			, config->ddr_cfg.row_size / _1K
-			, config->ddr_cfg.IP, RAS
+			, config->ddr_cfg.channel_pos
+			, config->ddr_cfg.IP
+			, RAS
 			, (double)l1_hit_counter / total_oper
 			, (double)l2_hit_counter / total_oper
 			, (double)l3_hit_counter / total_oper
@@ -146,7 +148,8 @@ BOOL add_to_avg_log(config *config, unsigned int l1_hit_counter, unsigned int l2
 			, (double)l3_sw_counter / total_oper
 			, (double)cas_counter / total_oper
 			, (double)ras_counter / total_oper
-			, (double)total_cost / total_oper);
+			, (double)total_cost / total_oper
+			);
 
 	fclose(file);
 	return False;

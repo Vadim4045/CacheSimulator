@@ -61,6 +61,7 @@ typedef struct
 	unsigned int num_of_ranks;
 	unsigned int num_of_banks;
 	unsigned int row_size;
+	unsigned int channel_pos;
 	unsigned int CAS;
 	unsigned int RAS;
 	INTERLEAVING_POLICY IP;
@@ -121,20 +122,21 @@ typedef struct
 } channel;
 	typedef struct
 {
-	 unsigned int num_of_banks;
-	 
-	 unsigned int channel_num_width;
-	 unsigned int dimm_num_width;
-	 unsigned int rank_num_width;
+	unsigned int channel_pos;
+	unsigned int num_of_banks;
 
-	 unsigned int page_size_width;
-	 unsigned int bank_num_width;
-	 unsigned int offset_width;
-	 unsigned int column_num_width;
-	 unsigned int row_num_width;
+	unsigned int channel_num_width;
+	unsigned int dimm_num_width;
+	unsigned int rank_num_width;
 
-	 channel* channels;
-	 config *cfg;
+	unsigned int page_size_width;
+	unsigned int bank_num_width;
+	unsigned int offset_width;
+	unsigned int column_num_width;
+	unsigned int row_num_width;
+
+	channel *channels;
+	config *cfg;
 } ddr;
 typedef struct
 {

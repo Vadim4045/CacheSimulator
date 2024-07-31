@@ -43,25 +43,67 @@ void init_ddr(ddr *ddr, config *cfg)
 
 DDR_RET access_to_ddr(ddr *ddr, unsigned int addr)
 {
-	//	-----------------------------------------
-	//	| dimm | rank | cnannel |	 address	|
-	//	-----------------------------------------
 	unsigned int i, bank_num, row, cur_row;
-	
-	unsigned int channel_num = (addr >> (ddr->offset_width + ddr->column_num_width 
-				+ ddr->bank_num_width + ddr->row_num_width)) & GET_MASK(ddr->channel_num_width);
-				
-	unsigned int dimm_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width 
-				+ ddr->row_num_width + ddr->channel_num_width + ddr->rank_num_width)) & GET_MASK(ddr->dimm_num_width);
-				
-	unsigned int rank_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width 
-				+ ddr->row_num_width + ddr->channel_num_width)) & GET_MASK(ddr->rank_num_width);
+	unsigned int channel_num, dimm_num, rank_num;
+	switch (ddr->cfg->ddr_cfg.channel_pos)
+	{
+		case 0:
+			//	-----------------------------------
+			//	| cnannel | dimm | rank | address |
+			//	-----------------------------------
 
-	row = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width)) & GET_MASK(ddr->row_num_width);
+			channel_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+												+ ddr->rank_num_width + ddr->dimm_num_width)) & GET_MASK(ddr->channel_num_width);
+
+			dimm_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+													+ ddr->rank_num_width)) & GET_MASK(ddr->dimm_num_width);
+
+			rank_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width)) 
+												& GET_MASK(ddr->rank_num_width);
+
+			row = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width)) & GET_MASK(ddr->row_num_width);
+			break;
+		case 1:
+			//	-----------------------------------
+			//	| dimm | cnannel | rank | address |
+			//	-----------------------------------
+
+			channel_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+											+ ddr->rank_num_width)) & GET_MASK(ddr->channel_num_width);
+
+			dimm_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+										+ ddr->channel_num_width + ddr->rank_num_width)) & GET_MASK(ddr->dimm_num_width);
+
+			rank_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width)) 
+								& GET_MASK(ddr->rank_num_width);
+
+			row = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width)) & GET_MASK(ddr->row_num_width);
+			break;
+		case 2:
+			//	-----------------------------------
+			//	| dimm | rank | cnannel | address |
+			//	-----------------------------------
+
+			channel_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width 
+											+ ddr->row_num_width)) & GET_MASK(ddr->channel_num_width);
+
+			dimm_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+												+ ddr->channel_num_width + ddr->rank_num_width)) & GET_MASK(ddr->dimm_num_width);
+
+			rank_num = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width + ddr->row_num_width 
+												+ ddr->channel_num_width)) & GET_MASK(ddr->rank_num_width);
+
+			row = (addr >> (ddr->offset_width + ddr->column_num_width + ddr->bank_num_width)) & GET_MASK(ddr->row_num_width);
+			break;
+		default:
+			printf("Wrong Channel position. Will choose 0.");
+			exit(EXIT_FAILURE);
+	}
+	
 
 	if(ddr->cfg->ddr_cfg.IP == 0)
 	{
-		//	ROW_INTERLEAVING
+		//	BLOCK_INTERLEAVING
 		//	------------------------------------------------
 		//	| row_addr | bank_addr |  column_addr | offset |
 		//	------------------------------------------------
@@ -72,7 +114,7 @@ DDR_RET access_to_ddr(ddr *ddr, unsigned int addr)
 	}
 	else
 	{
-		//	BLOCK_INTERLEAVING
+		//	ROW_INTERLEAVING
 		//	-----------------------------------------------------------------------
 		//	| row_addr | column_addr_high | bank_addr |  column_addr_low | offset |
 		//	-----------------------------------------------------------------------

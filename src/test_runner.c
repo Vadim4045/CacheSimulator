@@ -214,11 +214,26 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 	}
 
 	fclose(file);
-	
-	printf("l1_hit_rate = %f, l2_hit_rate = %f, l3_hit_rate = %f, miss_rate = %f\n", (double)l1_hit_counter / total_oper, (double)l2_hit_counter / total_oper, (double)l3_hit_counter / total_oper, (double)miss_counter / total_oper);
-	printf("l1_wb_rate = %f, l2_wb_rate = %f, l3_wb_rate = %f\n", (double)l1_wb_counter / total_oper, (double)l2_wb_counter / total_oper, (double)l3_wb_counter / total_oper);
-	printf("l2_sw_rate = %f, l3_sw_rate = %f\ncas_rate = %f, ras_rate = %f\n", (double)l2_sw_counter / total_oper, (double)l3_sw_counter / total_oper, (double)cas_counter / total_oper, (double)cas_counter / total_oper);
-	printf("Total access: %lu (access_rate: %f), total cost: %lu, avg: %f\n", total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
+
+	printf("l1_hit_rate = %f(%u), l2_hit_rate = %f(%u), l3_hit_rate = %f(%u), miss_rate = %f(%u)\n"
+			, (double)l1_hit_counter / total_oper, l1_hit_counter
+			, (double)l2_hit_counter / total_oper, l2_hit_counter
+			, (double)l3_hit_counter / total_oper, l3_hit_counter
+			, (double)miss_counter / total_oper, miss_counter
+			);
+	printf("l1_wb_rate = %f(%u), l2_wb_rate = %f(%u), l3_wb_rate = %f(%u)\n"
+			, (double)l1_wb_counter / total_oper, l1_wb_counter
+			, (double)l2_wb_counter / total_oper, l2_wb_counter
+			, (double)l3_wb_counter / total_oper, l3_wb_counter
+			);
+	printf("l2_sw_rate = %f(%u), l3_sw_rate = %f(%u)\ncas_rate = %f(%u), ras_rate = %f(%u)\n"
+			, (double)l2_sw_counter / total_oper, l2_sw_counter
+			, (double)l3_sw_counter / total_oper, l3_sw_counter
+			, (double)cas_counter / total_oper, cas_counter
+			, (double)ras_counter / total_oper, ras_counter
+			);
+	printf("Total access: %lu (access_rate: %f), total cost: %lu, avg: %f\n"
+			, total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
 
 	return 0;
 }

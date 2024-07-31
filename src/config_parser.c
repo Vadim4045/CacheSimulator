@@ -3,7 +3,7 @@
 
 static const char *cache_level_params[] = {"size", "sets", "cost"};
 static const char *cache_params[] = {"levels"};
-static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleaving", "channels", "dimms", "ranks"};
+static const char *ddr_params[] = {"banks", "row_size", "RAS", "CAS", "interleaving", "channels", "dimms", "ranks", "ch_pos"};
 static const char *system_params[] = {"bus", "page_size"};
 
 int get_param_num(const char **arr, unsigned int arr_size, const char *param_name);
@@ -83,7 +83,7 @@ int set_ddr(ddr_config *cfg, char *line)
 
 	if (!parse_param_line(line, param_name, &param_value))
 	{
-		if ((channel = get_param_num(ddr_params, 8, param_name)) == -1)
+		if ((channel = get_param_num(ddr_params, 9, param_name)) == -1)
 			return -1;
 
 		switch (channel)
@@ -142,9 +142,16 @@ int set_ddr(ddr_config *cfg, char *line)
 			}
 			cfg->num_of_ranks = param_value;
 			break;
-		default:
-			printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
-			return -1;
+		case 8:
+			if (param_value > 2)
+			{
+				printf("%s ERROR: %s = 0x%x (mast be 0, 1 or 2)", __FUNCTION__, param_name, param_value);
+				return -1;
+			}
+			cfg->channel_pos = param_value;
+			break;
+			default : printf("%s Error: Wrong parameter: %s\n", __FUNCTION__, param_name);
+				return -1;
 		}
 	}
 
