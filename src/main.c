@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	char *range_type = NULL;
 	int show_help = 0, range_num = -1, settings = 0;
 
-	while ((opt = getopt(argc, argv, "hdlvmit:c:r:")) != -1)
+	while ((opt = getopt(argc, argv, "hdlvmpit:c:r:")) != -1)
 	{
 		switch (opt)
 		{
@@ -52,6 +52,9 @@ int main(int argc, char **argv)
 			break;
 		case 'd':
 			settings |= (1 << 4);
+			break;
+		case 'p':
+			settings |= (1 << 5);
 			break;
 		case 't':
 			trace_file_name = optarg;

@@ -13,6 +13,7 @@ Run from project directory:
 All flags and parameters are optional. 
 
 -h -		show README
+-p -		print verbosity trase result
 -d -		disable date raising to L1 on L2/L3 HIT
 -l -		add result to statistic table
 -v -		store verbosity trace log for inspect(will override if exists)

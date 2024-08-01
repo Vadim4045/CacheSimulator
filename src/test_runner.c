@@ -184,12 +184,12 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 
-	if (settings & 2)
+	if ((settings << 1) & 1)
 	{
 		print_cache(cache);
 	}
 
-	if(settings & 4)
+	if((settings << 2) & 1)
 	{
 		while ((addr = cache_invalidate_step(cache)) > 0)
 		{
@@ -203,7 +203,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 
-	if (settings & 8)
+	if ((settings << 3) & 1)
 	{
 		add_to_avg_log(config, l1_hit_counter, l2_hit_counter, l3_hit_counter, l1_wb_counter, l2_wb_counter, l3_wb_counter, miss_counter, l2_sw_counter, l3_sw_counter, cas_counter, ras_counter, total_cost, total_oper, trace_counter, config->ddr_cfg.RAS);
 	}
@@ -215,23 +215,27 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 
 	fclose(file);
 
-	printf("l1_hit_rate = %f(%u), l2_hit_rate = %f(%u), l3_hit_rate = %f(%u), miss_rate = %f(%u)\n"
-			, (double)l1_hit_counter / total_oper, l1_hit_counter
-			, (double)l2_hit_counter / total_oper, l2_hit_counter
-			, (double)l3_hit_counter / total_oper, l3_hit_counter
-			, (double)miss_counter / total_oper, miss_counter
-			);
-	printf("l1_wb_rate = %f(%u), l2_wb_rate = %f(%u), l3_wb_rate = %f(%u)\n"
-			, (double)l1_wb_counter / total_oper, l1_wb_counter
-			, (double)l2_wb_counter / total_oper, l2_wb_counter
-			, (double)l3_wb_counter / total_oper, l3_wb_counter
-			);
-	printf("l2_sw_rate = %f(%u), l3_sw_rate = %f(%u)\ncas_rate = %f(%u), ras_rate = %f(%u)\n"
-			, (double)l2_sw_counter / total_oper, l2_sw_counter
-			, (double)l3_sw_counter / total_oper, l3_sw_counter
-			, (double)cas_counter / total_oper, cas_counter
-			, (double)ras_counter / total_oper, ras_counter
-			);
+	if ((settings >> 5) & 1)
+	{
+		printf("l1_hit_rate = %f(%u), l2_hit_rate = %f(%u), l3_hit_rate = %f(%u), miss_rate = %f(%u)\n"
+				, (double)l1_hit_counter / total_oper
+				, l1_hit_counter, (double)l2_hit_counter / total_oper
+				, l2_hit_counter, (double)l3_hit_counter / total_oper
+				, l3_hit_counter, (double)miss_counter / total_oper
+				, miss_counter
+				);
+		printf("l1_wb_rate = %f(%u), l2_wb_rate = %f(%u), l3_wb_rate = %f(%u)\n"
+				, (double)l1_wb_counter / total_oper, l1_wb_counter
+				, (double)l2_wb_counter / total_oper, l2_wb_counter
+				, (double)l3_wb_counter / total_oper, l3_wb_counter
+				);
+		printf("l2_sw_rate = %f(%u), l3_sw_rate = %f(%u)\ncas_rate = %f(%u), ras_rate = %f(%u)\n"
+				, (double)l2_sw_counter / total_oper, l2_sw_counter
+				, (double)l3_sw_counter / total_oper, l3_sw_counter
+				, (double)cas_counter / total_oper, cas_counter
+				, (double)ras_counter / total_oper, ras_counter
+				);
+	}
 	printf("Total access: %lu (access_rate: %f), total cost: %lu, avg: %f\n"
 			, total_oper, (double)total_oper / trace_counter, total_cost, (double)total_cost / total_oper);
 
