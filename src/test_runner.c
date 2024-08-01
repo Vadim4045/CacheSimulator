@@ -184,12 +184,12 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 
-	if ((settings << 1) & 1)
+	if ((settings >> 1) & 1)
 	{
 		print_cache(cache);
 	}
 
-	if((settings << 2) & 1)
+	if((settings >> 2) & 1)
 	{
 		while ((addr = cache_invalidate_step(cache)) > 0)
 		{
@@ -203,7 +203,7 @@ int go_trace(char *trace_f, cache *cache, config *config, int settings)
 		}
 	}
 
-	if ((settings << 3) & 1)
+	if ((settings >> 3) & 1)
 	{
 		add_to_avg_log(config, l1_hit_counter, l2_hit_counter, l3_hit_counter, l1_wb_counter, l2_wb_counter, l3_wb_counter, miss_counter, l2_sw_counter, l3_sw_counter, cas_counter, ras_counter, total_cost, total_oper, trace_counter, config->ddr_cfg.RAS);
 	}
@@ -313,7 +313,10 @@ int runner(char *trace_f, char *config_f, char *type, unsigned int num_params, u
 	static char range_param[MAX_LINE_LENGTH];
 	config config;
 	
-	read_config(&config, config_f);
+	if(read_config(&config, config_f))
+	{
+		return -1;
+	}
 
 	if(type != NULL)
 	{
